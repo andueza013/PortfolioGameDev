@@ -1,0 +1,139 @@
+/* src/styles/global.css */
+:root {
+  --bg-color: #0f172a;
+  --text-color: #f8fafc;
+  --accent-color: #3b82f6;
+  --card-bg: #1e293b;
+  --border-color: #334155;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 80%; 
+  margin: 0 auto;
+}
+
+header {
+  margin-bottom: 4rem;
+}
+
+h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+
+/* Grid de proyectos */
+
+.grid {
+  display: grid;
+  /* Esto dice: "Crea columnas de al menos 300px, pero nunca más de 3" */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  
+  /* Añade esta línea para limitar el máximo de columnas: */
+  max-width: 1200px; /* O el ancho que prefieras para que quepan 3 tarjetas cómodas */
+  margin: 0 auto;    /* Esto centra el grid si el container es más grande */
+  gap: 2rem;
+}
+
+
+/* TARJETA UNIFICADA: Flexbox para alinear elementos */
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s, border-color 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.card:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-5px);
+}
+
+/* Asegura que el botón/link siempre esté al final */
+.card a.btn-primary, 
+.card a.btn-secondary {
+  margin-top: auto;
+}
+
+/* Tags y Contenedores */
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem; /* Separación con el botón */
+}
+
+.tag {
+  background: #1e3a8a;
+  color: #bfdbfe;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.thumbnail {
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Esto garantiza que siempre mantengan la proporción correcta */
+  height: auto;         /* Elimina la altura fija */
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  margin: 1rem 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+.btn-primary, .btn-secondary {
+display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: 0.75rem;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-secondary:hover {
+  background: var(--accent-color);
+  color: white;
+}
+/* Asegurar que el SVG no cambie de tamaño y herede color */
+.btn-primary svg, 
+.btn-secondary svg {
+  flex-shrink: 0; /* Evita que el icono se deforme */
+  fill: currentColor; /* Hereda el color del texto (blanco o accent) */
+}
