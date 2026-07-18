@@ -60,7 +60,7 @@ body {
 
 /* ── Layout ────────────────────────────────────────────────────────────── */
 .container {
-  max-width: 1100px;
+  max-width: 80%;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -152,8 +152,8 @@ section + section { padding-top: 0; }
 }
 
 .hero-pitch {
-  max-width: 580px;
-  font-size: 15px;
+  max-width: 100%;
+  font-size: 20px;
   color: var(--text-2);
   line-height: 1.75;
   margin-bottom: 2rem;
@@ -641,4 +641,194 @@ section + section { padding-top: 0; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition-duration: 0ms !important; }
+}
+
+/* ── Resume Timeline Section ───────────────────────────────────────────── */
+.resume-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  margin-top: 2.5rem;
+}
+
+.resume-section-title {
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 2.5rem;
+  letter-spacing: -.01em;
+}
+
+.resume-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.resume-block {
+  position: relative;
+  padding-left: 1.75rem;
+  border-left: 1px solid var(--border);
+}
+
+.resume-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.875rem;
+}
+
+/* El punto del timeline alineado */
+.resume-timeline-dot {
+  position: absolute;
+  left: -4.5px;
+  top: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.resume-title-group h4 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.resume-company {
+  font-size: 13.5px;
+  color: var(--text-2);
+  margin-top: 0.25rem;
+}
+
+.resume-badge-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-bdr);
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.resume-body {
+  font-size: 14.5px;
+  color: var(--text-2);
+  line-height: 1.75;
+  text-align: justify;
+}
+
+/* Responsive para dispositivos móviles */
+@media (max-width: 900px) {
+  .resume-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .resume-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .resume-badge-date {
+    align-self: flex-start;
+  }
+}
+
+/* ── Featured Grid Layout ──────────────────────────────────────────────── */
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* Modificación de la tarjeta destacada para actuar como flexbox interno */
+.card-featured {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 0; /* Eliminado el margen inferior para el flujo del grid */
+  overflow: hidden;
+}
+
+/* Fuerza a los enlaces de la tarjeta a anclarse siempre al fondo */
+.card-featured .card-links {
+  margin-top: auto;
+}
+
+/* Ajuste fino para la imagen responsiva dentro del entorno a dos columnas */
+.card-featured .thumbnail {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* Adaptabilidad para móviles y tablets en formato vertical */
+@media (max-width: 900px) {
+  .featured-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+/* Modificación del contenedor Hero */
+.hero { 
+  padding: 6rem 0 4rem; 
+}
+
+.hero-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 3rem; /* Espacio entre la foto y el texto */
+}
+
+/* Estilos de la foto de perfil */
+.hero-avatar-wrapper {
+  flex-shrink: 0; /* Evita que la foto se encoja */
+  flex:1;
+}
+
+.hero-avatar {
+  width: 60%;
+  height: 60%;
+  object-fit: cover;
+  border-radius:50%; /* Bordes ligeramente suavizados, coherentes con tus tarjetas */
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero-content {
+  flex: 2;
+}
+
+/* Ajuste fino: quitamos el margen superior innecesario del primer elemento de texto */
+.hero-content .hero-eyebrow {
+  margin-top: 0;
+}
+
+/* Responsive: en móviles la foto se centra arriba y el texto abajo */
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+  
+  .hero-pitch {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .hero-ctas {
+    justify-content: center;
+  }
 }

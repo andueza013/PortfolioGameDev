@@ -75,147 +75,151 @@ const itchGames = [
 
   <div class="container">
 
-    <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+<!-- ── HERO ──────────────────────────────────────────────────────────── -->
     <header class="hero">
-      <p class="hero-eyebrow">// gameplay &middot; ai &middot; c++</p>
-      <h1 class="hero-name">Fernando Fernández Andúeza</h1>
-      <p class="hero-role">Gameplay &amp; AI Programmer</p>
-      <p class="hero-pitch">
-        Shipped a game on <strong>Steam</strong> built in Unreal Engine 5 with C++.
-        Custom AI with StateTree and NavMesh, actor object pooling, Two Bone IK,
-        and a C++ engine ported to <strong>Nintendo Switch</strong>.
-        <strong>2+ years of production software experience</strong> before game development —
-        real codebases, real users, real deadlines.
-      </p>
-      <div class="hero-ctas">
-        <a href="#projects" class="btn-hero-primary">View projects</a>
-        <a href="https://github.com/YOUR_GITHUB" target="_blank" rel="noopener" class="btn-hero-ghost">
-          GitHub ↗
-        </a>
-        <a href="https://linkedin.com/in/fernando-fernandez-andueza" target="_blank" rel="noopener" class="btn-hero-ghost">
-          LinkedIn ↗
-        </a>
+      <div class="hero-container">
+
+        
+        <!-- 2. Contenedor de los textos -->
+        <div class="hero-content">
+          <p class="hero-eyebrow">// gameplay &middot; ai &middot; c++</p>
+          <h1 class="hero-name">Fernando Fernández Andúeza</h1>
+          <p class="hero-role">Gameplay &amp; AI Programmer</p>
+          <p class="hero-pitch">
+            Shipped a game on <strong>Steam</strong> built in Unreal Engine 5 with C++.
+            Custom AI with StateTree and NavMesh, actor object pooling, Two Bone IK,
+            and a C++ engine ported to <strong>Nintendo Switch</strong>.
+            <strong>2+ years of production software experience</strong> before game development —
+            real codebases, real users, real deadlines.
+          </p>
+          <div class="hero-ctas">
+            <a href="#projects" class="btn-hero-primary">View projects</a>
+            <a href="https://github.com/YOUR_GITHUB" target="_blank" rel="noopener" class="btn-hero-ghost">
+              GitHub ↗
+            </a>
+            <a href="https://linkedin.com/in/fernando-fernandez-andueza" target="_blank" rel="noopener" class="btn-hero-ghost">
+              LinkedIn ↗
+            </a>
+          </div>
+        </div>
+                <!-- 1. Contenedor de la foto -->
+        <div class="hero-avatar-wrapper">
+          <img src="/public/profile.jpeg" alt="Fernando Fernández Andúeza" class="hero-avatar" />
+        </div>
       </div>
     </header>
 
-    <!-- ── DIFFERENTIATOR STRIP ──────────────────────────────────────────── -->
-    <div class="diff-strip">
-      <div class="diff-inner">
-        <span class="diff-kicker">Why different</span>
-        <p class="diff-copy">
-          Unlike most junior game developers, I spent <strong>2.5 years writing production software</strong>
-          at a company — SCRUM from the inside, client incidents, code I didn't write.
-          I bring that engineering maturity to gameplay and AI systems.
-        </p>
-      </div>
-    </div>
 
     <!-- ── FEATURED PROJECTS ─────────────────────────────────────────────── -->
+<!-- ── FEATURED PROJECTS ─────────────────────────────────────────────── -->
     <section id="projects">
       <p class="sec-head">Featured projects</p>
 
-      <!-- Beerserker: The Stolen Brew -->
-      <article class="card-featured">
-        <div class="card-meta">
-          <span class="badge badge-shipped">
-            <span class="badge-dot"></span>Available on Steam
-          </span>
-          <span class="card-engine">Unreal Engine 5 &nbsp;·&nbsp; C++</span>
-        </div>
+      <!-- NUEVO CONTENEDOR PARA LAS DOS COLUMNAS -->
+      <div class="featured-grid">
 
-        <h3>Beerserker: The Stolen Brew</h3>
-        <p style="font-size:13px; color:var(--text-3); margin-bottom:1rem;">
-          Third-person action game &nbsp;·&nbsp; Gameplay Programmer
-        </p>
+        <!-- Beerserker: The Stolen Brew -->
+        <article class="card-featured">
+          <div class="card-meta">
+            <span class="badge badge-shipped">
+              <span class="badge-dot"></span>Available on Steam
+            </span>
+            <span class="card-engine">Unreal Engine 5 &nbsp;·&nbsp; C++</span>
+          </div>
 
-        <!-- YouTube trailer embed -->
-        <div class="video-wrapper" style="margin-bottom:1.25rem; max-width:720px;">
-          <iframe
-            src="https://www.youtube.com/embed/2bR2OxafTjQ?rel=0&modestbranding=1"
-            title="Beerserker: The Stolen Brew — Trailer"
-            allowfullscreen
-          ></iframe>
-        </div>
+          <h3>Beerserker: The Stolen Brew</h3>
+          <p style="font-size:13px; color:var(--text-3); margin-bottom:1rem;">
+            Third-person action game &nbsp;·&nbsp; Gameplay Programmer
+          </p>
 
-        <p>
-          Built the core gameplay systems for a shipped Steam title entirely in C++.
-          Enemy AI using <strong style="color:var(--text)">StateTree</strong> with NavMesh reachability-aware pathfinding;
-          a grab-and-throw mechanic between tank and melee enemy types driven by
-          <strong style="color:var(--text)">Two Bone IK</strong> and socket attachment;
-          a custom actor pooling subsystem (<code style="font-family:var(--mono);font-size:13px">UBXPoolGameInstanceSubsystem</code>)
-          with level streaming-aware cleanup via FWorldDelegates;
-          direct <strong style="color:var(--text)">Steamworks API</strong> integration for stats and achievements;
-          FMOD audio; and Niagara VFX.
-        </p>
+          <div class="video-wrapper" style="margin-bottom:1.25rem; max-width:1100px;">
+            <iframe
+              src="https://www.youtube.com/embed/2bR2OxafTjQ?si=HfbHE73XUxKJRXTU" 
+              title="Beerserker: The Stolen Brew — Trailer"
+              allowfullscreen
+            ></iframe>
+          </div>
 
-        <div class="tag-container" style="margin-top:1rem;">
-          <span class="tag">UE5</span>
-          <span class="tag">C++</span>
-          <span class="tag">StateTree AI</span>
-          <span class="tag">NavMesh</span>
-          <span class="tag">Two Bone IK</span>
-          <span class="tag">Object Pooling</span>
-          <span class="tag">Steamworks API</span>
-          <span class="tag">FMOD</span>
-          <span class="tag">Niagara</span>
-        </div>
+          <p>
+            Built the core gameplay systems for a shipped Steam title entirely in C++.
+            Enemy AI using <strong style="color:var(--text)">StateTree</strong> with NavMesh reachability-aware pathfinding;
+            a grab-and-throw mechanic between tank and melee enemy types driven by
+            <strong style="color:var(--text)">Two Bone IK</strong> and socket attachment;
+            a custom actor pooling subsystem (<code style="font-family:var(--mono);font-size:13px">UBXPoolGameInstanceSubsystem</code>)
+            with level streaming-aware cleanup via FWorldDelegates;
+            direct <strong style="color:var(--text)">Steamworks API</strong> integration for stats and achievements;
+            FMOD audio; and Niagara VFX.
+          </p>
 
-        <div class="card-links" style="margin-top:1.25rem;">
-          <a href="https://store.steampowered.com/app/4522440/" target="_blank" rel="noopener" class="btn-primary">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
-              <path d="M12.695 0C8.772 0 5.314 2.578 4.05 6.148l6.624 2.777c.666-.57 1.55-.923 2.526-.923 2.137 0 3.872 1.735 3.872 3.872 0 .976-.353 1.86-.923 2.527l2.777 6.624C21.422 18.686 24 15.228 24 11.305 24 5.06 18.94 0 12.695 0zM5.997 15.17c-.426.668-.667 1.458-.667 2.304 0 2.395 1.942 4.336 4.337 4.336.846 0 1.636-.24 2.304-.666l-5.974-5.974z"/>
-            </svg>
-            Play on Steam
-          </a>
-        </div>
-      </article>
+          <div class="tag-container" style="margin-top:1rem;">
+            <span class="tag">UE5</span>
+            <span class="tag">C++</span>
+            <span class="tag">StateTree AI</span>
+            <span class="tag">NavMesh</span>
+            <span class="tag">Two Bone IK</span>
+            <span class="tag">Object Pooling</span>
+            <span class="tag">Steamworks API</span>
+            <span class="tag">FMOD</span>
+            <span class="tag">Niagara</span>
+          </div>
 
-      <!-- XEMA Engine -->
-      <article class="card-featured">
-        <div class="card-meta">
-          <span class="badge badge-personal">
-            <span class="badge-dot"></span>Personal project
-          </span>
-          <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL 4.5 &nbsp;·&nbsp; Nintendo Switch</span>
-        </div>
+          <div class="card-links" style="margin-top:1.25rem;">
+            <a href="https://store.steampowered.com/app/4522440/" target="_blank" rel="noopener" class="btn-primary">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+                <path d="M12.695 0C8.772 0 5.314 2.578 4.05 6.148l6.624 2.777c.666-.57 1.55-.923 2.526-.923 2.137 0 3.872 1.735 3.872 3.872 0 .976-.353 1.86-.923 2.527l2.777 6.624C21.422 18.686 24 15.228 24 11.305 24 5.06 18.94 0 12.695 0zM5.997 15.17c-.426.668-.667 1.458-.667 2.304 0 2.395 1.942 4.336 4.337 4.336.846 0 1.636-.24 2.304-.666l-5.974-5.974z"/>
+              </svg>
+              Play on Steam
+            </a>
+          </div>
+        </article>
 
-        <h3>XEMA — Custom 3D Engine</h3>
-        <p style="font-size:13px; color:var(--text-3); margin-bottom:1rem;">
-          Built from scratch &nbsp;·&nbsp; Cross-platform
-        </p>
+        <!-- XEMA Engine -->
+        <article class="card-featured">
+          <div class="card-meta">
+            <span class="badge badge-personal">
+              <span class="badge-dot"></span>Personal project
+            </span>
+            <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL 4.5 &nbsp;·&nbsp; Nintendo Switch</span>
+          </div>
 
-        <img src="/project-images/engine1.jpg" alt="XEMA Engine" class="thumbnail"
-             style="max-width:720px; margin-bottom:1.25rem;" loading="lazy" />
+          <h3>XEMA — Custom 3D Engine</h3>
+          <p style="font-size:13px; color:var(--text-3); margin-bottom:1rem;">
+            Built from scratch &nbsp;·&nbsp; Cross-platform
+          </p>
 
-        <p>
-          High-performance C++ engine written from scratch.
-          <strong style="color:var(--text)">OpenGL 4.5 DSA</strong> rendering pipeline with
-          Deferred Shading, PCF Shadow Mapping, and PBR (Metallic/Roughness).
-          <strong style="color:var(--text)">ECS</strong> with O(1) component access.
-          Job System via std::future for async model loading.
-          Ported to <strong style="color:var(--text)">Nintendo Switch</strong> via libnx and EGL,
-          supporting Docked (1080p) and Handheld (720p) modes with a single Premake5 codebase.
-        </p>
+          <img src="/project-images/engine1.jpg" alt="XEMA Engine" class="thumbnail" style="margin-bottom:1.25rem;" loading="lazy" />
 
-        <div class="tag-container" style="margin-top:1rem;">
-          <span class="tag">C++</span>
-          <span class="tag">OpenGL 4.5</span>
-          <span class="tag">ECS</span>
-          <span class="tag">Deferred Shading</span>
-          <span class="tag">PBR</span>
-          <span class="tag">Nintendo Switch</span>
-          <span class="tag">PhysX 5</span>
-          <span class="tag">Lua / sol2</span>
-          <span class="tag">WFC</span>
-        </div>
+          <p>
+            High-performance C++ engine written from scratch.
+            <strong style="color:var(--text)">OpenGL 4.5 DSA</strong> rendering pipeline with
+            Deferred Shading, PCF Shadow Mapping, and PBR (Metallic/Roughness).
+            <strong style="color:var(--text)">ECS</strong> with O(1) component access.
+            Job System via std::future for async model loading.
+            Ported to <strong style="color:var(--text)">Nintendo Switch</strong> via libnx and EGL,
+            supporting Docked (1080p) and Handheld (720p) modes with a single Premake5 codebase.
+          </p>
 
-        <div class="card-links" style="margin-top:1.25rem;">
-          <a href="/graphic-engine" class="btn-secondary">Technical breakdown →</a>
-          <a href="https://github.com/YOUR_XEMA_REPO" target="_blank" rel="noopener" class="btn-secondary">
-            View code ↗
-          </a>
-        </div>
-      </article>
+          <div class="tag-container" style="margin-top:1rem;">
+            <span class="tag">C++</span>
+            <span class="tag">OpenGL 4.5</span>
+            <span class="tag">ECS</span>
+            <span class="tag">Deferred Shading</span>
+            <span class="tag">PBR</span>
+            <span class="tag">Nintendo Switch</span>
+            <span class="tag">PhysX 5</span>
+            <span class="tag">Lua / sol2</span>
+            <span class="tag">WFC</span>
+          </div>
+
+          <div class="card-links" style="margin-top:1.25rem;">
+            <a href="/graphic-engine" class="btn-secondary">Technical breakdown →</a>
+            <a href="https://github.com/YOUR_XEMA_REPO" target="_blank" rel="noopener" class="btn-secondary">
+              View code ↗
+            </a>
+          </div>
+        </article>
+
+      </div> <!-- FIN DEL CONTENEDOR -->
     </section>
 
     <!-- ── JAMS & PROTOTYPES ─────────────────────────────────────────────── -->
@@ -235,7 +239,80 @@ const itchGames = [
         ))}
       </div>
     </section>
+<!-- ── RESUME / BACKGROUND ────────────────────────────────────────── -->
+<section id="resume">
+  <p class="sec-head">Experience & Academic Path</p>
+  
+  <div class="resume-layout">
+    
+    <!-- COLUMNA EXPERIENCIA -->
+    <div class="resume-column">
+      <h3 class="resume-section-title">Professional Experience</h3>
+      
+      <div class="resume-block">
+        <div class="resume-header">
+          <span class="resume-timeline-dot"></span>
+          <div class="resume-title-group">
+            <h4>Gameplay Programmer</h4>
+            <p class="resume-company">Beerserker Team & Freelance</p>
+          </div>
+          <span class="resume-badge-date">2024 — Present</span>
+        </div>
+        <p class="resume-body">
+          Core gameplay and AI architecture for commercial projects. Developed advanced enemy AI using UE5 StateTree and EQS, integrated custom actor object pooling, implemented 3D vector physics for combat mechanics, and managed direct Steamworks API integration for multiplayer stats, backend connectivity, and achievements.
+        </p>
+      </div>
 
+      <div class="resume-block">
+        <div class="resume-header">
+          <span class="resume-timeline-dot"></span>
+          <div class="resume-title-group">
+            <h4>Production Software Engineer</h4>
+            <p class="resume-company">Enterprise Software Industry</p>
+          </div>
+          <span class="resume-badge-date">2021 — 2023 (2.5 years)</span>
+        </div>
+        <p class="resume-body">
+          Engineered scalable web applications and enterprise services utilizing VueJS, TypeScript, and Microsoft SQL Server. Managed critical production server environments, solved live client incidents under strict SLAs, and operated within Agile teams as a certified Scrum Product Owner and Scrum Master to streamline development sprints.
+        </p>
+      </div>
+    </div>
+
+    <!-- COLUMNA ACADÉMICA -->
+    <div class="resume-column">
+      <h3 class="resume-section-title">Academic Path</h3>
+      
+      <div class="resume-block">
+        <div class="resume-header">
+          <span class="resume-timeline-dot"></span>
+          <div class="resume-title-group">
+            <h4>HND in Video Game Programming</h4>
+            <p class="resume-company">ESAT (Escuela Superior de Arte y Tecnología)</p>
+          </div>
+          <span class="resume-badge-date">Valencia, Spain</span>
+        </div>
+        <p class="resume-body">
+          Advanced specialization in low-level systems and game loops. Built a custom, cross-platform 3D graphic engine from scratch in C++ (OpenGL 4.5 DSA, deferred shading, PBR), implemented ECS frameworks with O(1) constraints, and ported custom codebases to the Nintendo Switch.
+        </p>
+      </div>
+
+      <div class="resume-block">
+        <div class="resume-header">
+          <span class="resume-timeline-dot"></span>
+          <div class="resume-title-group">
+            <h4>Agile Frameworks Certification</h4>
+            <p class="resume-company">Scrum.org / International Agile Institutes</p>
+          </div>
+          <span class="resume-badge-date">Professional Credentials</span>
+        </div>
+        <p class="resume-body">
+          Certified Scrum Master (SM) and Scrum Product Owner (PO). Trained to bridge the gap between design requirements and system architecture, optimizing production pipelines and managing technical debt in software team iterations.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
     <!-- ── SKILLS ────────────────────────────────────────────────────────── -->
     <section id="skills">
       <p class="sec-head">Technical skills</p>
