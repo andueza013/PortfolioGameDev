@@ -1,23 +1,68 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+// src/layouts/Layout.astro
+// Shared wrapper: <head>, sticky nav, footer.
+// Usage:
+//   <Layout title="..." description="...">
+//     ... page content ...
+//   </Layout>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Portfolio of Fernando Fernández Andúeza — Gameplay & AI Programmer specializing in UE5, C++, and game systems.',
+} = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Fernando Fernández Andúeza" />
+
+    <!-- Open Graph (LinkedIn / Twitter previews) -->
+    <meta property="og:title"       content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type"        content="website" />
+
+    <title>{title}</title>
+
+    <!-- JetBrains Mono — used for eyebrow, nav logo, tags -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <Nav />
+
+    <slot />
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-left">
+            <strong>Fernando Fernández Andúeza</strong> · Valencia, España<br />
+            Open to gameplay programmer &amp; AI programmer roles
+          </p>
+          <ul class="footer-links">
+            <li><a href="https://github.com/YOUR_GITHUB" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://linkedin.com/in/fernando-fernandez-andueza" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="https://anduezadev.itch.io" target="_blank" rel="noopener">itch.io</a></li>
+            <li><a href="mailto:YOUR_EMAIL">Email</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

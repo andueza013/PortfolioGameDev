@@ -1,121 +1,312 @@
 ---
-import '../styles/global.css';
+// src/pages/index.astro
+// Main portfolio page.
+//
+// TO ADD A JAM/PROTOTYPE:  Add an object to itchGames below.
+// TO EDIT FEATURED CARDS:  Edit the HTML in the "Featured projects" section.
+// TO UPDATE SKILLS:        Edit the skill-list items in the "Skills" section.
 
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+/* ── Jams & prototypes data ──────────────────────────────────────────────
+   Add a new game by adding a new object here. That's it.
+   Fields:
+     title       — display name
+     desc        — technical summary (2-3 sentences)
+     img         — filename in /public/project-images/ (or omit)
+     link        — itch.io URL
+     tags        — tech pills
+     badge       — "shipped" | "gamejam" | "personal" | "academic"
+   ─────────────────────────────────────────────────────────────────────── */
 const itchGames = [
   {
+    title: "P0-CH45",
+    desc:  "72-hour game jam entry (Mini Jam 157: Electric). Reactor maintenance game where a robot must keep nuclear systems operational by managing components, cables, and energy resources in real time. Full keyboard and gamepad support; HTML5 export playable in browser.",
+    img:   "pochas.png",
+    link:  "https://anduezadev.itch.io/p0-ch45",
+    tags:  ["Unity", "C#", "Game Jam", "HTML5", "Gamepad"],
+    badge: "gamejam" as const,
+  },
+  {
     title: "Project Memento Vivere",
-    desc: "Atmospheric narrative-driven project focusing on custom event-triggering systems and state management.",
-    img: "mementovivere.png", // Make sure to place your thumbnail in public/images/
-    link: "https://anduezadev.itch.io/project-memento-vivere",
-	tech:["Unity","C#"]
+    desc:  "2.5D Metroidvania with hand-crafted level design, a melee combat system, dash mechanics, and patrol-and-attack enemy AI. Features custom event-triggering and persistent state management across zones.",
+    img:   "mementovivere.png",
+    link:  "https://anduezadev.itch.io/project-memento-vivere",
+    tags:  ["Unity", "C#", "Metroidvania", "2.5D", "Enemy AI"],
+    badge: "academic" as const,
   },
   {
     title: "Bullet Hell",
-    desc: "High-performance projectile system implementing object pooling and pattern-based movement math.",
-    img: "bullethell.png",
-    link: "https://anduezadev.itch.io/bullet-hell",
-	tech:["Unity","C#"]
-  },
-  {
-    title: "ColorSwitcher",
-    desc: "Mechanic-driven prototype exploring input-to-state mapping and shader-based visual feedback.",
-    img: "colorswitcher.png",
-    link: "https://anduezadev.itch.io/colorswitcher",
-	tech:["Unity","C#"]
-  },
-  {
-    title: "P0-CH45",
-    desc: "Logic-heavy puzzle implementation focusing on constrained movement systems and grid-based gameplay.",
-    img: "pochas.png",
-    link: "https://anduezadev.itch.io/p0-ch45",
-	tech:["Unity","C#"]
-  },
-  {
-    title: "SkateVillagerush",
-    desc: "Physics-based movement prototype experimenting with character controller momentum and friction values.",
-    img: "svr.png",
-    link: "https://anduezadev.itch.io/skatevillagerush",
-	tech:["Unity","C#"]
+    desc:  "Top-down vertical shooter with automatic firing, multiple enemy types with distinct attack patterns, a power-up system (fire rate, double shot, shield), and a 3-phase boss fight where each phase changes the boss behavior set entirely.",
+    img:   "bullethell.png",
+    link:  "https://anduezadev.itch.io/bullet-hell",
+    tags:  ["Unity", "C#", "Boss AI", "Object Pooling", "2D"],
+    badge: "academic" as const,
   },
   {
     title: "Marine Abyss Exploration",
-    desc: "Environment interaction prototype featuring custom lighting parameters and ray-casting based exploration triggers.",
-    img: "xema1.png",
-    link: "https://anduezadev.itch.io/xperimental-exploration-of-the-marine-abyss",
-	tech:["Unity","C#"]
-  }
+    desc:  "Collaborative survival game — players pilot a submarine through ruined abyssal zones, harvesting minerals while managing resources and evading predators. Custom submarine HUD, harpoon mechanic, and raycasting-based exploration triggers.",
+    img:   "xema1.png",
+    link:  "https://anduezadev.itch.io/xperimental-exploration-of-the-marine-abyss",
+    tags:  ["Unity", "C#", "Survival", "Collaborative", "3D"],
+    badge: "gamejam" as const,
+  },
+  {
+    title: "Skate Village Rush",
+    desc:  "Endless runner prototype exploring character controller momentum, friction physics, and procedural obstacle spawning. Physics-based movement tuned for a skate-boarding feel.",
+    img:   "svr.png",
+    link:  "https://anduezadev.itch.io/skatevillagerush",
+    tags:  ["Unity", "C#", "Physics", "Endless Runner"],
+    badge: "academic" as const,
+  },
+  {
+    title: "ColorSwitcher",
+    desc:  "Mobile mechanic prototype exploring rapid input-to-state mapping and shader-based visual feedback. Clone of a mobile arcade game used to study core loop design and Unity mobile build pipeline.",
+    img:   "colorswitcher.png",
+    link:  "https://anduezadev.itch.io/colorswitcher",
+    tags:  ["Unity", "C#", "Mobile", "Shaders"],
+    badge: "academic" as const,
+  },
 ];
 ---
-<html lang="en">
-  <body>
-    <div class="container">
-      <header>
-        <h1>Fernando Fernandez Andueza</h1>
-        <p>Gameplay Programmer & Engine Developer</p>
-      </header>
 
-<section>
-  <h2>Featured Projects</h2>
-  <div class="grid">
-    <!-- Beerserker -->
-    <article class="card">
-      <h3>Beerserker: The Stolen Brew</h3>
-      <div class="video-wrapper">
-        <iframe src="https://www.youtube.com/embed/2bR2OxafTjQ?rel=0&modestbranding=1&autohide=1" title="Trailer" allowfullscreen></iframe>
+<Layout title="Fernando Fernández Andúeza · Gameplay & AI Programmer">
+
+  <div class="container">
+
+    <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+    <header class="hero">
+      <p class="hero-eyebrow">// gameplay &middot; ai &middot; c++</p>
+      <h1 class="hero-name">Fernando Fernández Andúeza</h1>
+      <p class="hero-role">Gameplay &amp; AI Programmer</p>
+      <p class="hero-pitch">
+        Shipped a game on <strong>Steam</strong> built in Unreal Engine 5 with C++.
+        Custom AI with StateTree and NavMesh, actor object pooling, Two Bone IK,
+        and a C++ engine ported to <strong>Nintendo Switch</strong>.
+        <strong>2+ years of production software experience</strong> before game development —
+        real codebases, real users, real deadlines.
+      </p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-hero-primary">View projects</a>
+        <a href="https://github.com/YOUR_GITHUB" target="_blank" rel="noopener" class="btn-hero-ghost">
+          GitHub ↗
+        </a>
+        <a href="https://linkedin.com/in/fernando-fernandez-andueza" target="_blank" rel="noopener" class="btn-hero-ghost">
+          LinkedIn ↗
+        </a>
       </div>
-      <p>Gameplay Programmer. Developed enemy AI using StateTree and EQS, and implemented efficient object pooling.</p>
-      <div class="tag-container">
-        <span class="tag">Unreal Engine</span>
-        <span class="tag">C++</span>
-        <span class="tag">AI Systems</span>
+    </header>
+
+    <!-- ── DIFFERENTIATOR STRIP ──────────────────────────────────────────── -->
+    <div class="diff-strip">
+      <div class="diff-inner">
+        <span class="diff-kicker">Why different</span>
+        <p class="diff-copy">
+          Unlike most junior game developers, I spent <strong>2.5 years writing production software</strong>
+          at a company — SCRUM from the inside, client incidents, code I didn't write.
+          I bring that engineering maturity to gameplay and AI systems.
+        </p>
       </div>
-<a href="https://store.steampowered.com/app/4522440/" target="_blank" class="btn-primary">
-  <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-    <path d="M12.695 0C8.772 0 5.314 2.578 4.05 6.148l6.624 2.777c.666-.57 1.55-.923 2.526-.923 2.137 0 3.872 1.735 3.872 3.872 0 .976-.353 1.86-.923 2.527l2.777 6.624C21.422 18.686 24 15.228 24 11.305 24 5.06 18.94 0 12.695 0zM5.997 15.17c-.426.668-.667 1.458-.667 2.304 0 2.395 1.942 4.336 4.337 4.336.846 0 1.636-.24 2.304-.666l-5.974-5.974z"/>
-  </svg>
-  View on Steam
-</a>
-    </article>
-
-    <!-- Motor Gráfico -->
-    <article class="card">
-	<img src="/project-images/engine1.jpg" alt="Xema engine" class="thumbnail" />
-      <h3>XEMA: Custom 3D Engine</h3>
-      <div class="placeholder-img"><span>Engine Architecture</span></div>
-      <p>High-performance C++ engine built from scratch. Features Job System, ECS, and Nintendo Switch porting.</p>
-      <div class="tag-container">
-        <span class="tag">C++</span>
-        <span class="tag">OpenGL 4.5</span>
-        <span class="tag">Low-Level</span>
-      </div>
-      <a href="/graphic-engine" class="btn-secondary">Technical Details</a>
-    </article>
-  </div>
-</section>
-
-<section>
-  <h2>Game Jams & Prototypes</h2>
-  <div class="grid">
-    {itchGames.map((game) => (
-      <article class="card">
-        <img src={`/project-images/${game.img}`} alt={game.title} class="thumbnail" />
-        <h3>{game.title}</h3>
-        <p>{game.desc}</p>
-        <div class="tag-container">
-          {game.tech.map(t => <span class="tag">{t}</span>)}
-        </div>
-<a href={game.link} target="_blank" class="btn-secondary">
-  <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-    <path d="M12.333 0C6.053 0 .986 5.06.986 11.333c0 4.22 2.31 7.878 5.714 9.837l1.493-5.935c-1.02-.435-1.75-1.44-1.75-2.635 0-1.575 1.275-2.85 2.85-2.85s2.85 1.275 2.85 2.85c0 1.195-.73 2.2-1.75 2.635l1.493 5.935c3.404-1.96 5.714-5.617 5.714-9.837C23.68 5.06 18.613 0 12.333 0zM8.804 15.804a1.245 1.245 0 01-1.764 0a1.245 1.245 0 010-1.764a1.245 1.245 0 011.764 0c.488.487.488 1.277 0 1.764zm8.588 0a1.246 1.246 0 01-1.764 0a1.246 1.246 0 010-1.764a1.246 1.246 0 011.764 0a1.246 1.246 0 010 1.764z"/>
-  </svg>
-  View on Itch.io
-</a>
-      </article>
-    ))}
-  </div>
-</section>
-
-    
     </div>
-  </body>
-</html>
+
+    <!-- ── FEATURED PROJECTS ─────────────────────────────────────────────── -->
+    <section id="projects">
+      <p class="sec-head">Featured projects</p>
+
+      <!-- Beerserker: The Stolen Brew -->
+      <article class="card-featured">
+        <div class="card-meta">
+          <span class="badge badge-shipped">
+            <span class="badge-dot"></span>Available on Steam
+          </span>
+          <span class="card-engine">Unreal Engine 5 &nbsp;·&nbsp; C++</span>
+        </div>
+
+        <h3>Beerserker: The Stolen Brew</h3>
+        <p style="font-size:13px; color:var(--text-3); margin-bottom:1rem;">
+          Third-person action game &nbsp;·&nbsp; Gameplay Programmer
+        </p>
+
+        <!-- YouTube trailer embed -->
+        <div class="video-wrapper" style="margin-bottom:1.25rem; max-width:720px;">
+          <iframe
+            src="https://www.youtube.com/embed/2bR2OxafTjQ?rel=0&modestbranding=1"
+            title="Beerserker: The Stolen Brew — Trailer"
+            allowfullscreen
+          ></iframe>
+        </div>
+
+        <p>
+          Built the core gameplay systems for a shipped Steam title entirely in C++.
+          Enemy AI using <strong style="color:var(--text)">StateTree</strong> with NavMesh reachability-aware pathfinding;
+          a grab-and-throw mechanic between tank and melee enemy types driven by
+          <strong style="color:var(--text)">Two Bone IK</strong> and socket attachment;
+          a custom actor pooling subsystem (<code style="font-family:var(--mono);font-size:13px">UBXPoolGameInstanceSubsystem</code>)
+          with level streaming-aware cleanup via FWorldDelegates;
+          direct <strong style="color:var(--text)">Steamworks API</strong> integration for stats and achievements;
+          FMOD audio; and Niagara VFX.
+        </p>
+
+        <div class="tag-container" style="margin-top:1rem;">
+          <span class="tag">UE5</span>
+          <span class="tag">C++</span>
+          <span class="tag">StateTree AI</span>
+          <span class="tag">NavMesh</span>
+          <span class="tag">Two Bone IK</span>
+          <span class="tag">Object Pooling</span>
+          <span class="tag">Steamworks API</span>
+          <span class="tag">FMOD</span>
+          <span class="tag">Niagara</span>
+        </div>
+
+        <div class="card-links" style="margin-top:1.25rem;">
+          <a href="https://store.steampowered.com/app/4522440/" target="_blank" rel="noopener" class="btn-primary">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+              <path d="M12.695 0C8.772 0 5.314 2.578 4.05 6.148l6.624 2.777c.666-.57 1.55-.923 2.526-.923 2.137 0 3.872 1.735 3.872 3.872 0 .976-.353 1.86-.923 2.527l2.777 6.624C21.422 18.686 24 15.228 24 11.305 24 5.06 18.94 0 12.695 0zM5.997 15.17c-.426.668-.667 1.458-.667 2.304 0 2.395 1.942 4.336 4.337 4.336.846 0 1.636-.24 2.304-.666l-5.974-5.974z"/>
+            </svg>
+            Play on Steam
+          </a>
+        </div>
+      </article>
+
+      <!-- XEMA Engine -->
+      <article class="card-featured">
+        <div class="card-meta">
+          <span class="badge badge-personal">
+            <span class="badge-dot"></span>Personal project
+          </span>
+          <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL 4.5 &nbsp;·&nbsp; Nintendo Switch</span>
+        </div>
+
+        <h3>XEMA — Custom 3D Engine</h3>
+        <p style="font-size:13px; color:var(--text-3); margin-bottom:1rem;">
+          Built from scratch &nbsp;·&nbsp; Cross-platform
+        </p>
+
+        <img src="/project-images/engine1.jpg" alt="XEMA Engine" class="thumbnail"
+             style="max-width:720px; margin-bottom:1.25rem;" loading="lazy" />
+
+        <p>
+          High-performance C++ engine written from scratch.
+          <strong style="color:var(--text)">OpenGL 4.5 DSA</strong> rendering pipeline with
+          Deferred Shading, PCF Shadow Mapping, and PBR (Metallic/Roughness).
+          <strong style="color:var(--text)">ECS</strong> with O(1) component access.
+          Job System via std::future for async model loading.
+          Ported to <strong style="color:var(--text)">Nintendo Switch</strong> via libnx and EGL,
+          supporting Docked (1080p) and Handheld (720p) modes with a single Premake5 codebase.
+        </p>
+
+        <div class="tag-container" style="margin-top:1rem;">
+          <span class="tag">C++</span>
+          <span class="tag">OpenGL 4.5</span>
+          <span class="tag">ECS</span>
+          <span class="tag">Deferred Shading</span>
+          <span class="tag">PBR</span>
+          <span class="tag">Nintendo Switch</span>
+          <span class="tag">PhysX 5</span>
+          <span class="tag">Lua / sol2</span>
+          <span class="tag">WFC</span>
+        </div>
+
+        <div class="card-links" style="margin-top:1.25rem;">
+          <a href="/graphic-engine" class="btn-secondary">Technical breakdown →</a>
+          <a href="https://github.com/YOUR_XEMA_REPO" target="_blank" rel="noopener" class="btn-secondary">
+            View code ↗
+          </a>
+        </div>
+      </article>
+    </section>
+
+    <!-- ── JAMS & PROTOTYPES ─────────────────────────────────────────────── -->
+    <section>
+      <p class="sec-head">Game jams &amp; prototypes</p>
+      <div class="grid">
+        {itchGames.map(game => (
+          <ProjectCard
+            title={game.title}
+            description={game.desc}
+            tags={game.tags}
+            link={game.link}
+            linkLabel="Play on itch.io"
+            img={game.img}
+            badge={game.badge}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- ── SKILLS ────────────────────────────────────────────────────────── -->
+    <section id="skills">
+      <p class="sec-head">Technical skills</p>
+      <div class="skills-grid">
+
+        <div>
+          <p class="skill-group-label">Game engines</p>
+          <div class="skill-list">
+            <span class="skill-item hi">Unreal Engine 5 (C++)</span>
+            <span class="skill-item hi">Unity (C#)</span>
+            <span class="skill-item">Custom C++ engine (XEMA)</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="skill-group-label">AI &amp; gameplay</p>
+          <div class="skill-list">
+            <span class="skill-item hi">StateTree</span>
+            <span class="skill-item hi">NavMesh &amp; pathfinding</span>
+            <span class="skill-item">Actor object pooling</span>
+            <span class="skill-item">Two Bone IK</span>
+            <span class="skill-item">Behavior-driven enemy AI</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="skill-group-label">Languages</p>
+          <div class="skill-list">
+            <span class="skill-item hi">C++</span>
+            <span class="skill-item hi">C#</span>
+            <span class="skill-item">C</span>
+            <span class="skill-item">TypeScript</span>
+            <span class="skill-item">x86 Assembly</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="skill-group-label">Graphics &amp; systems</p>
+          <div class="skill-list">
+            <span class="skill-item hi">OpenGL 4.5 DSA</span>
+            <span class="skill-item">Deferred Shading / PBR</span>
+            <span class="skill-item">Vertex &amp; fragment shaders</span>
+            <span class="skill-item">ECS architecture</span>
+            <span class="skill-item">Memory management &amp; pointers</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="skill-group-label">Tools &amp; pipeline</p>
+          <div class="skill-list">
+            <span class="skill-item">Git &middot; Perforce (P4V)</span>
+            <span class="skill-item">FMOD Studio</span>
+            <span class="skill-item">Steamworks SDK</span>
+            <span class="skill-item">Niagara VFX</span>
+            <span class="skill-item">Premake5 &middot; devkitPro</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="skill-group-label">Enterprise background</p>
+          <div class="skill-list">
+            <span class="skill-item">SCRUM (certified PO + SM)</span>
+            <span class="skill-item">2.5 yrs production code</span>
+            <span class="skill-item">Client incident handling</span>
+            <span class="skill-item">VueJS &middot; TypeScript &middot; MSSQL</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /.container -->
+
+</Layout>

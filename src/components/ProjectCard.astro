@@ -1,22 +1,72 @@
 ---
+// src/components/ProjectCard.astro
+// Generic project card for the jams / prototypes grid.
+// Props:
+//   title       — project name
+//   description — 2-3 sentence technical summary
+//   tags        — string[], rendered as mono pills
+//   link        — external URL (itch.io, GitHub, etc.)
+//   linkLabel   — button text (default: "View project")
+//   img         — optional thumbnail filename (looks in /public/project-images/)
+//   badge       — optional status string: "shipped" | "gamejam" | "personal" | "academic"
+
 interface Props {
-  title: string;
+  title:       string;
   description: string;
-  tags: string[];
-  link: string;
+  tags:        string[];
+  link:        string;
+  linkLabel?:  string;
+  img?:        string;
+  badge?:      'shipped' | 'gamejam' | 'personal' | 'academic';
 }
 
-const { title, description, tags, link } = Astro.props;
+const {
+  title,
+  description,
+  tags,
+  link,
+  linkLabel = 'View project',
+  img,
+  badge,
+} = Astro.props;
+
+const badgeLabels: Record<string, string> = {
+  shipped:  'Steam',
+  gamejam:  'Game Jam',
+  personal: 'Personal',
+  academic: 'Academic',
+};
 ---
 
-<a href={link} class="group block border border-slate-700 hover:border-blue-500 p-6 rounded-xl bg-slate-800 transition-all duration-300 hover:-translate-y-1">
-  <h3 class="text-xl font-bold mb-2 group-hover:text-blue-400">{title}</h3>
-  <p class="text-slate-400 mb-4 text-sm">{description}</p>
-  <div class="flex flex-wrap gap-2">
-    {tags.map((tag) => (
-      <span class="bg-blue-900/50 text-blue-200 px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-semibold">
-        {tag}
+<article class="card">
+  {img && (
+    <img
+      src={`/project-images/${img}`}
+      alt={title}
+      class="thumbnail"
+      loading="lazy"
+    />
+  )}
+
+  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:.625rem;">
+    <h3>{title}</h3>
+    {badge && (
+      <span class={`badge badge-${badge}`}>
+        <span class="badge-dot"></span>
+        {badgeLabels[badge]}
       </span>
-    ))}
+    )}
   </div>
-</a>
+
+  <p>{description}</p>
+
+  <div class="tag-container">
+    {tags.map(tag => <span class="tag">{tag}</span>)}
+  </div>
+
+  <div class="card-links">
+    <a href={link} target="_blank" rel="noopener" class="btn-secondary">
+      {linkLabel} ↗
+    </a>
+  </div>
+</article>

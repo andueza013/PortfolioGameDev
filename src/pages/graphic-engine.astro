@@ -1,51 +1,224 @@
 ---
-import '../styles/global.css';
+// src/pages/graphic-engine.astro
+// Technical breakdown of the XEMA custom C++ engine.
+// Edit the content sections below to add/update technical details.
+
+import Layout from '../layouts/Layout.astro';
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>XEMA Engine | Andueza Dev</title>
-  </head>
-  <body>
-    <div class="container">
-      <a href="/" class="back-link" style="display: inline-block; margin-bottom: 2rem; color: var(--accent-color); text-decoration: none;">← Back to home</a>
-      
-      <h1>XEMA: Custom 3D Engine</h1>
-      <p style="font-size: 1.2rem; color: #94a3b8;">A high-performance C++ engine built from scratch. Designed for cross-platform scalability, mastering memory management, math, and rendering pipelines.</p>
 
-      <section class="tech-section" style="margin-top: 3rem; border-top: 1px solid #334155; padding-top: 2rem;">
-        <h2>Technical Architecture</h2>
-        <div class="feature-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
-          <div class="feature-item" style="background: #1e293b; padding: 1.5rem; border-radius: 8px;">
-            <h3>Core Systems</h3>
-            <ul>
-              <li><strong>Job System:</strong> Thread pool using std::future for asynchronous model loading and procedural generation.</li>
-              <li><strong>ECS:</strong> Data-oriented design with O(1) component access and ID-based entity management.</li>
-              <li><strong>Scene Graph:</strong> Hierarchy system integrated directly into component arrays.</li>
-            </ul>
-          </div>
-          <div class="feature-item" style="background: #1e293b; padding: 1.5rem; border-radius: 8px;">
-            <h3>Graphics & HAL</h3>
-            <ul>
-              <li><strong>Modern OpenGL:</strong> 4.5+ DSA (Direct State Access) pipeline.</li>
-              <li><strong>Rendering Techniques:</strong> Deferred Shading, Shadow Mapping (PCF), and PBR (Metallic/Roughness).</li>
-              <li><strong>Platform Abstraction:</strong> Zero-overhead HAL resolved at link-time without virtual dispatch.</li>
-            </ul>
-          </div>
-          <div class="feature-item" style="background: #1e293b; padding: 1.5rem; border-radius: 8px;">
-            <h3>Platform Porting</h3>
-            <ul>
-              <li><strong>Nintendo Switch:</strong> Ported via libnx and EGL, supporting both Docked (1080p) and Handheld (720p) modes.</li>
-              <li><strong>Build System:</strong> Integrated devkitPro Makefile with Premake5 for single-codebase management.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+<Layout
+  title="XEMA Engine · Technical Breakdown — Fernando Fernández Andúeza"
+  description="Technical architecture of XEMA — a custom C++ game engine with OpenGL 4.5, ECS, Wave Function Collapse, and Nintendo Switch port."
+>
+  <div class="container">
 
-      <section class="tech-section" style="margin-top: 3rem; border-top: 1px solid #334155; padding-top: 2rem;">
-        <h2>Development Experience</h2>
-        <p>This project focused on solving low-level challenges, such as implementing a custom Physics Manager (PhysX 5), script integration via Lua/sol2, and asynchronous I/O to ensure the main loop never stalls.</p>
-      </section>
+    <!-- ── PAGE HEADER ──────────────────────────────────────────────────── -->
+    <div class="page-header">
+      <a href="/" class="back-link">← Back to portfolio</a>
+
+      <div style="display:flex; align-items:center; gap:.875rem; margin-bottom:.875rem; flex-wrap:wrap;">
+        <span class="badge badge-personal"><span class="badge-dot"></span>Personal project</span>
+        <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL 4.5 &nbsp;·&nbsp; Nintendo Switch</span>
+      </div>
+
+      <h1>XEMA — Custom 3D Engine</h1>
+      <p class="page-intro">
+        A high-performance C++ game engine built from scratch to master the full rendering pipeline,
+        low-level memory architecture, and cross-platform deployment — including a Nintendo Switch port.
+        Every system was written without relying on a pre-existing engine framework.
+      </p>
+
+      <div class="card-links" style="margin-top:1.25rem;">
+        <a href="https://github.com/YOUR_XEMA_REPO" target="_blank" rel="noopener" class="btn-secondary">
+          View source on GitHub ↗
+        </a>
+      </div>
     </div>
-  </body>
-</html>
+
+    <!-- ── CORE SYSTEMS ──────────────────────────────────────────────────── -->
+    <div class="tech-section">
+      <h2>Core systems</h2>
+      <div class="tech-grid">
+
+        <div class="tech-card">
+          <h3>Entity Component System</h3>
+          <ul>
+            <li>
+              <strong>Data-oriented design</strong> — components stored in contiguous arrays for cache efficiency.
+            </li>
+            <li>
+              <strong>O(1) component access</strong> via ID-based entity management — no map lookups on the hot path.
+            </li>
+            <li>
+              <strong>Scene graph</strong> — parent-child hierarchy integrated directly into the component arrays.
+            </li>
+          </ul>
+        </div>
+
+        <div class="tech-card">
+          <h3>Job System</h3>
+          <ul>
+            <li>
+              <strong>Thread pool</strong> using std::future for fire-and-forget async tasks.
+            </li>
+            <li>
+              Handles <strong>asynchronous model loading</strong> and Wave Function Collapse generation
+              without stalling the main loop.
+            </li>
+            <li>
+              <strong>Async I/O</strong> layer that keeps frame time stable during level streaming.
+            </li>
+          </ul>
+        </div>
+
+        <div class="tech-card">
+          <h3>Procedural Generation</h3>
+          <ul>
+            <li>
+              <strong>Wave Function Collapse</strong> for tile-based level generation using KayKit tilesets.
+            </li>
+            <li>
+              Custom <strong>entropy calculation</strong> — diagnosed and fixed a critical bug causing
+              non-deterministic collapse order.
+            </li>
+            <li>
+              WFC runs on a <strong>background job thread</strong> so generation never blocks the render loop.
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── GRAPHICS ──────────────────────────────────────────────────────── -->
+    <div class="tech-section">
+      <h2>Graphics &amp; rendering pipeline</h2>
+      <div class="tech-grid">
+
+        <div class="tech-card">
+          <h3>OpenGL 4.5 DSA Pipeline</h3>
+          <ul>
+            <li>
+              <strong>Direct State Access (DSA)</strong> — eliminates redundant bind calls for cleaner, faster state management.
+            </li>
+            <li>
+              Custom vertex buffer and VAO management, instanced rendering, and UBO-based uniform blocks.
+            </li>
+            <li>
+              Hand-written <strong>GLSL shaders</strong> for every rendering stage.
+            </li>
+          </ul>
+        </div>
+
+        <div class="tech-card">
+          <h3>Rendering Techniques</h3>
+          <ul>
+            <li>
+              <strong>Deferred Shading</strong> — G-Buffer pass stores position, normal, albedo, and material data.
+            </li>
+            <li>
+              <strong>PCF Shadow Mapping</strong> — Percentage Closer Filtering for smooth shadow edges.
+            </li>
+            <li>
+              <strong>PBR — Metallic/Roughness</strong> workflow with Cook-Torrance BRDF.
+            </li>
+          </ul>
+        </div>
+
+        <div class="tech-card">
+          <h3>Platform Abstraction (HAL)</h3>
+          <ul>
+            <li>
+              <strong>Zero-overhead abstraction</strong> — platform differences resolved at link-time,
+              no virtual dispatch on the render path.
+            </li>
+            <li>
+              Single rendering interface that switches between OpenGL (PC) and EGL (Switch)
+              without code changes in higher layers.
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── NINTENDO SWITCH PORT ───────────────────────────────────────────── -->
+    <div class="tech-section">
+      <h2>Nintendo Switch port</h2>
+      <div class="tech-grid">
+
+        <div class="tech-card">
+          <h3>Platform target</h3>
+          <ul>
+            <li>
+              Ported via <strong>libnx</strong> (homebrew SDK) and <strong>EGL</strong>
+              for the OpenGL context on Nintendo Switch hardware.
+            </li>
+            <li>
+              Supports both <strong>Docked mode (1080p)</strong> and <strong>Handheld mode (720p)</strong>
+              with automatic resolution switching.
+            </li>
+          </ul>
+        </div>
+
+        <div class="tech-card">
+          <h3>Build system</h3>
+          <ul>
+            <li>
+              <strong>Premake5</strong> generates platform-specific build files from a single Lua script.
+            </li>
+            <li>
+              Integrates <strong>devkitPro Makefile</strong> for the Switch target —
+              one codebase, two platform outputs.
+            </li>
+            <li>
+              No engine fork — the same C++ source compiles for both PC and Switch.
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── ADDITIONAL SYSTEMS ─────────────────────────────────────────────── -->
+    <div class="tech-section">
+      <h2>Additional systems</h2>
+      <div class="tech-grid">
+
+        <div class="tech-card">
+          <h3>Physics &amp; scripting</h3>
+          <ul>
+            <li>
+              <strong>PhysX 5</strong> integration via a custom Physics Manager that owns
+              the scene and dispatches simulation steps.
+            </li>
+            <li>
+              <strong>Lua scripting</strong> via sol2 — exposes engine types to Lua
+              without manual binding boilerplate.
+            </li>
+          </ul>
+        </div>
+
+        <div class="tech-card">
+          <h3>Memory &amp; low-level</h3>
+          <ul>
+            <li>
+              Manual memory management throughout — no garbage collection, no hidden allocations.
+            </li>
+            <li>
+              Custom allocators for component pools and asset caches to avoid heap fragmentation.
+            </li>
+            <li>
+              Profiled and optimized hot paths using platform-specific tools.
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="padding-bottom: 5rem;"></div>
+
+  </div><!-- /.container -->
+
+</Layout>
