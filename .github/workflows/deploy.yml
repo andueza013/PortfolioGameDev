@@ -2,11 +2,10 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ develop ] # Cambia a 'master' si esa es tu rama principal
+    branches: [ main ] # Cambia a 'master' si tu rama se llama así
 
   workflow_dispatch:
 
-# Permisos requeridos para desplegar en GitHub Pages
 permissions:
   contents: read
   pages: write
@@ -23,8 +22,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install, build, and upload site
-        uses: withastro/action@v3
+      # 1. Forzar el uso de Node.js 22 (o la versión que requiera tu Astro)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm' # Usa 'pnpm' o 'yarn' si no usas npm
+
+      # 2. Instalar dependencias
+      - name: Install dependencies
+        run: npm ci
+
+      # 3. Compilar el proyecto Astro
+      - name: Build site
+        run: npm run build
+
+      # 4. Preparar artefactos para GitHub Pages
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
 
   deploy:
     needs: build
