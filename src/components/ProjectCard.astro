@@ -5,18 +5,20 @@
 //   title       — project name
 //   description — 2-3 sentence technical summary
 //   tags        — string[], rendered as mono pills
-//   link        — external URL (itch.io, GitHub, etc.)
+//   link        — optional external URL (itch.io, GitHub, etc.)
 //   linkLabel   — button text (default: "View project")
 //   img         — optional thumbnail filename (looks in /public/project-images/)
+//   video       — optional embed URL (YouTube/Drive), takes priority over img
 //   badge       — optional status string: "shipped" | "gamejam" | "personal" | "academic"
 
 interface Props {
   title:       string;
   description: string;
   tags:        string[];
-  link:        string;
+  link?:       string;
   linkLabel?:  string;
   img?:        string;
+  video?:      string;
   badge?:      'shipped' | 'gamejam' | 'personal' | 'academic';
 }
 
@@ -27,6 +29,7 @@ const {
   link,
   linkLabel = 'View project',
   img,
+  video,
   badge,
 } = Astro.props;
 
@@ -39,7 +42,17 @@ const badgeLabels: Record<string, string> = {
 ---
 
 <article class="card">
-  {img && (
+  {video ? (
+    <div class="video-wrapper" style="margin-bottom:1rem;">
+      <iframe
+        src={video}
+        title={title}
+        allow="accelerated-encrypted-media; picture-in-picture"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+    </div>
+  ) : img && (
     <img
       src={`/project-images/${img}`}
       alt={title}
@@ -64,9 +77,11 @@ const badgeLabels: Record<string, string> = {
     {tags.map(tag => <span class="tag">{tag}</span>)}
   </div>
 
-  <div class="card-links">
-    <a href={link} target="_blank" rel="noopener" class="btn-secondary">
-      {linkLabel} ↗
-    </a>
-  </div>
+  {link && (
+    <div class="card-links">
+      <a href={link} target="_blank" rel="noopener" class="btn-secondary">
+        {linkLabel} ↗
+      </a>
+    </div>
+  )}
 </article>

@@ -4,6 +4,28 @@ import ProjectCard from "../components/ProjectCard.astro";
 
 const itchGames = [
   {
+    title: "Abandoned Hospital",
+    desc: "Academic project to demonstrate AIPerception-EQS usage into Enemy/NPC AI. First implemented with BehavoiurTree and completely remade with StateTree",
+    img: "AH.png",
+    link: "https://anduezadev.itch.io/colorswitcher",
+    tags: [
+      "Unreal Engine",
+      "C++",
+      "EQS",
+      "StateTree",
+      "BehaviourTree",
+      "AIPerception",
+    ],
+    badge: "academic" as const,
+  },
+  {
+    title: "WFC biomes",
+    desc: "Implementation of WFC in my own engine, generating both biomes and transitional biomes using multithreading, followed by a decoration post-pass.",
+    video: "https://www.youtube.com/embed/grZnYOMaqTQ?si=gf-zIuqm6VRQ5O4K",
+    tags: ["Own engine", "C++", "WFC", "Multithreading"],
+    badge: "academic" as const,
+  },
+  {
     title: "P0-CH45",
     desc: "P0CH45 is a game developed for Mini Jam 157: Electric. In this game we are a robot in charge of maintaining a nuclear power plant that provides electricity to the city. The plant has serious problems that we must repair, the reactor components fail every so often and the electrical cables throughout the plant are disconnected.",
     img: "pochas.png",
@@ -59,20 +81,54 @@ const itchGames = [
     tags: ["Android Studio", "Kotlin", "Mobile"],
     badge: "academic" as const,
   },
+];
+const skillCategories = [
   {
-    title: "Abandoned Hospital",
-    desc: "Academic project to demonstrate AIPerception-EQS usage into Enemy/NPC AI. First implemented with BehavoiurTree and completely remade with StateTree",
-    img: "AH.png",
-    link: "https://anduezadev.itch.io/colorswitcher",
-    tags: [
-      "Unreal Engine",
-      "C++",
-      "EQS",
-      "StateTree",
-      "BehaviourTree",
-      "AIPerception",
+    label: "Game engines",
+    skills: [
+      { name: "Unreal Engine 5 (C++)", hi: true },
+      { name: "Unity (C#)", hi: true },
+      { name: "Custom C++ engine (XEMA)" },
     ],
-    badge: "academic" as const,
+  },
+  {
+    label: "AI & gameplay",
+    skills: [
+      { name: "StateTree", hi: true },
+      { name: "Actor object pooling" },
+      { name: "Anim Montages" },
+      { name: "Anim Notifies" },
+            { name: "EQS" }, 
+                 { name: "AI Perception" },
+
+    ],
+  },
+  {
+    label: "Languages",
+    skills: [
+      { name: "C++", hi: true },
+      { name: "C" },
+      { name: "C#", hi: true },
+      { name: "Java" },
+      { name: "Javascript" },
+      { name: "Typescript" },
+      { name: "VB .NET" },
+      { name: "SQL" },
+    ],
+  },
+  {
+    label: "Graphics & systems",
+    skills: [
+      { name: "OpenGL 4.5 DSA", hi: true },
+      { name: "Deferred Shading / PBR" },
+      { name: "Vertex & fragment shaders" },
+      { name: "ECS architecture" },
+      { name: "Memory management & pointers" },
+    ],
+  },
+  {
+    label: "Version Control",
+    skills: [{ name: "Git" }, { name: "Perforce" }, { name: "Plastic SCM" }],
   },
 ];
 ---
@@ -117,7 +173,7 @@ const itchGames = [
         <!-- 1. Contenedor de la foto -->
         <div class="hero-avatar-wrapper">
           <img
-            src="/public/profile.jpeg"
+            src="profile.jpeg"
             alt="Fernando Fernández Andueza"
             class="hero-avatar"
           />
@@ -237,34 +293,52 @@ const itchGames = [
           </div>
         </article>
         <!-- Roadtrip: The Engine of Madness -->
-<article class="card-featured">
-  <div class="card-meta">
-    <span class="badge badge-development">
-      <span class="badge-dot"></span>In development · Steam page live
-    </span>
-    <span class="card-engine">Unity &nbsp;·&nbsp; C#</span>
-  </div>
+        <article class="card-featured">
+          <div class="card-meta">
+            <span class="badge badge-development">
+              <span class="badge-dot"></span>In development · Steam page live
+            </span>
+            <span class="card-engine">Unity &nbsp;·&nbsp; C#</span>
+          </div>
 
-  <h3>Roadtrip: The Engine of Madness</h3>
-  <p style="font-size:13px; color:var(--text-3); margin-bottom:1rem;">
-    Horror driving game &nbsp;·&nbsp; Oniric Tales &nbsp;·&nbsp; Gameplay Programmer
-  </p>
+          <h3>Roadtrip: The Engine of Madness</h3>
+          <p style="font-size:13px; color:var(--text-3); margin-bottom:1rem;">
+            Horror driving game &nbsp;·&nbsp; Oniric Tales &nbsp;·&nbsp;
+            Gameplay Programmer
+          </p>
 
-  <img src="/project-images/roadtrip.webp" alt="Roadtrip: The Engine of Madness" class="thumbnail" style="margin-bottom:1.25rem;" loading="lazy" />
+          <!-- <img
+            src="/project-images/roadtrip.webp"
+            alt="Roadtrip: The Engine of Madness"
+            class="thumbnail"
+            style="margin-bottom:1.25rem;"
+            loading="lazy"
+          /> -->
+                    <div
+            class="video-wrapper"
+            style="margin-bottom:1.25rem; max-width:1100px;"
+          >
+            <iframe
+              src="https://www.youtube.com/embed/e15C8ltjDOQ?si=vq4NW1F98MPu64Yu"
+              title="Roadtrip: The Engine of Madness — Trailer"
+              allowfullscreen></iframe>
+          </div>
 
-  <p>
-    Psychological horror driving game where you scavenge fuel and car parts to survive
-    the night. My contributions included a scalable, component-based dialogue system,
-    an AI perception system integrated into Behavior Trees, a radio communication system,
-    and general gameplay mechanics and bug fixing over a 6-month production.
-  </p>
+          <p>
+                Developed modular Unity/C# gameplay systems, including component-based dialogue networks, radio communication logic, and AI perception within Behavior Trees. Participated in full sprint cycles, profiling, and bug resolution.
+          </p>
 
-  <div class="card-links" style="margin-top:1.25rem;">
-    <a href="https://store.steampowered.com/app/3776540/Roadtrip_El_Motor_de_la_Locura/" target="_blank" rel="noopener" class="btn-secondary">
-      View on Steam ↗
-    </a>
-  </div>
-</article>
+          <div class="card-links" style="margin-top:1.25rem;">
+            <a
+              href="https://store.steampowered.com/app/3776540/Roadtrip_El_Motor_de_la_Locura/"
+              target="_blank"
+              rel="noopener"
+              class="btn-secondary"
+            >
+              View on Steam ↗
+            </a>
+          </div>
+        </article>
       </div>
       <!-- FIN DEL CONTENEDOR -->
     </section>
@@ -282,6 +356,7 @@ const itchGames = [
               link={game.link}
               linkLabel="Play on itch.io"
               img={game.img}
+              video={game.video}
               badge={game.badge}
             />
           ))
@@ -391,102 +466,54 @@ const itchGames = [
               </div>
               <span class="resume-badge-date">Valencia, Spain</span>
             </div>
-            <p class="resume-body"> FPII (HNC) in software development across multiple platforms: object-oriented
-              programming, relational databases (SQL), and application design patterns.
-              Covered mobile and desktop application development, client-server architecture,
-              and version control workflows</p>
+            <p class="resume-body">
+              FPII (HNC) in software development across multiple platforms:
+              object-oriented programming, relational databases (SQL), and
+              application design patterns. Covered mobile and desktop
+              application development, client-server architecture, and version
+              control workflows
+            </p>
           </div>
-            <div class="resume-block">
-              <div class="resume-header">
-                <span class="resume-timeline-dot"></span>
-                <div class="resume-title-group">
-                  <h4>Agile Frameworks Certification</h4>
-                  <p class="resume-company">
-                    Scrum.org / International Agile Institutes
-                  </p>
-                </div>
-                <span class="resume-badge-date">Professional Credentials</span>
+          <div class="resume-block">
+            <div class="resume-header">
+              <span class="resume-timeline-dot"></span>
+              <div class="resume-title-group">
+                <h4>Agile Frameworks Certification</h4>
+                <p class="resume-company">
+                  Scrum.org / International Agile Institutes
+                </p>
               </div>
-              <p class="resume-body">
-                Certified Scrum Master (SM) and Scrum Product Owner (PO).
-                Trained to bridge the gap between design requirements and system
-                architecture, optimizing production pipelines and managing
-                technical debt in software team iterations.
-              </p>
+              <span class="resume-badge-date">Professional Credentials</span>
             </div>
+            <p class="resume-body">
+              Certified Scrum Master (SM) and Scrum Product Owner (PO). Trained
+              to bridge the gap between design requirements and system
+              architecture, optimizing production pipelines and managing
+              technical debt in software team iterations.
+            </p>
           </div>
         </div>
-   
-      <!-- ── SKILLS ────────────────────────────────────────────────────────── -->
-      <section id="skills">
-        <p class="sec-head">Technical skills</p>
-        <div class="skills-grid">
-          <div>
-            <p class="skill-group-label">Game engines</p>
-            <div class="skill-list">
-              <span class="skill-item hi">Unreal Engine 5 (C++)</span>
-              <span class="skill-item hi">Unity (C#)</span>
-              <span class="skill-item">Custom C++ engine (XEMA)</span>
+      </div>
+    </section>
+    <!-- ── SKILLS ────────────────────────────────────────────────────────── -->
+    <section id="skills">
+      <p class="sec-head">Technical skills</p>
+      <div class="skills-grid">
+        {
+          skillCategories.map((category) => (
+            <div>
+              <p class="skill-group-label">{category.label}</p>
+              <div class="skill-list">
+                {category.skills.map((skill) => (
+                  <span class:list={["skill-item", { hi: skill.hi }]}>
+                    {skill.name}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-
-          <div>
-            <p class="skill-group-label">AI &amp; gameplay</p>
-            <div class="skill-list">
-              <span class="skill-item hi">StateTree</span>
-              <span class="skill-item hi">NavMesh &amp; pathfinding</span>
-              <span class="skill-item">Actor object pooling</span>
-              <span class="skill-item">Two Bone IK</span>
-              <span class="skill-item">Behavior-driven enemy AI</span>
-            </div>
-          </div>
-
-          <div>
-            <p class="skill-group-label">Languages</p>
-            <div class="skill-list">
-              <span class="skill-item hi">C++</span>
-              <span class="skill-item hi">C#</span>
-              <span class="skill-item">C</span>
-              <span class="skill-item">TypeScript</span>
-              <span class="skill-item">x86 Assembly</span>
-            </div>
-          </div>
-
-          <div>
-            <p class="skill-group-label">Graphics &amp; systems</p>
-            <div class="skill-list">
-              <span class="skill-item hi">OpenGL 4.5 DSA</span>
-              <span class="skill-item">Deferred Shading / PBR</span>
-              <span class="skill-item">Vertex &amp; fragment shaders</span>
-              <span class="skill-item">ECS architecture</span>
-              <span class="skill-item">Memory management &amp; pointers</span>
-            </div>
-          </div>
-
-          <div>
-            <p class="skill-group-label">Tools &amp; pipeline</p>
-            <div class="skill-list">
-              <span class="skill-item">Git &middot; Perforce (P4V)</span>
-              <span class="skill-item">FMOD Studio</span>
-              <span class="skill-item">Steamworks SDK</span>
-              <span class="skill-item">Niagara VFX</span>
-              <span class="skill-item">Premake5 &middot; devkitPro</span>
-            </div>
-          </div>
-
-          <div>
-            <p class="skill-group-label">Enterprise background</p>
-            <div class="skill-list">
-              <span class="skill-item">SCRUM (certified PO + SM)</span>
-              <span class="skill-item">2.5 yrs production code</span>
-              <span class="skill-item">Client incident handling</span>
-              <span class="skill-item"
-                >VueJS &middot; TypeScript &middot; MSSQL</span
-              >
-            </div>
-          </div>
-        </div>
-      </section>
+          ))
+        }
+      </div>
     </section><!-- /.container -->
   </div>
 </Layout>

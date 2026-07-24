@@ -1,14 +1,13 @@
 ---
 // src/pages/graphic-engine.astro
 // Technical breakdown of the XEMA custom C++ engine.
-// Edit the content sections below to add/update technical details.
 
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
   title="XEMA Engine · Technical Breakdown — Fernando Fernández Andúeza"
-  description="Technical architecture of XEMA — a custom C++ game engine with OpenGL 4.5, ECS, Wave Function Collapse, and Nintendo Switch port."
+  description="Technical architecture of XEMA — a custom C++ game engine with OpenGL 4.5, ECS, Wave Function Collapse, and a Nintendo Switch port."
 >
   <div class="container">
 
@@ -18,21 +17,16 @@ import Layout from '../layouts/Layout.astro';
 
       <div style="display:flex; align-items:center; gap:.875rem; margin-bottom:.875rem; flex-wrap:wrap;">
         <span class="badge badge-personal"><span class="badge-dot"></span>Personal project</span>
-        <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL 4.5 &nbsp;·&nbsp; Nintendo Switch</span>
+        <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL 4.5 &nbsp;·&nbsp; PC &nbsp;·&nbsp; Nintendo Switch</span>
       </div>
 
       <h1>XEMA — Custom 3D Engine</h1>
       <p class="page-intro">
-        A high-performance C++ game engine built from scratch to master the full rendering pipeline,
-        low-level memory architecture, and cross-platform deployment — including a Nintendo Switch port.
-        Every system was written without relying on a pre-existing engine framework.
+        A C++ engine built from scratch, without relying on an existing framework, to work
+        through every layer of a 3D pipeline directly — rendering, memory, threading, and
+        cross-platform portability. Shipped to Nintendo Switch; a PS4 port is currently
+        in progress.
       </p>
-
-      <div class="card-links" style="margin-top:1.25rem;">
-        <a href="https://github.com/YOUR_XEMA_REPO" target="_blank" rel="noopener" class="btn-secondary">
-          View source on GitHub ↗
-        </a>
-      </div>
     </div>
 
     <!-- ── CORE SYSTEMS ──────────────────────────────────────────────────── -->
@@ -44,13 +38,12 @@ import Layout from '../layouts/Layout.astro';
           <h3>Entity Component System</h3>
           <ul>
             <li>
-              <strong>Data-oriented design</strong> — components stored in contiguous arrays for cache efficiency.
+              Components stored in contiguous arrays, with <strong>O(1) access</strong> via
+              ID-based entity management instead of map lookups on the hot path.
             </li>
             <li>
-              <strong>O(1) component access</strong> via ID-based entity management — no map lookups on the hot path.
-            </li>
-            <li>
-              <strong>Scene graph</strong> — parent-child hierarchy integrated directly into the component arrays.
+              Parent-child hierarchy built directly into the component arrays,
+              no separate scene graph structure.
             </li>
           </ul>
         </div>
@@ -59,30 +52,25 @@ import Layout from '../layouts/Layout.astro';
           <h3>Job System</h3>
           <ul>
             <li>
-              <strong>Thread pool</strong> using std::future for fire-and-forget async tasks.
+              Thread pool built on <strong>std::future</strong> for fire-and-forget async work.
             </li>
             <li>
-              Handles <strong>asynchronous model loading</strong> and Wave Function Collapse generation
-              without stalling the main loop.
-            </li>
-            <li>
-              <strong>Async I/O</strong> layer that keeps frame time stable during level streaming.
+              Used for asynchronous model loading and to keep procedural generation
+              off the main thread, so neither one stalls the render loop.
             </li>
           </ul>
         </div>
 
         <div class="tech-card">
-          <h3>Procedural Generation</h3>
+          <h3>Procedural generation</h3>
           <ul>
             <li>
-              <strong>Wave Function Collapse</strong> for tile-based level generation using KayKit tilesets.
+              <strong>Wave Function Collapse</strong>, generating both biomes and
+              transitional biomes between them.
             </li>
             <li>
-              Custom <strong>entropy calculation</strong> — diagnosed and fixed a critical bug causing
-              non-deterministic collapse order.
-            </li>
-            <li>
-              WFC runs on a <strong>background job thread</strong> so generation never blocks the render loop.
+              Runs multithreaded, followed by a separate decoration pass that places
+              detail objects once the layout is resolved.
             </li>
           </ul>
         </div>
@@ -96,45 +84,43 @@ import Layout from '../layouts/Layout.astro';
       <div class="tech-grid">
 
         <div class="tech-card">
-          <h3>OpenGL 4.5 DSA Pipeline</h3>
+          <h3>OpenGL 4.5 DSA pipeline</h3>
           <ul>
             <li>
-              <strong>Direct State Access (DSA)</strong> — eliminates redundant bind calls for cleaner, faster state management.
+              Built on <strong>Direct State Access</strong>, avoiding the redundant
+              bind calls that older-style OpenGL code tends to accumulate.
             </li>
             <li>
-              Custom vertex buffer and VAO management, instanced rendering, and UBO-based uniform blocks.
-            </li>
-            <li>
-              Hand-written <strong>GLSL shaders</strong> for every rendering stage.
+              Custom vertex buffer and VAO management, instanced rendering, UBO-based
+              uniform blocks, and hand-written GLSL shaders for each stage.
             </li>
           </ul>
         </div>
 
         <div class="tech-card">
-          <h3>Rendering Techniques</h3>
+          <h3>Rendering techniques</h3>
           <ul>
             <li>
-              <strong>Deferred Shading</strong> — G-Buffer pass stores position, normal, albedo, and material data.
+              <strong>Deferred shading</strong> — a G-Buffer pass stores position,
+              normal, albedo, and material data.
             </li>
             <li>
-              <strong>PCF Shadow Mapping</strong> — Percentage Closer Filtering for smooth shadow edges.
-            </li>
-            <li>
-              <strong>PBR — Metallic/Roughness</strong> workflow with Cook-Torrance BRDF.
+              <strong>PCF shadow mapping</strong> for softer shadow edges, and a
+              <strong>PBR</strong> metallic/roughness workflow using the Cook-Torrance BRDF.
             </li>
           </ul>
         </div>
 
         <div class="tech-card">
-          <h3>Platform Abstraction (HAL)</h3>
+          <h3>Platform abstraction</h3>
           <ul>
             <li>
-              <strong>Zero-overhead abstraction</strong> — platform differences resolved at link-time,
-              no virtual dispatch on the render path.
+              Platform differences are resolved at <strong>link-time</strong>, not
+              through virtual dispatch, so the render path stays branch-free.
             </li>
             <li>
-              Single rendering interface that switches between OpenGL (PC) and EGL (Switch)
-              without code changes in higher layers.
+              One rendering interface switches between OpenGL on PC and EGL on Switch
+              without any changes in the layers above it.
             </li>
           </ul>
         </div>
@@ -142,21 +128,31 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
 
-    <!-- ── NINTENDO SWITCH PORT ───────────────────────────────────────────── -->
+    <!-- ── CROSS-PLATFORM PORTS ────────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2>Nintendo Switch port</h2>
+      <h2>Cross-platform ports</h2>
       <div class="tech-grid">
 
         <div class="tech-card">
-          <h3>Platform target</h3>
+          <h3>Nintendo Switch — shipped</h3>
           <ul>
             <li>
-              Ported via <strong>libnx</strong> (homebrew SDK) and <strong>EGL</strong>
-              for the OpenGL context on Nintendo Switch hardware.
+              Ported through <strong>libnx</strong> and <strong>EGL</strong> for the
+              OpenGL context on Switch hardware.
             </li>
             <li>
-              Supports both <strong>Docked mode (1080p)</strong> and <strong>Handheld mode (720p)</strong>
-              with automatic resolution switching.
+              Supports docked (1080p) and handheld (720p) modes, switching resolution
+              automatically.
+            </li>
+          </ul>
+        </div>
+
+        <div class="tech-card">
+          <h3>PlayStation 4 — in progress</h3>
+          <ul>
+            <li>
+              Migrating the engine from OpenGL to 
+              <strong> GNM/GNMX </strong> graphics API.
             </li>
           </ul>
         </div>
@@ -165,14 +161,11 @@ import Layout from '../layouts/Layout.astro';
           <h3>Build system</h3>
           <ul>
             <li>
-              <strong>Premake5</strong> generates platform-specific build files from a single Lua script.
+              <strong>Premake5</strong> generates platform-specific build files from
+              one Lua script, integrated with the devkitPro Makefile for Switch.
             </li>
             <li>
-              Integrates <strong>devkitPro Makefile</strong> for the Switch target —
-              one codebase, two platform outputs.
-            </li>
-            <li>
-              No engine fork — the same C++ source compiles for both PC and Switch.
+              No engine fork — the same C++ source compiles for every target.
             </li>
           </ul>
         </div>
@@ -189,27 +182,12 @@ import Layout from '../layouts/Layout.astro';
           <h3>Physics &amp; scripting</h3>
           <ul>
             <li>
-              <strong>PhysX 5</strong> integration via a custom Physics Manager that owns
+              <strong>PhysX 5</strong>, through a custom Physics Manager that owns
               the scene and dispatches simulation steps.
             </li>
             <li>
-              <strong>Lua scripting</strong> via sol2 — exposes engine types to Lua
-              without manual binding boilerplate.
-            </li>
-          </ul>
-        </div>
-
-        <div class="tech-card">
-          <h3>Memory &amp; low-level</h3>
-          <ul>
-            <li>
-              Manual memory management throughout — no garbage collection, no hidden allocations.
-            </li>
-            <li>
-              Custom allocators for component pools and asset caches to avoid heap fragmentation.
-            </li>
-            <li>
-              Profiled and optimized hot paths using platform-specific tools.
+              <strong>Lua scripting</strong> via sol2, exposing engine types to Lua
+              without hand-written binding boilerplate.
             </li>
           </ul>
         </div>
