@@ -1,5 +1,7 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  // Reemplaza con tu usuario y el nombre exacto de tu repositorio
+  site: 'https://andueza013.github.io',
+  base: '/PortfolioGameDev',
+});
