@@ -54,7 +54,7 @@ const badgeLabels: Record<string, string> = {
     </div>
   ) : img && (
     <img
-      src={`/project-images/${img}`}
+      src={`${import.meta.env.BASE_URL}/project-images/${img}`}
       alt={title}
       class="thumbnail"
       loading="lazy"
