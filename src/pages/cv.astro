@@ -1,0 +1,336 @@
+---
+// src/pages/cv.astro
+// Print-optimised CV. On screen it matches the rest of the site; when printed
+// (or saved as PDF) the nav, footer and toolbar are hidden, colours flatten to
+// black on white, external URLs are spelled out, and entries are kept from
+// splitting across pages.
+//
+// All content comes from src/data/cv.ts — the home page renders the same data.
+
+import Layout from '../layouts/Layout.astro';
+import {
+  profile,
+  summary,
+  experience,
+  education,
+  cvProjects,
+  skillRows,
+} from '../data/cv';
+
+const lastUpdated = new Date().toLocaleDateString('en-GB', {
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<Layout
+  title={`CV — ${profile.name}`}
+  description={`Curriculum vitae of ${profile.name} — Gameplay & AI Programmer (Unreal Engine 5, Unity, custom C++ engine).`}
+>
+  <div class="container cv-container">
+    <div class="cv-toolbar">
+      <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
+      <button type="button" id="print-cv" class="btn-hero-primary">Save as PDF</button>
+    </div>
+
+    <article class="cv-sheet">
+      <header class="cv-head">
+        <h1>{profile.name}</h1>
+        <p class="cv-role">{profile.role}</p>
+        <p class="cv-contact">
+          <a href={`mailto:${profile.email}`}>{profile.email}</a> ·
+          <a href={profile.linkedin}>linkedin.com/in/fernando-fernandez-andueza</a> ·
+          <a href={profile.github}>github.com/andueza013</a> ·
+          <a href={profile.itch}>anduezadev.itch.io</a>
+        </p>
+        <p class="cv-contact">
+          {profile.location} &middot; EU citizen &middot; open to relocation within Spain and to
+          remote work &middot; Spanish (native), English (professional)
+        </p>
+      </header>
+
+      <section class="cv-block">
+        <h2>Profile</h2>
+        <p class="cv-summary">{summary}</p>
+      </section>
+
+      <section class="cv-block">
+        <h2>Experience</h2>
+        {experience.map((e) => (
+          <div class="cv-entry">
+            <div class="cv-entry-head">
+              <h3>
+                {e.role}{' '}
+                <span class="cv-org">
+                  &middot;{' '}
+                  {e.orgLink ? <a href={e.orgLink}>{e.org}</a> : e.org}
+                  {e.orgNote && <span class="cv-org-note"> &middot; {e.orgNote}</span>}
+                </span>
+              </h3>
+              <span class="cv-date">{e.date}</span>
+            </div>
+            <p>{e.body}</p>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-block">
+        <h2>Selected projects</h2>
+        {cvProjects.map((pr) => (
+          <div class="cv-entry">
+            <div class="cv-entry-head">
+              <h3>{pr.link ? <a href={pr.link}>{pr.name}</a> : pr.name}</h3>
+              <span class="cv-date">{pr.meta}</span>
+            </div>
+            <p>{pr.body}</p>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-block">
+        <h2>Education &amp; certifications</h2>
+        {education.map((e) => (
+          <div class="cv-entry">
+            <div class="cv-entry-head">
+              <h3>
+                {e.role}{' '}
+                <span class="cv-org">
+                  &middot; {e.org}
+                  {e.orgNote && <span class="cv-org-note"> &middot; {e.orgNote}</span>}
+                </span>
+              </h3>
+              <span class="cv-date">{e.date}</span>
+            </div>
+            <p>{e.body}</p>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-block">
+        <h2>Technical skills</h2>
+        <dl class="cv-skills">
+          {skillRows.map(([label, list]) => (
+            <>
+              <dt>{label}</dt>
+              <dd>{list}</dd>
+            </>
+          ))}
+        </dl>
+      </section>
+
+      <p class="cv-updated">Last updated: {lastUpdated}</p>
+    </article>
+  </div>
+</Layout>
+
+<script>
+  document.getElementById('print-cv')?.addEventListener('click', () => window.print());
+</script>
+
+<style>
+  .cv-container {
+    max-width: 900px;
+    padding-bottom: 4rem;
+  }
+
+  .cv-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 2.5rem 0 1.5rem;
+  }
+
+  .cv-toolbar .back-link { margin-bottom: 0; }
+
+  .cv-sheet {
+    background: var(--surface);
+    border: 1px solid var(--border-muted);
+    border-radius: 12px;
+    padding: 2.5rem;
+  }
+
+  .cv-head {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cv-head h1 {
+    font-size: 1.9rem;
+    font-weight: 500;
+    letter-spacing: -.02em;
+    line-height: 1.2;
+  }
+
+  .cv-role {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    margin: .25rem 0 .75rem;
+  }
+
+  .cv-contact {
+    font-size: 12.5px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+
+  .cv-contact a {
+    color: var(--text-2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cv-contact a:hover { color: var(--accent); }
+
+  .cv-block { margin-bottom: 1.75rem; }
+  .cv-block:last-child { margin-bottom: 0; }
+
+  .cv-block h2 {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: .875rem;
+  }
+
+  .cv-summary {
+    font-size: 13.5px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+
+  .cv-summary strong { color: var(--text); font-weight: 500; }
+
+  .cv-entry { margin-bottom: 1.125rem; }
+  .cv-entry:last-child { margin-bottom: 0; }
+
+  .cv-entry-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .cv-entry h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .cv-entry h3 a { border-bottom: 1px solid var(--border); }
+  .cv-entry h3 a:hover { color: var(--accent); }
+
+  .cv-org { color: var(--text-2); font-weight: 400; }
+  .cv-org-note { color: var(--text-3); }
+
+  .cv-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-3);
+    white-space: nowrap;
+  }
+
+  .cv-entry p {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.6;
+    margin-top: .3rem;
+  }
+
+  .cv-skills {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .4rem 1.25rem;
+  }
+
+  .cv-skills dt { font-size: 12.5px; font-weight: 500; color: var(--text); }
+  .cv-skills dd { font-size: 12.5px; color: var(--text-2); line-height: 1.55; }
+
+  .cv-updated {
+    margin-top: 2rem;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--text-3);
+  }
+
+  @media (max-width: 640px) {
+    .cv-sheet { padding: 1.5rem; }
+    .cv-skills { grid-template-columns: 1fr; gap: .1rem 0; }
+    .cv-skills dd { margin-bottom: .5rem; }
+  }
+</style>
+
+<style is:global>
+  @media print {
+    @page { size: A4; margin: 13mm 14mm; }
+
+    /* Only the CV sheet survives */
+    .site-nav,
+    .site-footer,
+    .cv-toolbar,
+    .skip-link { display: none !important; }
+
+    html, body { background: #fff !important; color: #000 !important; }
+    .container, .cv-container { max-width: none !important; padding: 0 !important; }
+
+    .cv-sheet {
+      background: none !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+    }
+
+    .cv-head { border-bottom: 1px solid #999 !important; }
+    .cv-head h1 { font-size: 21pt; }
+    .cv-role { color: #000 !important; }
+
+    .cv-contact,
+    .cv-contact a,
+    .cv-summary,
+    .cv-entry p,
+    .cv-skills dd,
+    .cv-org { color: #222 !important; }
+
+    .cv-contact a { border-bottom: 0 !important; }
+    .cv-entry h3 a { border-bottom: 0 !important; }
+    .cv-org-note { color: #444 !important; }
+
+    .cv-block h2 {
+      color: #000 !important;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 2px;
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+
+    .cv-entry h3,
+    .cv-skills dt,
+    .cv-summary strong { color: #000 !important; }
+
+    .cv-date { color: #444 !important; }
+
+    /* On paper a link is dead weight unless the URL is spelled out. The contact
+       line already prints its URLs as text, so only entry links get this. */
+    .cv-entry a[href^="http"]::after {
+      content: " (" attr(href) ")";
+      font-family: var(--mono);
+      font-size: 8pt;
+      font-weight: 400;
+      color: #555;
+      word-break: break-all;
+    }
+
+    .cv-summary,
+    .cv-entry p { orphans: 3; widows: 3; }
+
+    /* Never split an entry across pages */
+    .cv-head,
+    .cv-entry { break-inside: avoid; page-break-inside: avoid; }
+
+    .cv-updated { color: #666 !important; }
+  }
+</style>

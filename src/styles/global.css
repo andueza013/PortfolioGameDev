@@ -5,7 +5,6 @@
    Layout:  container, sections
    Nav:     sticky header
    Hero:    landing section
-   Diff:    differentiator strip
    Sec:     section headings
    Card:    project cards (featured + grid)
    Tags:    tech pill tags
@@ -80,11 +79,45 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Keyboard focus. The reset strips link styling, so without this a keyboard
+   user has no idea where they are on the page. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Sits above everything, off-screen until it takes focus */
+.skip-link {
+  position: fixed;
+  top: .5rem;
+  left: .5rem;
+  z-index: 200;
+  padding: .5rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--accent-bdr);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13.5px;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
 /* ── Layout ────────────────────────────────────────────────────────────── */
 .container {
-  max-width: 80%;
+  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 2rem;
+}
+
+/* Detail pages build their own sections out of divs, so they need the bottom
+   breathing room the <section> rule below gives the home page. */
+.page-container {
+  padding-bottom: 5rem;
 }
 
 section {
@@ -107,7 +140,7 @@ section+section {
 }
 
 .nav-inner {
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: .875rem 2rem;
   display: flex;
@@ -158,6 +191,51 @@ section+section {
   background: var(--accent-bg);
 }
 
+/* Menu toggle — hidden until the links collapse at 640px */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 34px;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.nav-toggle:hover {
+  color: var(--text);
+  border-color: var(--accent-bdr);
+}
+
+/* Three bars drawn with the element's own box plus its two shadows */
+.nav-toggle-bars,
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.nav-toggle-bars {
+  position: relative;
+}
+
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.nav-toggle-bars::before { top: -5px; }
+.nav-toggle-bars::after  { top: 5px; }
+
 /* ── Hero ──────────────────────────────────────────────────────────────── */
 .hero {
   padding: 6rem 0 4rem;
@@ -191,6 +269,16 @@ section+section {
   font-size: 20px;
   color: var(--text-2);
   line-height: 1.75;
+  margin-bottom: 1.1rem;
+}
+
+/* The pitch is two paragraphs: the hook, then the detail. The second one steps
+   down in size so the first still carries the page. */
+.hero-pitch+.hero-pitch {
+  font-size: 17px;
+}
+
+.hero-pitch:last-of-type {
   margin-bottom: 2rem;
 }
 
@@ -242,46 +330,13 @@ section+section {
   color: var(--text);
 }
 
-/* ── Differentiator strip ──────────────────────────────────────────────── */
-.diff-strip {
-  border-top: 1px solid var(--border-muted);
-  border-bottom: 1px solid var(--border-muted);
-  padding: 1.125rem 0;
-  margin-bottom: 4.5rem;
-}
-
-.diff-inner {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.diff-kicker {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--accent);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.diff-copy {
-  font-size: 13.5px;
-  color: var(--text-2);
-  line-height: 1.6;
-}
-
-.diff-copy strong {
-  color: var(--text);
-  font-weight: 500;
-}
-
 /* ── Section heading ───────────────────────────────────────────────────── */
+/* Section heading. It is an <h2> for document structure, but keeps the small
+   mono label look — hence the explicit size and weight. */
 .sec-head {
   font-family: var(--mono);
   font-size: 10.5px;
+  font-weight: 500;
   color: var(--text-3);
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -337,14 +392,16 @@ section+section {
   flex: 1;
 }
 
-/* Featured card — full-width, accent top border */
+/* Featured card — accent top border, stretches to fill its grid cell */
 .card-featured {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   position: relative;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 2rem;
-  margin-bottom: 1.25rem;
   overflow: hidden;
 }
 
@@ -384,6 +441,26 @@ section+section {
   font-family: var(--mono);
   font-size: 11.5px;
   color: var(--text-3);
+}
+
+/* Genre · studio · role line, under a featured card's title */
+.card-featured .card-subtitle {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-bottom: 1rem;
+}
+
+/* Trailer or screenshot sitting between the title and the description */
+.card-media {
+  margin-bottom: 1.25rem;
+}
+
+/* Title with a status badge pushed to the right */
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .625rem;
 }
 
 /* Status badge */
@@ -620,6 +697,19 @@ section+section {
   margin-top: 2.5rem;
 }
 
+/* Captioned video or screenshot inside a technical section */
+.tech-figure {
+  margin-top: 1.75rem;
+  max-width: 800px;
+}
+
+.tech-figure figcaption {
+  margin-top: .625rem;
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.6;
+}
+
 .tech-section h2 {
   font-size: 1.25rem;
   font-weight: 500;
@@ -656,11 +746,12 @@ section+section {
 }
 
 .tech-card li {
+  display: flex;
   font-size: 13.5px;
   color: var(--text-2);
   line-height: 1.6;
   gap: .5rem;
-  list-style: outside;
+  list-style: none;
 }
 
 .tech-card li::before {
@@ -676,13 +767,6 @@ section+section {
 .tech-card li strong {
   color: var(--text);
   font-weight: 500;
-}
-
-.detail-p {
-  font-size: 14px;
-  color: var(--text-2);
-  line-height: 1.75;
-  max-width: 780px;
 }
 
 /* ── Footer ────────────────────────────────────────────────────────────── */
@@ -734,18 +818,46 @@ section+section {
 
   .nav-inner {
     padding: .875rem 1.25rem;
+    flex-wrap: wrap;
   }
 
-  .nav-links li:not(:last-child):not(:nth-last-child(2)) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  /* Collapsed behind the toggle; .is-open is set by the script in Nav.astro. */
+  .nav-links {
     display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: .5rem 0 .25rem;
+    border-top: 1px solid var(--border-muted);
+  }
+
+  .nav-links.is-open {
+    display: flex;
+  }
+
+  .nav-links li {
+    padding: .1rem 0;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: .55rem 0;
+    font-size: 15px;
+  }
+
+  .nav-links .nav-cta {
+    display: inline-block;
+    margin-top: .35rem;
+    padding: .5rem 1rem;
   }
 
   .hero {
     padding: 4rem 0 3rem;
-  }
-
-  .diff-strip {
-    margin-bottom: 3rem;
   }
 
   section {
@@ -845,6 +957,11 @@ section+section {
   margin-top: 0.25rem;
 }
 
+/* Studio, publisher or campus — secondary to the org itself */
+.resume-company-note {
+  color: var(--text-3);
+}
+
 .resume-badge-date {
   font-family: var(--mono);
   font-size: 11px;
@@ -860,7 +977,6 @@ section+section {
   font-size: 14.5px;
   color: var(--text-2);
   line-height: 1.75;
-  text-align: justify;
 }
 
 /* Responsive para dispositivos móviles */
@@ -896,67 +1012,38 @@ section+section {
   .featured-grid { grid-template-columns: 1fr; gap: 1.25rem; }
 }
 
-/* Modificación de la tarjeta destacada para actuar como flexbox interno */
-.card-featured {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  position: relative;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem;
-  margin-bottom: 0;
-  /* Eliminado el margen inferior para el flujo del grid */
-  overflow: hidden;
-}
-
 /* Fuerza a los enlaces de la tarjeta a anclarse siempre al fondo */
 .card-featured .card-links {
   margin-top: auto;
 }
 
-/* Ajuste fino para la imagen responsiva dentro del entorno a dos columnas */
+/* Keeps the thumbnail from stretching inside the two-column featured grid */
 .card-featured .thumbnail {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
 
-/* Adaptabilidad para móviles y tablets en formato vertical */
-@media (max-width: 900px) {
-  .featured-grid {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
-}
-
-/* Modificación del contenedor Hero */
-.hero {
-  padding: 6rem 0 4rem;
-}
-
 .hero-container {
   display: flex;
   align-items: flex-start;
   gap: 3rem;
-  /* Espacio entre la foto y el texto */
 }
 
-/* Estilos de la foto de perfil */
 .hero-avatar-wrapper {
-  flex-shrink: 0;
-  /* Evita que la foto se encoja */
   flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
+/* Square source, so aspect-ratio keeps it a circle at any width */
 .hero-avatar {
   margin-top: 15%;
-  width: 60%;
-  height: 60%;
+  width: min(320px, 100%);
+  aspect-ratio: 1;
+  height: auto;
   object-fit: cover;
   border-radius: 50%;
-  /* Bordes ligeramente suavizados, coherentes con tus tarjetas */
   border: 1px solid var(--border);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
@@ -965,12 +1052,11 @@ section+section {
   flex: 2;
 }
 
-/* Ajuste fino: quitamos el margen superior innecesario del primer elemento de texto */
 .hero-content .hero-eyebrow {
   margin-top: 0;
 }
 
-/* Responsive: en móviles la foto se centra arriba y el texto abajo */
+/* Below 768px the photo stacks on top and the text is centred */
 @media (max-width: 768px) {
   .hero-container {
     flex-direction: column;
@@ -986,5 +1072,81 @@ section+section {
 
   .hero-ctas {
     justify-content: center;
+  }
+}
+/* ── Contact ───────────────────────────────────────────────────────────── */
+.contact-panel {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.contact-pitch h3 {
+  font-size: 1.375rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -.02em;
+  margin-bottom: .625rem;
+}
+
+.contact-pitch p {
+  font-size: 14.5px;
+  color: var(--text-2);
+  line-height: 1.75;
+  max-width: 60ch;
+}
+
+.contact-facts {
+  display: flex;
+  flex-direction: column;
+  gap: .45rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-muted);
+}
+
+.contact-facts li {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.contact-facts span {
+  display: inline-block;
+  min-width: 8.5rem;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.contact-actions {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.contact-actions a {
+  justify-content: center;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .contact-panel {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    padding: 1.5rem;
+  }
+
+  .contact-facts span {
+    display: block;
+    min-width: 0;
+    margin-bottom: .1rem;
   }
 }

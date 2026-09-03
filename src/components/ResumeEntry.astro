@@ -1,0 +1,32 @@
+---
+// src/components/ResumeEntry.astro
+// One block of the home page's Experience / Academic path timeline.
+// The data comes from src/data/cv.ts, so the CV page shows the same entries.
+
+import type { Entry } from '../data/cv';
+
+interface Props {
+  entry: Entry;
+}
+
+const { entry } = Astro.props;
+---
+
+<div class="resume-block">
+  <div class="resume-header">
+    <span class="resume-timeline-dot"></span>
+    <div class="resume-title-group">
+      <h4>{entry.role}</h4>
+      <p class="resume-company">
+        {entry.orgLink ? (
+          <a href={entry.orgLink} target="_blank" rel="noopener">{entry.org} ↗</a>
+        ) : (
+          entry.org
+        )}
+        {entry.orgNote && <span class="resume-company-note"> · {entry.orgNote}</span>}
+      </p>
+    </div>
+    <span class="resume-badge-date">{entry.date}</span>
+  </div>
+  <p class="resume-body">{entry.body}</p>
+</div>

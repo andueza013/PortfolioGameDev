@@ -6,17 +6,17 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-  title="XEMA Engine · Technical Breakdown — Fernando Fernández Andúeza"
+  title="XEMA Engine · Technical Breakdown — Fernando Fernández Andueza"
   description="Technical architecture of XEMA — a custom C++ game engine with OpenGL 4.5, ECS, Wave Function Collapse, and a Nintendo Switch port."
 >
-  <div class="container">
+  <div class="container page-container">
 
     <!-- ── PAGE HEADER ──────────────────────────────────────────────────── -->
     <div class="page-header">
-      <a href="/" class="back-link">← Back to portfolio</a>
+      <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
 
-      <div style="display:flex; align-items:center; gap:.875rem; margin-bottom:.875rem; flex-wrap:wrap;">
-        <span class="badge badge-personal"><span class="badge-dot"></span>Personal project</span>
+      <div class="card-meta">
+        <span class="badge badge-personal"><span class="badge-dot"></span>University project</span>
         <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL 4.5 &nbsp;·&nbsp; PC &nbsp;·&nbsp; Nintendo Switch</span>
       </div>
 
@@ -76,6 +76,21 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
       </div>
+
+      <figure class="tech-figure">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/grZnYOMaqTQ?si=gf-zIuqm6VRQ5O4K"
+            title="XEMA — Wave Function Collapse biome generation"
+            allow="accelerated-encrypted-media; picture-in-picture"
+            loading="lazy"
+            allowfullscreen></iframe>
+        </div>
+        <figcaption>
+          Wave Function Collapse resolving biomes and the transitions between them,
+          followed by the decoration pass.
+        </figcaption>
+      </figure>
     </div>
 
     <!-- ── GRAPHICS ──────────────────────────────────────────────────────── -->
@@ -194,8 +209,6 @@ import Layout from '../layouts/Layout.astro';
 
       </div>
     </div>
-
-    <div style="padding-bottom: 5rem;"></div>
 
   </div><!-- /.container -->
 

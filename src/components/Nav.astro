@@ -1,20 +1,35 @@
 ---
 // src/components/Nav.astro
 // Sticky navigation — shared across all pages.
-// Update YOUR_GITHUB and YOUR_EMAIL before deploying.
+// Below 640px the links collapse behind a toggle button; every link stays
+// reachable, which the previous nth-last-child rule quietly broke.
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <nav class="site-nav">
   <div class="nav-inner">
-    <a href={`${import.meta.env.BASE_URL}`} class="nav-logo">
+    <a href={base} class="nav-logo">
       <span class="slash">//</span> ffa.dev
     </a>
 
-    <ul class="nav-links">
-      <li><a href={`${import.meta.env.BASE_URL}/#projects`}>Projects</a></li>
-      <li><a href={`${import.meta.env.BASE_URL}/#skills`}>Skills</a></li>
+    <button
+      type="button"
+      class="nav-toggle"
+      id="nav-toggle"
+      aria-expanded="false"
+      aria-controls="nav-links"
+      aria-label="Open menu"
+    >
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href={`${base}/#projects`}>Projects</a></li>
+      <li><a href={`${base}/#resume`}>Experience</a></li>
+      <li><a href={`${base}/#skills`}>Skills</a></li>
       <li>
-        <a href="https://github.com/YOUR_GITHUB" target="_blank" rel="noopener">
+        <a href="https://github.com/andueza013" target="_blank" rel="noopener">
           GitHub
         </a>
       </li>
@@ -23,9 +38,38 @@
           LinkedIn
         </a>
       </li>
+      <li><a href={`${base}/cv`}>CV</a></li>
       <li>
-        <a href="mailto:YOUR_EMAIL" class="nav-cta">Get in touch</a>
+        <a href={`${base}/#contact`} class="nav-cta">Get in touch</a>
       </li>
     </ul>
   </div>
 </nav>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const links = document.getElementById('nav-links');
+
+  if (toggle && links) {
+    const setOpen = (open: boolean) => {
+      links.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // Anchor links scroll the page behind the open menu — close it on the way.
+    links.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || toggle.getAttribute('aria-expanded') !== 'true') return;
+      setOpen(false);
+      toggle.focus();
+    });
+  }
+</script>

@@ -43,7 +43,7 @@ const badgeLabels: Record<string, string> = {
 
 <article class="card">
   {video ? (
-    <div class="video-wrapper" style="margin-bottom:1rem;">
+    <div class="video-wrapper card-media">
       <iframe
         src={video}
         title={title}
@@ -61,7 +61,7 @@ const badgeLabels: Record<string, string> = {
     />
   )}
 
-  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:.625rem;">
+  <div class="card-head">
     <h3>{title}</h3>
     {badge && (
       <span class={`badge badge-${badge}`}>
