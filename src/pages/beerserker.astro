@@ -1,0 +1,400 @@
+---
+// src/pages/beerserker.astro
+// Technical breakdown of the enemy AI built for Beerserker: The Stolen Brew.
+//
+// SCOPE NOTE: Beerserker is a commercial project, so no source from the studio
+// repository is reproduced here. Everything below describes architecture and
+// decisions, illustrated with diagrams and editor captures.
+//
+// PENDING: the spacing/slots line under Melee needs Fernando to confirm
+// against the shipped project before this is considered final.
+//
+// MEDIA: archetype clips are muted, looping <video> (public/project-images/
+// beerserker/videos/*.mp4) rather than <img>/GIF — Astro's image optimisation
+// doesn't process animated GIFs, and a properly encoded MP4 is a fraction of
+// the size. The StateTree graph stays a static <img> (PNG).
+//
+// LAYOUT: editorial long-form — running prose, alternating image/text rows and
+// pull-quotes instead of the tech-grid/tech-card pattern used on graphic-engine.astro.
+// See src/styles/global.css, "Editorial detail page (beerserker)".
+
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Beerserker Enemy AI · Technical Breakdown — Fernando Fernández Andueza"
+  description="How the enemy AI of Beerserker: The Stolen Brew was built in Unreal Engine 5 with StateTree — four archetypes, from a melee grunt to a four-pattern tank mini-boss."
+>
+  <div class="container page-container">
+
+    <!-- ── PAGE HEADER ──────────────────────────────────────────────────── -->
+    <div class="page-header">
+      <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
+
+      <div class="ed-header-panel">
+        <img
+          class="ed-header-capsule"
+          src={`${import.meta.env.BASE_URL}/project-images/beerserker/Capsule.png`}
+          alt="Beerserker: The Stolen Brew — Steam capsule artwork"
+        />
+
+        <div class="ed-header-text">
+          <p class="ed-kicker">Enemy AI · Technical breakdown</p>
+
+          <h1>Beerserker</h1>
+          <p class="ed-lede">
+           Beerserker is a modern fast-paced arcade game and comical twist. Blinded by the legendary dwarven ale's taste, Ragna aims to retrieve this masterpiece from the grasp of the gods. Will you be able to make your way through a crowded dwarven brewery? Or end up crushed by their ranks?
+          </p>
+
+          <div class="card-meta" style="margin-top: 1.5rem;">
+            <span class="badge badge-shipped"><span class="badge-dot"></span>Available on Steam</span>
+            <span class="card-engine">Unreal Engine 5 &nbsp;·&nbsp; C++ &nbsp;·&nbsp; StateTree</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── THE BRIEF ─────────────────────────────────────────────────────── -->
+    <div class="tech-section">
+      <h2 class="ed-kicker">The brief</h2>
+
+      <span class="ed-label">The production</span>
+      <p class="ed-prose">
+        A 10-month final-year production at <strong>ESAT</strong>, built by a multidisciplinary
+        team of <strong>20+</strong> programmers, artists, musicians and designers. Released on
+        Steam in Early Access on <strong>7 July 2026</strong> — a real ship date, with the scope
+        cuts and bug triage that implies.
+      </p>
+
+      <span class="ed-label">My ownership</span>
+      <p class="ed-prose">
+        I owned the <strong>enemy AI end to end</strong>: the architecture, all four archetypes,
+        and the tuning surface the design team worked against — written in
+        <strong>Unreal Engine 5</strong> with C++ and Blueprints, on a team pipeline running
+        Perforce.
+      </p>
+
+      <span class="ed-label">The constraints</span>
+      <p class="ed-prose">
+        Arcade pacing: enemies fight in groups, so per-agent cost and the legibility of each
+        attack tell mattered more than clever planning. Designers needed to retune aggression,
+        ranges and timings without a programmer in the loop.
+      </p>
+
+      <figure class="tech-figure">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/2bR2OxafTjQ?si=HfbHE73XUxKJRXTU"
+            title="Beerserker: The Stolen Brew — Trailer"
+            allow="encrypted-media; picture-in-picture"
+            loading="lazy"
+            allowfullscreen></iframe>
+        </div>
+        <figcaption>
+          Beerserker: The Stolen Brew — the enemies in the trailer are the four
+          archetypes described below.
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- ── THE FOUR ARCHETYPES ───────────────────────────────────────────── -->
+    <div class="tech-section">
+      <h2 class="ed-kicker">The four archetypes</h2>
+
+      <div class="ed-row">
+        <div class="ed-num">01</div>
+        <div class="ed-media">
+          <figure class="tech-figure">
+            <video
+              autoplay
+              loop
+              muted
+              playsinline
+              aria-label="Melee enemy claiming a slot around the player and committing to an attack"
+            >
+              <source src={`${import.meta.env.BASE_URL}/project-images/beerserker/videos/Melee.mp4`} type="video/mp4" />
+            </video>
+            <figcaption>Closing distance and committing to an attack.</figcaption>
+          </figure>
+        </div>
+        <div class="ed-body">
+          <h3>Melee</h3>
+          <div class="ed-rule"></div>
+          <p>
+            The baseline enemy, and the one that appears in the largest groups: it closes
+            distance and commits to an attack once in range. It also claims a slot around the
+            player instead of converging on the same point as everyone else, so a group never
+            stacks into a single attack line.
+          </p>
+        </div>
+      </div>
+
+      <div class="ed-row ed-row--rev">
+        <div class="ed-num">02</div>
+        <div class="ed-media">
+          <figure class="tech-figure">
+            <video
+              autoplay
+              loop
+              muted
+              playsinline
+              aria-label="Ranged enemy retreating to an EQS-selected position and firing at the player"
+            >
+              <source src={`${import.meta.env.BASE_URL}/project-images/beerserker/videos/Ranged.mp4`} type="video/mp4" />
+            </video>
+            <figcaption>Retreating to a queried position before firing.</figcaption>
+          </figure>
+        </div>
+        <div class="ed-body">
+          <h3>Ranged</h3>
+          <div class="ed-rule ed-rule--purple"></div>
+          <p>
+            Retreats once the player closes inside a set range, then runs an
+            <strong>EQS</strong> query for a retreat position that also filters for line of
+            sight to the player. Fires at the player's exact current position — no leading — on
+            the same per-attack cooldown every archetype uses.
+          </p>
+        </div>
+      </div>
+
+      <div class="ed-row">
+        <div class="ed-num">03</div>
+        <div class="ed-media">
+          <figure class="tech-figure">
+            <video
+              autoplay
+              loop
+              muted
+              playsinline
+              aria-label="Explosive enemy blinking faster as its detonation timer runs down"
+            >
+              <source src={`${import.meta.env.BASE_URL}/project-images/beerserker/videos/Bomb.mp4`} type="video/mp4" />
+            </video>
+            <figcaption>The blink telegraph accelerating toward detonation.</figcaption>
+          </figure>
+        </div>
+        <div class="ed-body">
+          <h3>Explosive</h3>
+          <div class="ed-rule ed-rule--amber"></div>
+          <p>
+            A red blink speeds up as its detonation timer runs down, so the player can read how
+            much time is left at a glance. It detonates on a timer if it never reaches the
+            player, after a short commit animation if it does, or on the spot if it is killed
+            first — the intended counter is killing it at range before either happens.
+          </p>
+        </div>
+      </div>
+
+      <div class="ed-row ed-row--rev">
+        <div class="ed-num">04</div>
+        <div class="ed-media">
+          <figure class="tech-figure">
+            <video
+              autoplay
+              loop
+              muted
+              playsinline
+              aria-label="Tank mini-boss cycling between its four attack patterns"
+            >
+              <source src={`${import.meta.env.BASE_URL}/project-images/beerserker/videos/Tank.mp4`} type="video/mp4" />
+            </video>
+            <figcaption>Choosing between four attack patterns.</figcaption>
+          </figure>
+        </div>
+        <div class="ed-body">
+          <h3>Tank mini-boss</h3>
+          <div class="ed-rule ed-rule--green"></div>
+          <p>
+            <strong>Four attacks:</strong> a ranged honey throw, a ranged dwarf throw, a melee
+            sweep that leaves a honey hazard on the ground, and a melee area attack. The two
+            ranged attacks are each chosen independently by their own cooldown and range check;
+            the two melee attacks share a cooldown and are chosen by weight, so the fight
+            doesn't fall into repeating the same attack. Throwing the dwarf is its own short
+            sequence — call it over, wait for it to arrive, confirm it's still alive, grab it,
+            throw it — falling back to a different attack if the dwarf isn't available.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── WHY STATETREE, NOT BEHAVIOR TREE ───────────────────────────────── -->
+    <div class="tech-section">
+      <h2 class="ed-kicker">Why StateTree, not Behavior Tree</h2>
+
+      <p class="ed-lede ed-lede-drop">
+        The four archetypes were designed around discrete states and clear transitions between
+        them — a shape Behavior Tree doesn't express directly. Building it there meant forcing
+        that shape through conditional checks, the "bool hell" that grows with every state
+        added.
+      </p>
+
+      <p class="ed-prose">
+        <strong>StateTree</strong> combines Behavior Tree-style selectors with proper states and
+        transitions, matching how the enemies were already designed instead of working against
+        it.
+      </p>
+
+      <p class="ed-prose">
+        It was also the newer tool Epic was actively investing in — production-ready since the
+        UE5.5/5.6 cycle, enabled by default from 5.6, and given a debugger to match the one
+        Behavior Tree had had for a decade.
+      </p>
+
+      <figure class="tech-figure">
+        <img
+          src={`${import.meta.env.BASE_URL}/project-images/beerserker/statetree-graph.png`}
+          alt="Annotated StateTree graph for one of the enemy archetypes"
+          loading="lazy"
+        />
+        <figcaption>
+          One of the archetypes' StateTree graphs, annotated — states and transitions
+          matching the discrete-state design described above.
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- ── PERCEPTION, AGGRO AND NAVIGATION ───────────────────────────────── -->
+    <div class="tech-section">
+      <h2 class="ed-kicker">Perception, aggro and navigation</h2>
+
+      <span class="ed-label">Perception</span>
+      <p class="ed-prose">
+        A custom detection volume, not AI Perception — the full sight/hearing/damage stack
+        Perception offers was more than these enemies needed to decide whether they had found
+        the player.
+      </p>
+
+      <span class="ed-label">Navigation &amp; spawning</span>
+      <p class="ed-prose">
+        Standard NavMesh navigation, moving enemies with <strong>MoveTo</strong>. The spawner
+        checks for a valid NavMesh position before placing an enemy, rather than trusting a
+        fixed spawn point.
+      </p>
+    </div>
+
+    <!-- ── THE TUNING SURFACE ──────────────────────────────────────────────── -->
+    <div class="tech-section">
+      <h2 class="ed-kicker">The tuning surface</h2>
+      <p class="ed-prose">
+        Base stats, attack cooldowns, attack range, retreat range and detection range were all
+        exposed as parameters designers could retune directly — what design could change
+        without code, without a programmer in the loop.
+      </p>
+    </div>
+
+    <!-- ── DEBUGGING AND PERFORMANCE ───────────────────────────────────────── -->
+    <div class="tech-section">
+      <h2 class="ed-kicker">Debugging and performance</h2>
+
+      <span class="ed-label">General profiling, not AI-specific</span>
+      <p class="ed-prose">
+        Unreal Insights and the Visual Studio debugger were daily tools across the whole
+        production, catching bottlenecks such as particle systems — the profiling work on this
+        project was not AI-specific.
+      </p>
+
+      <span class="ed-label">Pooling enemies instead of spawning</span>
+      <p class="ed-prose">
+        Enemies are activated and deactivated from a pool rather than spawned and destroyed,
+        built before the first enemy existed. A preventive decision, not a fix for a measured
+        problem: the game is an arcade with many enemies on screen at once, so the cost of
+        spawn/destroy churn was assumed rather than discovered.
+      </p>
+    </div>
+
+    <!-- ── CHALLENGES & SOLUTIONS ──────────────────────────────────────────── -->
+    <div class="tech-section">
+      <h2 class="ed-kicker">Challenges &amp; solutions</h2>
+
+      <div class="ed-list">
+        <div class="ed-item">
+          <span class="ed-item-index">01</span>
+          <div class="ed-item-body">
+            <h3>Perception was overkill for what these enemies needed</h3>
+            <p>
+              <strong>Problem:</strong> Unreal's AI Perception gives you sight, hearing and
+              damage stimuli, a whole config surface — for enemies that only ever needed to
+              answer one question: has this enemy found the player?
+            </p>
+            <p>
+              <strong>Solution:</strong> a custom detection volume instead. Less to configure,
+              nothing unused sitting in the profile.
+            </p>
+          </div>
+        </div>
+
+        <div class="ed-item">
+          <span class="ed-item-index">02</span>
+          <div class="ed-item-body">
+            <h3>Spawn/destroy churn under arcade enemy counts</h3>
+            <p>
+              <strong>Problem:</strong> the game throws groups of enemies at the player
+              continuously — spawning and destroying actors at that rate is exactly the kind of
+              cost that shows up late, once content has already been built around it.
+            </p>
+            <p>
+              <strong>Solution:</strong> a pool built before the first enemy existed —
+              activate/deactivate instead of spawn/destroy, decided preventively rather than
+              after profiling caught a problem.
+            </p>
+          </div>
+        </div>
+
+        <div class="ed-item">
+          <span class="ed-item-index">03</span>
+          <div class="ed-item-body">
+            <h3>A retreat that only checks range can back an enemy into a wall</h3>
+            <p>
+              <strong>Problem:</strong> picking a retreat point purely by distance from the
+              player can land the ranged archetype somewhere with no line of sight to fire from,
+              or somewhere unreachable.
+            </p>
+            <p>
+              <strong>Solution:</strong> the retreat position comes from an <strong>EQS</strong>
+              query that filters for line of sight as part of scoring the position, not as a
+              separate check afterwards.
+            </p>
+          </div>
+        </div>
+
+        <div class="ed-item">
+          <span class="ed-item-index">04</span>
+          <div class="ed-item-body">
+            <h3>Designers needed to tune AI without touching code</h3>
+            <p>
+              <strong>Problem:</strong> retuning aggression, ranges or timings through a
+              programmer does not scale across a 10-month production with a design team
+              iterating constantly.
+            </p>
+            <p>
+              <strong>Solution:</strong> base stats, cooldowns, ranges and detection were all
+              exposed as parameters on the archetypes, editable directly by design.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── LINKS ─────────────────────────────────────────────────────────── -->
+    <div class="tech-section">
+      <h2 class="ed-kicker">The game</h2>
+      <div class="card-links">
+        <a
+          href="https://store.steampowered.com/app/4522440/"
+          target="_blank"
+          rel="noopener"
+          class="btn-primary"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+            <path
+              d="M12.695 0C8.772 0 5.314 2.578 4.05 6.148l6.624 2.777c.666-.57 1.55-.923 2.526-.923 2.137 0 3.872 1.735 3.872 3.872 0 .976-.353 1.86-.923 2.527l2.777 6.624C21.422 18.686 24 15.228 24 11.305 24 5.06 18.94 0 12.695 0zM5.997 15.17c-.426.668-.667 1.458-.667 2.304 0 2.395 1.942 4.336 4.337 4.336.846 0 1.636-.24 2.304-.666l-5.974-5.974z"
+            ></path>
+          </svg>
+          Play on Steam
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /.container -->
+
+</Layout>

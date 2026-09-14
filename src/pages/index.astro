@@ -19,16 +19,9 @@ interface OtherProject {
 const otherProjects: OtherProject[] = [
   {
     title: "Abandoned Hospital",
-    desc: "Academic project built to demonstrate AI Perception and EQS driving enemy and NPC behaviour in Unreal Engine. First implemented with behaviour trees, then rebuilt from scratch on StateTree.",
+    desc: "AI systems study — solo project. Enemy and NPC behaviour driven by AI Perception and EQS in Unreal Engine. Built it twice on purpose: first with behaviour trees, then rebuilt from scratch on StateTree, to see what each architecture actually costs on the same problem rather than reading about the difference.",
     img: "AH.webp",
-    tags: [
-      "Unreal Engine",
-      "C++",
-      "EQS",
-      "StateTree",
-      "Behaviour Trees",
-      "AI Perception",
-    ],
+    tags: ["Unreal Engine 5", "C++", "AI"],
     badge: "academic",
   },
   {
@@ -67,31 +60,30 @@ const otherProjects: OtherProject[] = [
           <p class="hero-eyebrow">// gameplay &middot; ai &middot; c++</p>
           <h1 class="hero-name">Fernando Fernández Andueza</h1>
           <p class="hero-role">Gameplay &amp; AI Programmer</p>
+          <p class="hero-availability">
+            Valencia, Spain &nbsp;·&nbsp; open to relocation and remote &nbsp;
+          </p>
           <p class="hero-pitch">
             I'm a gameplay &amp; AI programmer working in Unreal Engine 5 (C++ and Blueprints).
             I shipped <strong>Beerserker: The Stolen Brew</strong> on Steam — a 10-month
-            production with a multidisciplinary team of 20+ at ESAT, published by Grumpy Games —
-            where I built the AI for every enemy archetype in StateTree.
+            production with a multidisciplinary team of 20+ at ESAT — where I owned the
+            enemy AI: four archetypes in StateTree, from a melee grunt to a tank mini-boss
+            with four distinct attack patterns.
           </p>
           <p class="hero-pitch">
-            Alongside it I wrote <strong>XEMA</strong>, a custom C++ engine, from scratch:
-            OpenGL 4.5, deferred PBR rendering, an ECS core and a
-            <strong>Nintendo Switch port</strong>, with a PlayStation 4 port currently in
-            progress. Before games I spent 2+ years as a fullstack developer shipping ERP
-            software in production.
+            I work across engines — Unreal and Unity on shipped and in-development titles,
+            plus <strong>XEMA</strong>, a custom C++ engine I wrote from scratch and ported
+            to <strong>Nintendo Switch</strong>, which is where I learned what the engines
+            are doing underneath. Before games I spent 2+ years as a fullstack developer
+            shipping ERP software in production.
           </p>
 
           <div class="hero-ctas">
             <a href="#projects" class="btn-hero-primary">View projects</a>
-            <a href={`${import.meta.env.BASE_URL}/cv`} class="btn-hero-ghost">View CV</a>
-            <a
-              href={profile.github}
-              target="_blank"
-              rel="noopener"
-              class="btn-hero-ghost"
-            >
-              GitHub ↗
+            <a href={`${import.meta.env.BASE_URL}/beerserker`} class="btn-hero-ghost">
+              Enemy AI breakdown
             </a>
+            <a href={`${import.meta.env.BASE_URL}/cv`} class="btn-hero-ghost">View CV</a>
             <a
               href={profile.linkedin}
               target="_blank"
@@ -138,7 +130,7 @@ const otherProjects: OtherProject[] = [
             <iframe
               src="https://www.youtube.com/embed/2bR2OxafTjQ?si=HfbHE73XUxKJRXTU"
               title="Beerserker: The Stolen Brew — Trailer"
-              allow="accelerated-encrypted-media; picture-in-picture"
+              allow="encrypted-media; picture-in-picture"
               loading="lazy"
               allowfullscreen></iframe>
           </div>
@@ -146,13 +138,16 @@ const otherProjects: OtherProject[] = [
           <p>
             A fast-paced arcade action game with a comical twist, produced over 10
             months by a multidisciplinary team of 20+ programmers, artists, musicians
-            and designers at ESAT, and published on Steam by Grumpy Games. I owned the
-            enemy AI, built entirely in <strong>StateTree</strong>: a melee enemy, a
-            ranged enemy, an explosive enemy, and a tank mini-boss with four distinct
-            attack patterns.
+            and designers at ESAT, and released on Steam in Early Access in July 2026.
+            I owned the enemy AI, built entirely in <strong>StateTree</strong>: a melee
+            enemy, a ranged enemy, an explosive enemy, and a tank mini-boss with four
+            distinct attack patterns.
           </p>
 
           <div class="card-links">
+            <a href={`${import.meta.env.BASE_URL}/beerserker`} class="btn-secondary"
+              >AI breakdown →</a
+            >
             <a
               href="https://store.steampowered.com/app/4522440/"
               target="_blank"
@@ -200,13 +195,12 @@ const otherProjects: OtherProject[] = [
 
           <p>
             XEMA engine is a graphics engine I developed solo over the course of
-            10 months using OpenGL for both PC and Nintendo Switch (with a PS4
-            port currently in progress). An ECS architecture was chosen to
+            10 months using OpenGL for both PC and Nintendo Switch (libnx). An ECS architecture was chosen to
             ensure the engine core is efficient and cache-friendly. It features
-            deferred rendering with PBR capabilities. A job system has also been
+            deferred rendering with PBR capabilities and instanced rendering to draw
+            repeated geometry in a single call. A job system has also been
             implemented, which the engine uses for asynchronous asset loading.
-            It includes a Lua scripting system, PhysX integration and
-            multithreaded Wave Function Collapse biome generation.
+            It includes a Lua scripting system and PhysX integration.
           </p>
 
           <div class="card-links">
@@ -228,14 +222,14 @@ const otherProjects: OtherProject[] = [
           <h3>Roadtrip: The Engine of Madness</h3>
           <p class="card-subtitle">
             Horror driving game &nbsp;·&nbsp; Oniric Tales &nbsp;·&nbsp;
-            Gameplay Programmer
+            Gameplay Programmer, Dec 2024 — Jun 2025
           </p>
 
           <div class="video-wrapper card-media">
             <iframe
               src="https://www.youtube.com/embed/e15C8ltjDOQ?si=vq4NW1F98MPu64Yu"
               title="Roadtrip: The Engine of Madness — Trailer"
-              allow="accelerated-encrypted-media; picture-in-picture"
+              allow="encrypted-media; picture-in-picture"
               loading="lazy"
               allowfullscreen></iframe>
           </div>
@@ -344,6 +338,13 @@ const otherProjects: OtherProject[] = [
         <div class="contact-actions">
           <a href={`mailto:${profile.email}`} class="btn-hero-primary">{profile.email}</a>
           <a href={`${import.meta.env.BASE_URL}/cv`} class="btn-hero-ghost">View CV</a>
+          <a
+            href={`${import.meta.env.BASE_URL}/cv-fernando-fernandez-andueza.pdf`}
+            class="btn-hero-ghost"
+            download
+          >
+            CV (PDF) ↓
+          </a>
           <a href={profile.linkedin} target="_blank" rel="noopener" class="btn-hero-ghost">LinkedIn ↗</a>
           <a href={profile.github} target="_blank" rel="noopener" class="btn-hero-ghost">GitHub ↗</a>
           <a href={profile.itch} target="_blank" rel="noopener" class="btn-hero-ghost">itch.io ↗</a>

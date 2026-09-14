@@ -30,7 +30,19 @@ const lastUpdated = new Date().toLocaleDateString('en-GB', {
   <div class="container cv-container">
     <div class="cv-toolbar">
       <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
-      <button type="button" id="print-cv" class="btn-hero-primary">Save as PDF</button>
+      <div class="cv-toolbar-actions">
+        {/* A real file, because application forms and ATS ask you to upload one
+            rather than to print a page. Regenerate it when this CV changes —
+            see the README. */}
+        <a
+          href={`${import.meta.env.BASE_URL}/cv-fernando-fernandez-andueza.pdf`}
+          class="btn-hero-primary"
+          download
+        >
+          Download PDF
+        </a>
+        <button type="button" id="print-cv" class="btn-hero-ghost">Save as PDF</button>
+      </div>
     </div>
 
     <article class="cv-sheet">
@@ -143,6 +155,13 @@ const lastUpdated = new Date().toLocaleDateString('en-GB', {
   }
 
   .cv-toolbar .back-link { margin-bottom: 0; }
+
+  .cv-toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: .625rem;
+    flex-wrap: wrap;
+  }
 
   .cv-sheet {
     background: var(--surface);

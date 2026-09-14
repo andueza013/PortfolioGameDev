@@ -25,9 +25,12 @@
 
   --text: #f8fafc;
   --text-2: #94a3b8;
-  --text-3: #64748b;
+  --text-3: #8b9bb4;
 
   --accent: #3b82f6;
+  /* Darker accent for solid fills that carry white text: #3b82f6 gives only
+     3.68:1 against #fff, below the 4.5:1 WCAG AA needs. This one gives 5.17:1. */
+  --accent-strong: #2563eb;
   --accent-bg: rgba(59, 130, 246, .08);
   --accent-bdr: rgba(59, 130, 246, .28);
 
@@ -37,6 +40,9 @@
   --purple: #a78bfa;
   --purple-bg: rgba(167, 139, 250, .08);
   --purple-bdr: rgba(167, 139, 250, .25);
+  --amber: #f59e0b;
+  --amber-bg: rgba(245, 158, 11, .08);
+  --amber-bdr: rgba(245, 158, 11, .25);
 
   --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
@@ -261,6 +267,17 @@ section+section {
 .hero-role {
   font-size: clamp(1.1rem, 2.5vw, 1.375rem);
   color: var(--text-2);
+  margin-bottom: .5rem;
+}
+
+/* Location, mobility and work status: the first thing a recruiter checks, and
+   it used to be reachable only from the contact panel at the foot of the page. */
+.hero-availability {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--text-3);
+  letter-spacing: .01em;
+  line-height: 1.6;
   margin-bottom: 1.75rem;
 }
 
@@ -301,9 +318,9 @@ section+section {
   font-weight: 500;
   padding: .6rem 1.25rem;
   border-radius: 8px;
-  background: var(--accent);
+  background: var(--accent-strong);
   color: #fff;
-  border: 1px solid var(--accent);
+  border: 1px solid var(--accent-strong);
   transition: opacity .15s;
 }
 
@@ -497,9 +514,9 @@ section+section {
 }
 
 .badge-gamejam {
-  color: #f59e0b;
-  background: rgba(245, 158, 11, .08);
-  border-color: rgba(245, 158, 11, .25);
+  color: var(--amber);
+  background: var(--amber-bg);
+  border-color: var(--amber-bdr);
 }
 
 .badge-academic {
@@ -710,6 +727,13 @@ section+section {
   line-height: 1.6;
 }
 
+.tech-figure img,
+.tech-figure video {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+}
+
 .tech-section h2 {
   font-size: 1.25rem;
   font-weight: 500;
@@ -745,28 +769,288 @@ section+section {
   list-style: none;
 }
 
+/* The bullet is positioned, not a flex item. `display: flex` here turned every
+   inline child into a flex item, so a mid-sentence <strong> was pulled out of
+   the text flow and pushed apart by the gap. */
 .tech-card li {
-  display: flex;
+  position: relative;
+  padding-left: .875rem;
   font-size: 13.5px;
   color: var(--text-2);
   line-height: 1.6;
-  gap: .5rem;
   list-style: none;
 }
 
 .tech-card li::before {
   content: '';
+  position: absolute;
+  left: 0;
+  top: .55em;
   width: 4px;
   height: 4px;
   border-radius: 50%;
   background: var(--accent);
-  flex-shrink: 0;
-  margin-top: .5rem;
 }
 
 .tech-card li strong {
   color: var(--text);
   font-weight: 500;
+}
+
+/* ── Editorial detail page (beerserker) ───────────────────────────────────
+   Long-form alternative to the tech-grid/tech-card pattern above: running
+   prose, numbered rows and pull-quotes instead of a repeated card grid. */
+.ed-kicker {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+/* Sub-topic label inside a prose section, e.g. "Perception" before its
+   paragraph when a section covers more than one topic */
+.ed-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: .5rem;
+}
+
+.ed-lede {
+  font-size: 1.1875rem;
+  line-height: 1.8;
+  color: var(--text-2);
+  max-width: 680px;
+  margin-bottom: 1rem;
+}
+
+.ed-lede strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Drop cap on the opening paragraph of a prose section */
+.ed-lede-drop::first-letter {
+  font-size: 3.1em;
+  font-weight: 300;
+  float: left;
+  line-height: .82;
+  padding: 4px 10px 0 0;
+  color: var(--accent);
+}
+
+.ed-prose {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-2);
+  max-width: 680px;
+  margin-bottom: 1.25rem;
+}
+
+.ed-prose:last-child {
+  margin-bottom: 0;
+}
+
+.ed-prose strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.ed-quote {
+  margin: 2rem 0;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--accent);
+}
+
+.ed-quote p {
+  font-size: 1.4rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text);
+  margin: 0;
+}
+
+.ed-quote--amber { border-color: var(--amber); }
+
+/* Alternating image/text row — the four archetypes */
+.ed-row {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+}
+
+.ed-row + .ed-row {
+  margin-top: 3.5rem;
+}
+
+.ed-num {
+  flex: 0 0 auto;
+  width: 4.5rem;
+  font-size: 4.25rem;
+  font-weight: 200;
+  line-height: 1;
+  color: var(--border-muted);
+  order: 0;
+}
+
+.ed-media {
+  flex: 0 0 320px;
+  order: 1;
+}
+
+.ed-media .tech-figure {
+  margin-top: 0;
+  max-width: none;
+}
+
+.ed-media img,
+.ed-media video {
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.ed-body {
+  flex: 1;
+  min-width: 0;
+  order: 2;
+}
+
+.ed-row--rev .ed-media { order: 2; }
+.ed-row--rev .ed-body { order: 1; }
+
+.ed-body h3 {
+  font-size: 1.375rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: .625rem;
+}
+
+.ed-body p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-2);
+}
+
+.ed-body p strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.ed-rule {
+  width: 2.25rem;
+  height: 2px;
+  margin-bottom: 1rem;
+  background: var(--accent);
+}
+
+.ed-rule--purple { background: var(--purple); }
+.ed-rule--amber { background: var(--amber); }
+.ed-rule--green { background: var(--green); }
+
+/* Numbered entries without a card box — challenges & solutions, retrospective */
+.ed-list {
+  max-width: 760px;
+}
+
+.ed-item {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border-muted);
+}
+
+.ed-item:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.ed-item-index {
+  flex: 0 0 2rem;
+  padding-top: .15rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.ed-item-body h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: .5rem;
+}
+
+.ed-item-body p {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+.ed-item-body p + p {
+  margin-top: .5rem;
+}
+
+/* Steam capsule beside the page header */
+.ed-header-panel {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.ed-header-capsule {
+  flex: 0 0 200px;
+  width: 200px;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, .2);
+}
+
+.ed-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .ed-header-panel {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .ed-header-capsule {
+    flex-basis: auto;
+    width: 140px;
+  }
+
+  .ed-lede { font-size: 1.0625rem; }
+  .ed-lede-drop::first-letter { font-size: 2.6em; }
+  .ed-quote p { font-size: 1.15rem; }
+
+  .ed-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .ed-num,
+  .ed-media,
+  .ed-body,
+  .ed-row--rev .ed-media,
+  .ed-row--rev .ed-body {
+    order: initial;
+  }
+
+  .ed-num { font-size: 2.5rem; width: auto; }
+  .ed-media { flex-basis: auto; width: 100%; }
 }
 
 /* ── Footer ────────────────────────────────────────────────────────────── */
@@ -998,11 +1282,13 @@ section+section {
 }
 
 /* ── Featured Grid Layout ──────────────────────────────────────────────── */
+/* Three columns: three featured projects, one per column. */
 .featured-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
+
 
 @media (max-width: 1200px) {
   .featured-grid { grid-template-columns: repeat(2, 1fr); }

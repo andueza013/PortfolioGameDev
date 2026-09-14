@@ -36,13 +36,22 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <link rel="icon" href={`${base}/favicon.ico`} sizes="32x32" />
 
-    <!-- Open Graph (LinkedIn / Twitter previews) -->
-    <meta property="og:title"       content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type"        content="website" />
-    <meta property="og:url"         content={canonical} />
-    <meta property="og:image"       content={ogImage} />
-    <meta name="twitter:card"       content="summary_large_image" />
+    <!-- Open Graph (LinkedIn / Twitter previews).
+         The image is the 800×800 portrait, so the card type is `summary`, not
+         `summary_large_image` — the latter expects roughly 1200×630 and would
+         crop a square portrait badly. Swap both if a proper 1200×630 card is
+         ever made. -->
+    <meta property="og:title"        content={title} />
+    <meta property="og:description"  content={description} />
+    <meta property="og:type"         content="website" />
+    <meta property="og:url"          content={canonical} />
+    <meta property="og:site_name"    content="Fernando Fernández Andueza" />
+    <meta property="og:locale"       content="en_GB" />
+    <meta property="og:image"        content={ogImage} />
+    <meta property="og:image:width"  content="800" />
+    <meta property="og:image:height" content="800" />
+    <meta property="og:image:alt"    content="Portrait of Fernando Fernández Andueza" />
+    <meta name="twitter:card"        content="summary" />
 
     <title>{title}</title>
 

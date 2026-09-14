@@ -70,7 +70,7 @@ export const experience: Entry[] = [
     org: 'Beerserker: The Stolen Brew',
     orgLink: 'https://store.steampowered.com/app/4522440/',
     orgNote: 'ESAT final-year production, published on Steam by Grumpy Games',
-    date: 'Sept 2025 — Present',
+    date: 'Sept 2025 — Jul 2026',
     body:
       'Enemy AI on a 10-month production built by a 20+ person multidisciplinary team at ESAT ' +
       'and released commercially on Steam. Designed and implemented four distinct enemy ' +
@@ -141,10 +141,10 @@ export const cvProjects: Project[] = [
     link: 'https://andueza013.github.io/PortfolioGameDev/graphic-engine',
     body:
       'Solo-built engine, 10 months. ECS core storing components in contiguous arrays with ' +
-      'O(1) access, deferred renderer with PBR, a std::future job system driving asynchronous ' +
-      'asset loading, multithreaded Wave Function Collapse for biome generation, Lua scripting ' +
-      'through sol2 and PhysX 5 integration. Ported to Nintendo Switch via libnx and EGL; a ' +
-      'PlayStation 4 port to GNM/GNMX is in progress.',
+      'O(1) access, deferred renderer with PBR and instanced rendering, a std::future job ' +
+      'system driving asynchronous asset loading, multithreaded Wave Function Collapse for ' +
+      'biome generation, Lua scripting through sol2 and PhysX 5 integration. Ported to ' +
+      'Nintendo Switch via libnx and EGL; a PlayStation 4 port to GNM/GNMX is in progress.',
   },
   {
     name: 'Abandoned Hospital',
