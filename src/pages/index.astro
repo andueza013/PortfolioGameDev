@@ -19,7 +19,7 @@ interface OtherProject {
 const otherProjects: OtherProject[] = [
   {
     title: "Abandoned Hospital",
-    desc: "AI systems study — solo project. Enemy and NPC behaviour driven by AI Perception and EQS in Unreal Engine. Built it twice on purpose: first with behaviour trees, then rebuilt from scratch on StateTree, to see what each architecture actually costs on the same problem rather than reading about the difference.",
+    desc: "Class exercise to work with AI Perception and EQS in Unreal Engine, built with a behaviour tree, for enemy and NPC behaviour. Once I had handed it in, I rebuilt it on my own with free assets and rewrote the AI from scratch with StateTree.",
     img: "AH.webp",
     tags: ["Unreal Engine 5", "C++", "AI"],
     badge: "academic",
@@ -61,37 +61,24 @@ const otherProjects: OtherProject[] = [
           <h1 class="hero-name">Fernando Fernández Andueza</h1>
           <p class="hero-role">Gameplay &amp; AI Programmer</p>
           <p class="hero-availability">
-            Valencia, Spain &nbsp;·&nbsp; open to relocation and remote &nbsp;
+            Valencia, Spain &nbsp;·&nbsp; open to relocation within Spain and to remote work
           </p>
           <p class="hero-pitch">
-            I'm a gameplay &amp; AI programmer working in Unreal Engine 5 (C++ and Blueprints).
-            I shipped <strong>Beerserker: The Stolen Brew</strong> on Steam — a 10-month
-            production with a multidisciplinary team of 20+ at ESAT — where I owned the
-            enemy AI: four archetypes in StateTree, from a melee grunt to a tank mini-boss
-            with four distinct attack patterns.
+            I'm a Game Programmer with a passion for Game AI, procedural generation and
+            gameplay systems and mechanics. I built the enemy AI for <strong>Beerserker: The Stolen Brew</strong>,
+            a final-year project by a team of
+            about 20 that is on Steam in Early Access, and I built <strong>XEMA</strong>, a
+            custom C++ and OpenGL engine that taught me how engines work under the hood.
           </p>
           <p class="hero-pitch">
-            I work across engines — Unreal and Unity on shipped and in-development titles,
-            plus <strong>XEMA</strong>, a custom C++ engine I wrote from scratch and ported
-            to <strong>Nintendo Switch</strong>, which is where I learned what the engines
-            are doing underneath. Before games I spent 2+ years as a fullstack developer
-            shipping ERP software in production.
+            I work with Unreal and Unity. Before games I spent two and a half years as a
+            fullstack developer on ERP software.
           </p>
 
           <div class="hero-ctas">
             <a href="#projects" class="btn-hero-primary">View projects</a>
-            <a href={`${import.meta.env.BASE_URL}/beerserker`} class="btn-hero-ghost">
-              Enemy AI breakdown
-            </a>
             <a href={`${import.meta.env.BASE_URL}/cv`} class="btn-hero-ghost">View CV</a>
-            <a
-              href={profile.linkedin}
-              target="_blank"
-              rel="noopener"
-              class="btn-hero-ghost"
-            >
-              LinkedIn ↗
-            </a>
+            <a href={`mailto:${profile.email}`} class="btn-hero-ghost">{profile.email}</a>
           </div>
         </div>
 
@@ -116,14 +103,14 @@ const otherProjects: OtherProject[] = [
         <article class="card-featured">
           <div class="card-meta">
             <span class="badge badge-shipped">
-              <span class="badge-dot"></span>Available on Steam
+              <span class="badge-dot"></span>Early Access on Steam
             </span>
             <span class="card-engine">Unreal Engine 5 &nbsp;·&nbsp; C++</span>
           </div>
 
           <h3>Beerserker: The Stolen Brew</h3>
           <p class="card-subtitle">
-            Third-person action game &nbsp;·&nbsp; ESAT × Grumpy Games &nbsp;·&nbsp; Gameplay &amp; AI Programmer
+            ESAT × Grumpy Games &nbsp;·&nbsp; Gameplay &amp; AI Programmer
           </p>
 
           <div class="video-wrapper card-media">
@@ -136,12 +123,21 @@ const otherProjects: OtherProject[] = [
           </div>
 
           <p>
-            A fast-paced arcade action game with a comical twist, produced over 10
-            months by a multidisciplinary team of 20+ programmers, artists, musicians
-            and designers at ESAT, and released on Steam in Early Access in July 2026.
-            I owned the enemy AI, built entirely in <strong>StateTree</strong>: a melee
-            enemy, a ranged enemy, an explosive enemy, and a tank mini-boss with four
-            distinct attack patterns.
+            A fast-paced arcade action game with a comical twist. It is our final-year
+            project at ESAT, made by about 20 people across programming, art, design,
+            music and production, and it came out on Steam in Early Access in July 2026.
+          </p>
+          <p>
+            I worked mainly on the AI. I implemented the four enemy archetypes you meet
+            in the game (melee, ranged, explosive and a tank mini-boss), using <strong>StateTree</strong> in C++ and Blueprints. I also implemented a
+            templated object pool as a plugin, so it is modular and can be taken to other
+            projects, and the enemy spawners. Finally, I was in
+            charge of managing the Steam builds.
+          </p>
+          <p>
+            I have used StateTree with custom tasks and conditions, EQS to query the
+            environment, actor components, plugins, Animation Montages, Animation
+            Notifies, Two Bone IK and GameInstance Subsystems.
           </p>
 
           <div class="card-links">
@@ -177,13 +173,13 @@ const otherProjects: OtherProject[] = [
               <span class="badge-dot"></span>University project
             </span>
             <span class="card-engine"
-              >C++ &nbsp;·&nbsp; OpenGL 4.5 &nbsp;·&nbsp; Nintendo Switch</span
+              >C++ &nbsp;·&nbsp; OpenGL &nbsp;·&nbsp; Nintendo Switch (emulator)</span
             >
           </div>
 
           <h3>XEMA — Custom 3D Engine</h3>
           <p class="card-subtitle">
-            Built from scratch &nbsp;·&nbsp; Cross-platform
+            Built entirely by me &nbsp;·&nbsp; PC and Nintendo Switch
           </p>
 
           <img
@@ -194,13 +190,14 @@ const otherProjects: OtherProject[] = [
           />
 
           <p>
-            XEMA engine is a graphics engine I developed solo over the course of
-            10 months using OpenGL for both PC and Nintendo Switch (libnx). An ECS architecture was chosen to
-            ensure the engine core is efficient and cache-friendly. It features
-            deferred rendering with PBR capabilities and instanced rendering to draw
-            repeated geometry in a single call. A job system has also been
-            implemented, which the engine uses for asynchronous asset loading.
-            It includes a Lua scripting system and PhysX integration.
+            XEMA is a graphics engine I built entirely myself with OpenGL and C++,
+            for both PC and Nintendo Switch (on Switch I have only tested it on an
+            emulator). It has an ECS architecture, deferred PBR rendering with
+            shadow mapping and instanced rendering, and a JobSystem to speed up work
+            such as asynchronous mesh loading. It also has Lua scripting and PhysX
+            integration for physics, with GLFW for input and window management, and
+            ImGui for visual markers of entities, components and performance. I am
+            currently working on a PS4 port using its own graphics API.
           </p>
 
           <div class="card-links">
@@ -283,14 +280,18 @@ const otherProjects: OtherProject[] = [
       <div class="resume-layout">
         <div class="resume-column">
           <h3 class="resume-section-title">Experience</h3>
-          {experience.map((entry) => <ResumeEntry entry={entry} />)}
+          {experience.map((entry) => <ResumeEntry entry={entry} compact />)}
         </div>
 
         <div class="resume-column">
           <h3 class="resume-section-title">Academic path</h3>
-          {education.map((entry) => <ResumeEntry entry={entry} />)}
+          {education.map((entry) => <ResumeEntry entry={entry} compact />)}
         </div>
       </div>
+
+      <p class="resume-more">
+        <a href={`${import.meta.env.BASE_URL}/cv`} class="btn-secondary">Full details in the CV →</a>
+      </p>
     </section>
 
     <!-- ── SKILLS ────────────────────────────────────────────────────────── -->
@@ -346,7 +347,6 @@ const otherProjects: OtherProject[] = [
             CV (PDF) ↓
           </a>
           <a href={profile.linkedin} target="_blank" rel="noopener" class="btn-hero-ghost">LinkedIn ↗</a>
-          <a href={profile.github} target="_blank" rel="noopener" class="btn-hero-ghost">GitHub ↗</a>
           <a href={profile.itch} target="_blank" rel="noopener" class="btn-hero-ghost">itch.io ↗</a>
         </div>
       </div>

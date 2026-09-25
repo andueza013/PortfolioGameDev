@@ -16,7 +16,7 @@ interface Props {
 
 const {
   title,
-  description = 'Portfolio of Fernando Fernández Andueza — Gameplay & AI Programmer working in Unreal Engine 5 (C++), Unity (C#), and a custom C++ engine shipped to Nintendo Switch.',
+  description = 'Portfolio of Fernando Fernández Andueza — Gameplay & AI Programmer working in Unreal Engine 5 (C++), Unity (C#), and a custom C++ engine ported to Nintendo Switch (tested on an emulator).',
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
@@ -81,7 +81,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
             Open to gameplay programmer &amp; AI programmer roles
           </p>
           <ul class="footer-links">
-            <li><a href="https://github.com/andueza013" target="_blank" rel="noopener">GitHub</a></li>
             <li><a href="https://linkedin.com/in/fernando-fernandez-andueza" target="_blank" rel="noopener">LinkedIn</a></li>
             <li><a href="https://anduezadev.itch.io" target="_blank" rel="noopener">itch.io</a></li>
             <li><a href="mailto:anduezadev@gmail.com">Email</a></li>

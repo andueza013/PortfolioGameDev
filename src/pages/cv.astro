@@ -21,6 +21,13 @@ const lastUpdated = new Date().toLocaleDateString('en-GB', {
   month: 'long',
   year: 'numeric',
 });
+
+// On paper the full URL is spelled out after each entry link; strip the protocol
+// and Steam's trailing slug so it fits on one line.
+const printUrl = (href: string) =>
+  href
+    .replace(/^https?:\/\//, '')
+    .replace(/(store\.steampowered\.com\/app\/\d+).*/, '$1');
 ---
 
 <Layout
@@ -52,12 +59,11 @@ const lastUpdated = new Date().toLocaleDateString('en-GB', {
         <p class="cv-contact">
           <a href={`mailto:${profile.email}`}>{profile.email}</a> ·
           <a href={profile.linkedin}>linkedin.com/in/fernando-fernandez-andueza</a> ·
-          <a href={profile.github}>github.com/andueza013</a> ·
           <a href={profile.itch}>anduezadev.itch.io</a>
         </p>
         <p class="cv-contact">
           {profile.location} &middot; EU citizen &middot; open to relocation within Spain and to
-          remote work &middot; Spanish (native), English (professional)
+          remote work &middot; Spanish (native)
         </p>
       </header>
 
@@ -75,7 +81,7 @@ const lastUpdated = new Date().toLocaleDateString('en-GB', {
                 {e.role}{' '}
                 <span class="cv-org">
                   &middot;{' '}
-                  {e.orgLink ? <a href={e.orgLink}>{e.org}</a> : e.org}
+                  {e.orgLink ? <a href={e.orgLink} data-print={printUrl(e.orgLink)}>{e.org}</a> : e.org}
                   {e.orgNote && <span class="cv-org-note"> &middot; {e.orgNote}</span>}
                 </span>
               </h3>
@@ -91,7 +97,7 @@ const lastUpdated = new Date().toLocaleDateString('en-GB', {
         {cvProjects.map((pr) => (
           <div class="cv-entry">
             <div class="cv-entry-head">
-              <h3>{pr.link ? <a href={pr.link}>{pr.name}</a> : pr.name}</h3>
+              <h3>{pr.link ? <a href={pr.link} data-print={printUrl(pr.link)}>{pr.name}</a> : pr.name}</h3>
               <span class="cv-date">{pr.meta}</span>
             </div>
             <p>{pr.body}</p>
@@ -203,7 +209,7 @@ const lastUpdated = new Date().toLocaleDateString('en-GB', {
 
   .cv-contact a:hover { color: var(--accent); }
 
-  .cv-block { margin-bottom: 1.75rem; }
+  .cv-block { margin-bottom: 1.75rem; padding: 0; }
   .cv-block:last-child { margin-bottom: 0; }
 
   .cv-block h2 {
@@ -285,7 +291,7 @@ const lastUpdated = new Date().toLocaleDateString('en-GB', {
 
 <style is:global>
   @media print {
-    @page { size: A4; margin: 13mm 14mm; }
+    @page { size: A4; margin: 11mm 14mm; }
 
     /* Only the CV sheet survives */
     .site-nav,
@@ -335,7 +341,7 @@ const lastUpdated = new Date().toLocaleDateString('en-GB', {
     /* On paper a link is dead weight unless the URL is spelled out. The contact
        line already prints its URLs as text, so only entry links get this. */
     .cv-entry a[href^="http"]::after {
-      content: " (" attr(href) ")";
+      content: " (" attr(data-print) ")";
       font-family: var(--mono);
       font-size: 8pt;
       font-weight: 400;
@@ -344,12 +350,18 @@ const lastUpdated = new Date().toLocaleDateString('en-GB', {
     }
 
     .cv-summary,
-    .cv-entry p { orphans: 3; widows: 3; }
+    .cv-entry p { orphans: 3; widows: 3; line-height: 1.45 !important; }
+    .cv-skills dd { line-height: 1.4 !important; }
 
-    /* Never split an entry across pages */
-    .cv-head,
-    .cv-entry { break-inside: avoid; page-break-inside: avoid; }
+    /* Long entries may flow onto the next page — keeping them whole left a
+       third of page 1 empty. The heading still never gets stranded. */
+    .cv-head { break-inside: avoid; page-break-inside: avoid; }
+    .cv-entry-head { break-after: avoid; page-break-after: avoid; }
 
-    .cv-updated { color: #666 !important; }
+    .cv-updated { color: #666 !important; margin-top: 1rem !important; }
+
+    /* Tighter vertical rhythm on paper so the CV fits on two pages */
+    .cv-block { margin-bottom: 1.25rem !important; }
+    .cv-entry { margin-bottom: .8rem !important; }
   }
 </style>

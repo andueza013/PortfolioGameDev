@@ -2,17 +2,20 @@
 // src/components/ResumeEntry.astro
 // One block of the home page's Experience / Academic path timeline.
 // The data comes from src/data/cv.ts, so the CV page shows the same entries.
+// `compact` drops the body: the home page shows role, org and dates only and
+// links to /cv for the detail.
 
 import type { Entry } from '../data/cv';
 
 interface Props {
   entry: Entry;
+  compact?: boolean;
 }
 
-const { entry } = Astro.props;
+const { entry, compact = false } = Astro.props;
 ---
 
-<div class="resume-block">
+<div class:list={['resume-block', { 'resume-block--compact': compact }]}>
   <div class="resume-header">
     <span class="resume-timeline-dot"></span>
     <div class="resume-title-group">
@@ -28,5 +31,5 @@ const { entry } = Astro.props;
     </div>
     <span class="resume-badge-date">{entry.date}</span>
   </div>
-  <p class="resume-body">{entry.body}</p>
+  {!compact && <p class="resume-body">{entry.body}</p>}
 </div>

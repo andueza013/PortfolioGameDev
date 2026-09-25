@@ -734,6 +734,57 @@ section+section {
   border-radius: 8px;
 }
 
+/* Screenshots with small text: never upscale them past their real size */
+.tech-figure--inset { max-width: 290px; margin-top: 1.25rem; }
+
+/* width/height attributes are only there to reserve space; let the width drive */
+.tech-figure img { height: auto; }
+.tech-figure .gbuffer-item--square img { height: 100%; }
+
+/* Cards in a row keep their own height, so a short card isn't padded out */
+.tech-grid { align-items: start; }
+.tech-figure--natural { max-width: 623px; }
+.tech-figure--inset img,
+.tech-figure--natural img { border-radius: 4px; }
+
+/* RenderDoc G-buffer: three wide targets stacked, shadow map beside them */
+.gbuffer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+  margin-top: .75rem;
+}
+
+.gbuffer-stack {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.gbuffer-item { position: relative; }
+
+.gbuffer-item--square img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.gbuffer-label {
+  position: absolute;
+  top: .5rem;
+  left: .5rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, .65);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+}
+
+@media (max-width: 640px) {
+  .gbuffer-grid { grid-template-columns: 1fr; }
+}
+
 .tech-section h2 {
   font-size: 1.25rem;
   font-weight: 500;
@@ -1261,6 +1312,16 @@ section+section {
   font-size: 14.5px;
   color: var(--text-2);
   line-height: 1.75;
+}
+
+/* Home page: role, org and dates only — the detail lives on /cv */
+.resume-block--compact .resume-header {
+  margin-bottom: 0;
+}
+
+.resume-more {
+  margin-top: 2.5rem;
+  text-align: center;
 }
 
 /* Responsive para dispositivos móviles */

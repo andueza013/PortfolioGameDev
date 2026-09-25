@@ -6,9 +6,6 @@
 // repository is reproduced here. Everything below describes architecture and
 // decisions, illustrated with diagrams and editor captures.
 //
-// PENDING: the spacing/slots line under Melee needs Fernando to confirm
-// against the shipped project before this is considered final.
-//
 // MEDIA: archetype clips are muted, looping <video> (public/project-images/
 // beerserker/videos/*.mp4) rather than <img>/GIF — Astro's image optimisation
 // doesn't process animated GIFs, and a properly encoded MP4 is a fraction of
@@ -23,7 +20,7 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout
   title="Beerserker Enemy AI · Technical Breakdown — Fernando Fernández Andueza"
-  description="How the enemy AI of Beerserker: The Stolen Brew was built in Unreal Engine 5 with StateTree — four archetypes, from a melee grunt to a four-pattern tank mini-boss."
+  description="How I built the enemy AI of Beerserker: The Stolen Brew in Unreal Engine 5 with StateTree: four archetypes, from a melee enemy to a tank mini-boss with four attacks."
 >
   <div class="container page-container">
 
@@ -47,7 +44,7 @@ import Layout from '../layouts/Layout.astro';
           </p>
 
           <div class="card-meta" style="margin-top: 1.5rem;">
-            <span class="badge badge-shipped"><span class="badge-dot"></span>Available on Steam</span>
+            <span class="badge badge-shipped"><span class="badge-dot"></span>Early Access on Steam</span>
             <span class="card-engine">Unreal Engine 5 &nbsp;·&nbsp; C++ &nbsp;·&nbsp; StateTree</span>
           </div>
         </div>
@@ -60,25 +57,19 @@ import Layout from '../layouts/Layout.astro';
 
       <span class="ed-label">The production</span>
       <p class="ed-prose">
-        A 10-month final-year production at <strong>ESAT</strong>, built by a multidisciplinary
-        team of <strong>20+</strong> programmers, artists, musicians and designers. Released on
-        Steam in Early Access on <strong>7 July 2026</strong> — a real ship date, with the scope
-        cuts and bug triage that implies.
+        Beerserker: The Stolen Brew is my final-year project at <strong>ESAT</strong>, with
+        about 20 people across programming, art, design, music and production. It came out on
+        Steam in Early Access on <strong>7 July 2026</strong> and is free.
       </p>
 
       <span class="ed-label">My ownership</span>
       <p class="ed-prose">
-        I owned the <strong>enemy AI end to end</strong>: the architecture, all four archetypes,
-        and the tuning surface the design team worked against — written in
-        <strong>Unreal Engine 5</strong> with C++ and Blueprints, on a team pipeline running
-        Perforce.
-      </p>
-
-      <span class="ed-label">The constraints</span>
-      <p class="ed-prose">
-        Arcade pacing: enemies fight in groups, so per-agent cost and the legibility of each
-        attack tell mattered more than clever planning. Designers needed to retune aggression,
-        ranges and timings without a programmer in the loop.
+        I worked mostly on the AI. I implemented the four enemy archetypes with <strong>StateTree</strong>,
+        in C++ and Blueprints, with custom tasks and conditions, and
+        used <strong>EQS</strong> to query the environment. I also built a templated object pool
+        as a plugin (for enemies, projectiles, decals and particles) and the enemy spawners, and
+        I was in charge of configuring and uploading the builds to Steam. The team worked
+        collaboratively in Perforce.
       </p>
 
       <figure class="tech-figure">
@@ -90,10 +81,7 @@ import Layout from '../layouts/Layout.astro';
             loading="lazy"
             allowfullscreen></iframe>
         </div>
-        <figcaption>
-          Beerserker: The Stolen Brew — the enemies in the trailer are the four
-          archetypes described below.
-        </figcaption>
+        <figcaption>Beerserker: The Stolen Brew — trailer.</figcaption>
       </figure>
     </div>
 
@@ -110,21 +98,18 @@ import Layout from '../layouts/Layout.astro';
               loop
               muted
               playsinline
-              aria-label="Melee enemy claiming a slot around the player and committing to an attack"
+              aria-label="Melee enemy moving towards the player and hitting them"
             >
               <source src={`${import.meta.env.BASE_URL}/project-images/beerserker/videos/Melee.mp4`} type="video/mp4" />
             </video>
-            <figcaption>Closing distance and committing to an attack.</figcaption>
+            <figcaption>Moving towards the player and hitting them.</figcaption>
           </figure>
         </div>
         <div class="ed-body">
           <h3>Melee</h3>
           <div class="ed-rule"></div>
           <p>
-            The baseline enemy, and the one that appears in the largest groups: it closes
-            distance and commits to an attack once in range. It also claims a slot around the
-            player instead of converging on the same point as everyone else, so a group never
-            stacks into a single attack line.
+            It moves towards the player until the player is in range, then hits them.
           </p>
         </div>
       </div>
@@ -138,21 +123,19 @@ import Layout from '../layouts/Layout.astro';
               loop
               muted
               playsinline
-              aria-label="Ranged enemy retreating to an EQS-selected position and firing at the player"
+              aria-label="Ranged enemy retreating to a distant place and shooting at the player"
             >
               <source src={`${import.meta.env.BASE_URL}/project-images/beerserker/videos/Ranged.mp4`} type="video/mp4" />
             </video>
-            <figcaption>Retreating to a queried position before firing.</figcaption>
+            <figcaption>Retreating to a distant place and shooting.</figcaption>
           </figure>
         </div>
         <div class="ed-body">
           <h3>Ranged</h3>
           <div class="ed-rule ed-rule--purple"></div>
           <p>
-            Retreats once the player closes inside a set range, then runs an
-            <strong>EQS</strong> query for a retreat position that also filters for line of
-            sight to the player. Fires at the player's exact current position — no leading — on
-            the same per-attack cooldown every archetype uses.
+            It gets in range and shoots. When the player is too close, it looks for a distant
+            place to retreat to and shoot from.
           </p>
         </div>
       </div>
@@ -222,22 +205,9 @@ import Layout from '../layouts/Layout.astro';
       <h2 class="ed-kicker">Why StateTree, not Behavior Tree</h2>
 
       <p class="ed-lede ed-lede-drop">
-        The four archetypes were designed around discrete states and clear transitions between
-        them — a shape Behavior Tree doesn't express directly. Building it there meant forcing
-        that shape through conditional checks, the "bool hell" that grows with every state
-        added.
-      </p>
-
-      <p class="ed-prose">
-        <strong>StateTree</strong> combines Behavior Tree-style selectors with proper states and
-        transitions, matching how the enemies were already designed instead of working against
-        it.
-      </p>
-
-      <p class="ed-prose">
-        It was also the newer tool Epic was actively investing in — production-ready since the
-        UE5.5/5.6 cycle, enabled by default from 5.6, and given a debugger to match the one
-        Behavior Tree had had for a decade.
+        We chose <strong>StateTree</strong> because Epic is adopting it as a standard, and
+        because we were forcing Behavior Trees to behave like state machines. For that, we
+        used a state machine directly: a StateTree.
       </p>
 
       <figure class="tech-figure">
@@ -247,78 +217,26 @@ import Layout from '../layouts/Layout.astro';
           loading="lazy"
         />
         <figcaption>
-          One of the archetypes' StateTree graphs, annotated — states and transitions
-          matching the discrete-state design described above.
+          One of the archetypes' StateTree graphs, annotated.
         </figcaption>
       </figure>
     </div>
 
-    <!-- ── PERCEPTION, AGGRO AND NAVIGATION ───────────────────────────────── -->
+    <!-- ── DESIGN DECISIONS ───────────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2 class="ed-kicker">Perception, aggro and navigation</h2>
-
-      <span class="ed-label">Perception</span>
-      <p class="ed-prose">
-        A custom detection volume, not AI Perception — the full sight/hearing/damage stack
-        Perception offers was more than these enemies needed to decide whether they had found
-        the player.
-      </p>
-
-      <span class="ed-label">Navigation &amp; spawning</span>
-      <p class="ed-prose">
-        Standard NavMesh navigation, moving enemies with <strong>MoveTo</strong>. The spawner
-        checks for a valid NavMesh position before placing an enemy, rather than trusting a
-        fixed spawn point.
-      </p>
-    </div>
-
-    <!-- ── THE TUNING SURFACE ──────────────────────────────────────────────── -->
-    <div class="tech-section">
-      <h2 class="ed-kicker">The tuning surface</h2>
-      <p class="ed-prose">
-        Base stats, attack cooldowns, attack range, retreat range and detection range were all
-        exposed as parameters designers could retune directly — what design could change
-        without code, without a programmer in the loop.
-      </p>
-    </div>
-
-    <!-- ── DEBUGGING AND PERFORMANCE ───────────────────────────────────────── -->
-    <div class="tech-section">
-      <h2 class="ed-kicker">Debugging and performance</h2>
-
-      <span class="ed-label">General profiling, not AI-specific</span>
-      <p class="ed-prose">
-        Unreal Insights and the Visual Studio debugger were daily tools across the whole
-        production, catching bottlenecks such as particle systems — the profiling work on this
-        project was not AI-specific.
-      </p>
-
-      <span class="ed-label">Pooling enemies instead of spawning</span>
-      <p class="ed-prose">
-        Enemies are activated and deactivated from a pool rather than spawned and destroyed,
-        built before the first enemy existed. A preventive decision, not a fix for a measured
-        problem: the game is an arcade with many enemies on screen at once, so the cost of
-        spawn/destroy churn was assumed rather than discovered.
-      </p>
-    </div>
-
-    <!-- ── CHALLENGES & SOLUTIONS ──────────────────────────────────────────── -->
-    <div class="tech-section">
-      <h2 class="ed-kicker">Challenges &amp; solutions</h2>
+      <h2 class="ed-kicker">Design decisions</h2>
 
       <div class="ed-list">
         <div class="ed-item">
           <span class="ed-item-index">01</span>
           <div class="ed-item-body">
-            <h3>Perception was overkill for what these enemies needed</h3>
+            <h3>Many enemies on screen all the time</h3>
             <p>
-              <strong>Problem:</strong> Unreal's AI Perception gives you sight, hearing and
-              damage stimuli, a whole config surface — for enemies that only ever needed to
-              answer one question: has this enemy found the player?
-            </p>
-            <p>
-              <strong>Solution:</strong> a custom detection volume instead. Less to configure,
-              nothing unused sitting in the profile.
+              I programmed a generic object pool as a plugin, so it is modular and can be taken
+              to other projects, because of the nature of the game: many enemies on screen all
+              the time, plus particles, decals and projectiles. When an enemy goes back to the
+              pool, its StateTree stops on the next frame, and when it is reused it starts again
+              from the beginning.
             </p>
           </div>
         </div>
@@ -326,16 +244,10 @@ import Layout from '../layouts/Layout.astro';
         <div class="ed-item">
           <span class="ed-item-index">02</span>
           <div class="ed-item-body">
-            <h3>Spawn/destroy churn under arcade enemy counts</h3>
+            <h3>Where the ranged enemy retreats to</h3>
             <p>
-              <strong>Problem:</strong> the game throws groups of enemies at the player
-              continuously — spawning and destroying actors at that rate is exactly the kind of
-              cost that shows up late, once content has already been built around it.
-            </p>
-            <p>
-              <strong>Solution:</strong> a pool built before the first enemy existed —
-              activate/deactivate instead of spawn/destroy, decided preventively rather than
-              after profiling caught a problem.
+              The enemy retreats to a safe place, chosen with an <strong>EQS</strong> query by
+              its distance to the player and its line of sight to them.
             </p>
           </div>
         </div>
@@ -343,16 +255,11 @@ import Layout from '../layouts/Layout.astro';
         <div class="ed-item">
           <span class="ed-item-index">03</span>
           <div class="ed-item-body">
-            <h3>A retreat that only checks range can back an enemy into a wall</h3>
+            <h3>Which attack the tank picks</h3>
             <p>
-              <strong>Problem:</strong> picking a retreat point purely by distance from the
-              player can land the ranged archetype somewhere with no line of sight to fire from,
-              or somewhere unreachable.
-            </p>
-            <p>
-              <strong>Solution:</strong> the retreat position comes from an <strong>EQS</strong>
-              query that filters for line of sight as part of scoring the position, not as a
-              separate check afterwards.
+              Each of the tank's melee attacks starts with a weight of 1, and every time it uses
+              one, that attack's weight goes up. The less an attack has been used, the more likely
+              it is to come up, so the tank doesn't keep repeating the same one.
             </p>
           </div>
         </div>
@@ -360,15 +267,39 @@ import Layout from '../layouts/Layout.astro';
         <div class="ed-item">
           <span class="ed-item-index">04</span>
           <div class="ed-item-body">
-            <h3>Designers needed to tune AI without touching code</h3>
+            <h3>Which dwarf the tank throws</h3>
             <p>
-              <strong>Problem:</strong> retuning aggression, ranges or timings through a
-              programmer does not scale across a 10-month production with a design team
-              iterating constantly.
+              When the tank calls a dwarf, it looks for the dwarves within a configurable radius,
+              checks with a line trace that it can see them, and picks the closest one. The
+              selection is triggered by an AnimNotifyState at the point in the animation where
+              the tank calls the dwarf.
             </p>
+          </div>
+        </div>
+
+        <div class="ed-item">
+          <span class="ed-item-index">05</span>
+          <div class="ed-item-body">
+            <h3>Stun through StateTree events</h3>
             <p>
-              <strong>Solution:</strong> base stats, cooldowns, ranges and detection were all
-              exposed as parameters on the archetypes, editable directly by design.
+              When the player hits an enemy with an attack that stuns, the enemy receives
+              the <code>StateTree.Stun</code> event, which takes it into the stun state. When the
+              animation ends, an anim notify sends <code>StateTree.StunFinish</code> to leave it.
+              The tank can't be stunned.
+            </p>
+          </div>
+        </div>
+
+        <div class="ed-item">
+          <span class="ed-item-index">06</span>
+          <div class="ed-item-body">
+            <h3>Exposed attributes and varied melee attacks</h3>
+            <p>
+              The enemies' attributes are exposed in the editor so they can be modified: attack
+              range, cooldowns, detection radius or honey distances. Each attack's cooldown is set
+              by GameplayTag and checked by a custom StateTree condition. In the melee enemies,
+              attacks are a list of animations: adding a new one is enough for the enemy to use
+              it, so the game doesn't feel so repetitive.
             </p>
           </div>
         </div>

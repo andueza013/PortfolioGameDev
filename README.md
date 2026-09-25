@@ -1,7 +1,7 @@
 # Portfolio — Fernando Fernández Andueza
 
 Personal portfolio of a Gameplay & AI Programmer (Unreal Engine 5 / C++, Unity / C#,
-and XEMA — a custom C++ engine shipped to Nintendo Switch).
+and XEMA — a custom C++ engine, ported to Nintendo Switch and tested on emulator).
 
 Built with [Astro](https://astro.build) as a fully static site and deployed to GitHub Pages
 at **https://andueza013.github.io/PortfolioGameDev**.
@@ -12,7 +12,7 @@ at **https://andueza013.github.io/PortfolioGameDev**.
 public/
 ├── favicon.svg, favicon.ico
 ├── profile.jpeg              # also used as the Open Graph preview image
-└── project-images/           # card thumbnails
+└── project-images/           # card thumbnails, Beerserker images and videos
 src/
 ├── components/
 │   ├── Nav.astro             # sticky header + mobile menu, shared across pages
@@ -24,6 +24,7 @@ src/
 │   └── Layout.astro          # <head>, meta/OG tags, skip link, nav + footer
 ├── pages/
 │   ├── index.astro           # hero, featured projects, other projects, résumé, skills, contact
+│   ├── beerserker.astro      # Beerserker enemy AI breakdown
 │   ├── cv.astro              # print-optimised CV (Ctrl+P → A4 PDF)
 │   └── graphic-engine.astro  # XEMA technical breakdown
 └── styles/
@@ -42,6 +43,22 @@ own spelling, so Unreal's "Behavior Tree" and Unity's "Behavior Graph" stay as t
 
 The "Other projects" grid is the `otherProjects` array in the frontmatter of
 `src/pages/index.astro`, since it is page-specific.
+
+### The PDF CV
+
+`public/cv-fernando-fernandez-andueza.pdf` is a committed file, not something the site
+generates: application forms and ATS want a file to upload, not a page to print. It is
+**not** rebuilt by `npm run build`, so regenerate it by hand whenever `src/data/cv.ts`
+changes, with the dev server running:
+
+```sh
+chrome --headless --disable-gpu --no-pdf-header-footer \
+  --print-to-pdf=public/cv-fernando-fernandez-andueza.pdf \
+  http://localhost:4321/PortfolioGameDev/cv
+```
+
+Any Chromium binary works. The `@media print` rules in `src/pages/cv.astro` do the rest —
+A4, hidden chrome, and URLs spelled out after each link.
 
 ## Commands
 

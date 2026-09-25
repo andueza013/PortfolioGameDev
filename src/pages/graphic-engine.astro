@@ -1,13 +1,15 @@
 ---
 // src/pages/graphic-engine.astro
 // Technical breakdown of the XEMA custom C++ engine.
+// Every claim here comes from the author's own description of the engine —
+// don't add technical detail that he hasn't stated.
 
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
   title="XEMA Engine · Technical Breakdown — Fernando Fernández Andueza"
-  description="Technical architecture of XEMA — a custom C++ game engine with OpenGL 4.5, ECS, Wave Function Collapse, and a Nintendo Switch port."
+  description="XEMA — a C++ and OpenGL engine with ECS, deferred PBR rendering, Lua scripting and PhysX, for PC and Nintendo Switch (tested on an emulator)."
 >
   <div class="container page-container">
 
@@ -17,15 +19,14 @@ import Layout from '../layouts/Layout.astro';
 
       <div class="card-meta">
         <span class="badge badge-personal"><span class="badge-dot"></span>University project</span>
-        <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL 4.5 &nbsp;·&nbsp; PC &nbsp;·&nbsp; Nintendo Switch</span>
+        <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL &nbsp;·&nbsp; PC &nbsp;·&nbsp; Nintendo Switch (emulator)</span>
       </div>
 
       <h1>XEMA — Custom 3D Engine</h1>
       <p class="page-intro">
-        A C++ engine built from scratch, without relying on an existing framework, to work
-        through every layer of a 3D pipeline directly — rendering, memory, threading, and
-        cross-platform portability. Shipped to Nintendo Switch; a PS4 port is currently
-        in progress.
+        XEMA is a graphics engine I built entirely myself in C++ and OpenGL, for PC and
+        Nintendo Switch. On Switch I have only tested it on an emulator. I am currently
+        working on a PS4 port using its own graphics API.
       </p>
     </div>
 
@@ -35,43 +36,41 @@ import Layout from '../layouts/Layout.astro';
       <div class="tech-grid">
 
         <div class="tech-card">
-          <h3>Entity Component System</h3>
+          <h3>Architecture</h3>
           <ul>
+            <li>ECS (Entity Component System) architecture.</li>
             <li>
-              Components stored in contiguous arrays, with <strong>O(1) access</strong> via
-              ID-based entity management instead of map lookups on the hot path.
-            </li>
-            <li>
-              Parent-child hierarchy built directly into the component arrays,
-              no separate scene graph structure.
+              JobSystem to speed up work such as asynchronous mesh loading.
             </li>
           </ul>
         </div>
 
         <div class="tech-card">
-          <h3>Job System</h3>
+          <h3>Libraries and tools</h3>
           <ul>
+            <li>GLFW for input and window management.</li>
             <li>
-              Thread pool built on <strong>std::future</strong> for fire-and-forget async work.
+              ImGui for visual markers of entities, components and performance.
             </li>
-            <li>
-              Used for asynchronous model loading and to keep procedural generation
-              off the main thread, so neither one stalls the render loop.
-            </li>
+            <li>PhysX integration for physics.</li>
+            <li>Lua scripting.</li>
           </ul>
+          <figure class="tech-figure tech-figure--inset">
+            <img
+              src={`${import.meta.env.BASE_URL}/project-images/xema/imgui-stats.png`}
+              alt="ImGui stats panel showing FPS, frame time and the time spent in each engine section"
+              width="290"
+              height="281"
+              loading="lazy"
+            />
+            <figcaption>ImGui performance panel: frame time and time per engine section.</figcaption>
+          </figure>
         </div>
 
         <div class="tech-card">
           <h3>Procedural generation</h3>
           <ul>
-            <li>
-              <strong>Wave Function Collapse</strong>, generating both biomes and
-              transitional biomes between them.
-            </li>
-            <li>
-              Runs multithreaded, followed by a separate decoration pass that places
-              detail objects once the layout is resolved.
-            </li>
+            <li>Wave Function Collapse, implemented in the engine.</li>
           </ul>
         </div>
 
@@ -81,84 +80,91 @@ import Layout from '../layouts/Layout.astro';
         <div class="video-wrapper">
           <iframe
             src="https://www.youtube.com/embed/grZnYOMaqTQ?si=gf-zIuqm6VRQ5O4K"
-            title="XEMA — Wave Function Collapse biome generation"
+            title="XEMA — Wave Function Collapse"
             allow="encrypted-media; picture-in-picture"
             loading="lazy"
             allowfullscreen></iframe>
         </div>
-        <figcaption>
-          Wave Function Collapse resolving biomes and the transitions between them,
-          followed by the decoration pass.
-        </figcaption>
+        <figcaption>Wave Function Collapse running in XEMA.</figcaption>
       </figure>
     </div>
 
     <!-- ── GRAPHICS ──────────────────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2>Graphics &amp; rendering pipeline</h2>
+      <h2>Graphics</h2>
       <div class="tech-grid">
 
         <div class="tech-card">
-          <h3>OpenGL 4.5 DSA pipeline</h3>
+          <h3>Rendering</h3>
           <ul>
-            <li>
-              Built on <strong>Direct State Access</strong>, avoiding the redundant
-              bind calls that older-style OpenGL code tends to accumulate.
-            </li>
-            <li>
-              Custom vertex buffer and VAO management, instanced rendering, UBO-based
-              uniform blocks, and hand-written GLSL shaders for each stage.
-            </li>
-          </ul>
-        </div>
-
-        <div class="tech-card">
-          <h3>Rendering techniques</h3>
-          <ul>
-            <li>
-              <strong>Deferred shading</strong> — a G-Buffer pass stores position,
-              normal, albedo, and material data.
-            </li>
-            <li>
-              <strong>PCF shadow mapping</strong> for softer shadow edges, and a
-              <strong>PBR</strong> metallic/roughness workflow using the Cook-Torrance BRDF.
-            </li>
-          </ul>
-        </div>
-
-        <div class="tech-card">
-          <h3>Platform abstraction</h3>
-          <ul>
-            <li>
-              Platform differences are resolved at <strong>link-time</strong>, not
-              through virtual dispatch, so the render path stays branch-free.
-            </li>
-            <li>
-              One rendering interface switches between OpenGL on PC and EGL on Switch
-              without any changes in the layers above it.
-            </li>
+            <li>Deferred rendering with PBR.</li>
+            <li>Shadow mapping.</li>
+            <li>Instanced rendering.</li>
           </ul>
         </div>
 
       </div>
+
+      <figure class="tech-figure">
+        <img
+          src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-final.png`}
+          alt="Final image of a XEMA frame: a procedurally generated landscape with trees and houses"
+          width="590"
+          height="186"
+          loading="lazy"
+        />
+        <div class="gbuffer-grid">
+          <div class="gbuffer-stack">
+            <div class="gbuffer-item">
+              <img src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-albedo.png`} alt="Albedo render target" width="365" height="115" loading="lazy" />
+              <span class="gbuffer-label">Albedo</span>
+            </div>
+            <div class="gbuffer-item">
+              <img src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-normal.png`} alt="Normals render target" width="664" height="210" loading="lazy" />
+              <span class="gbuffer-label">Normals</span>
+            </div>
+            <div class="gbuffer-item">
+              <img src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-position.png`} alt="Position render target" width="563" height="177" loading="lazy" />
+              <span class="gbuffer-label">Position</span>
+            </div>
+          </div>
+          <div class="gbuffer-item gbuffer-item--square">
+            <img src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-shadow.png`} alt="Shadow map seen from the light" width="490" height="488" loading="lazy" />
+            <span class="gbuffer-label">Shadow map</span>
+          </div>
+        </div>
+        <figcaption>
+          One XEMA frame captured in RenderDoc. The geometry pass writes albedo, normals and
+          position to three render targets, and the lighting pass reads them together with the
+          shadow map to draw the final image.
+        </figcaption>
+      </figure>
+
+      <figure class="tech-figure tech-figure--natural">
+        <img
+          src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-events.png`}
+          alt="RenderDoc event list with several glDrawElementsInstanced calls followed by the depth-only and colour passes"
+          width="623"
+          height="252"
+          loading="lazy"
+        />
+        <figcaption>
+          Draw calls from the same frame: repeated meshes are drawn
+          with <code>glDrawElementsInstanced</code>, up to 107 instances in a single call.
+        </figcaption>
+      </figure>
     </div>
 
-    <!-- ── CROSS-PLATFORM PORTS ────────────────────────────────────────────── -->
+    <!-- ── PLATFORMS ─────────────────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2>Cross-platform ports</h2>
+      <h2>Platforms</h2>
       <div class="tech-grid">
 
         <div class="tech-card">
-          <h3>Nintendo Switch — shipped</h3>
+          <h3>Nintendo Switch — tested on emulator</h3>
           <ul>
-            <li>
-              Ported through <strong>libnx</strong> and <strong>EGL</strong> for the
-              OpenGL context on Switch hardware.
-            </li>
-            <li>
-              Supports docked (1080p) and handheld (720p) modes, switching resolution
-              automatically.
-            </li>
+            <li>Ported through <strong>libnx</strong> and <strong>EGL</strong>.</li>
+            <li>I have only tested it on an emulator, not on a console.</li>
           </ul>
         </div>
 
@@ -166,42 +172,10 @@ import Layout from '../layouts/Layout.astro';
           <h3>PlayStation 4 — in progress</h3>
           <ul>
             <li>
-              Migrating the engine from OpenGL to the <strong>GNM/GNMX</strong> graphics API.
-            </li>
-          </ul>
-        </div>
-
-        <div class="tech-card">
-          <h3>Build system</h3>
-          <ul>
-            <li>
-              <strong>Premake5</strong> generates platform-specific build files from
-              one Lua script, integrated with the devkitPro Makefile for Switch.
+              Running on a devkit: the ECS and rendering of simple geometry.
             </li>
             <li>
-              No engine fork — the same C++ source compiles for every target.
-            </li>
-          </ul>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ── ADDITIONAL SYSTEMS ─────────────────────────────────────────────── -->
-    <div class="tech-section">
-      <h2>Additional systems</h2>
-      <div class="tech-grid">
-
-        <div class="tech-card">
-          <h3>Physics &amp; scripting</h3>
-          <ul>
-            <li>
-              <strong>PhysX 5</strong>, through a custom Physics Manager that owns
-              the scene and dispatches simulation steps.
-            </li>
-            <li>
-              <strong>Lua scripting</strong> via sol2, exposing engine types to Lua
-              without hand-written binding boilerplate.
+              Still missing: mesh loading, textures, instancing, lights, shadows and PBR.
             </li>
           </ul>
         </div>
