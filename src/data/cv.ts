@@ -19,11 +19,12 @@ export interface Entry {
   org: string;
   /** External URL for `org`, when there is one to link to. */
   orgLink?: string;
-  /** Secondary context shown after `org` — studio, campus, publisher. */
+  /** Secondary context shown under the heading — studio, campus, publisher. */
   orgNote?: string;
   /** Free-form date range, rendered verbatim. */
   date: string;
-  body: string;
+  /** One bullet each on the CV. */
+  points: string[];
 }
 
 export interface Project {
@@ -32,7 +33,8 @@ export interface Project {
   meta: string;
   /** Absolute URL — printed after the name on paper, so it must be resolvable. */
   link?: string;
-  body: string;
+  /** One bullet each on the CV. */
+  points: string[];
 }
 
 export interface SkillCategory {
@@ -44,25 +46,25 @@ export const profile = {
   name: 'Fernando Fernández Andueza',
   role: 'Gameplay & AI Programmer',
   email: 'anduezadev@gmail.com',
+  portfolio: 'https://andueza013.github.io/PortfolioGameDev',
   linkedin: 'https://linkedin.com/in/fernando-fernandez-andueza',
   itch: 'https://anduezadev.itch.io',
   location: 'Valencia, Spain',
   facts: [
     ['Based in', 'Valencia, Spain'],
-    ['Work status', 'EU citizen — no visa sponsorship needed in the EU'],
-    ['Availability', 'Open to relocation within Spain, and to remote work'],
+    ['Work status', 'EU citizen, no visa needed to work in the EU'],
+    ['Availability', 'Open to relocation within Spain and to remote work'],
     ['Languages', 'Spanish (native)'],
   ] as [string, string][],
 };
 
-/** The "Profile" block of the CV. */
+/** The "Profile" block of the CV. The Switch and PS4 detail lives under XEMA. */
 export const summary =
-  'Gameplay and AI programmer. I built the enemy AI for Beerserker: The Stolen Brew ' +
-  '(Steam, Early Access) with StateTree in Unreal Engine 5. I built XEMA, a custom C++ ' +
-  'engine, from scratch, with OpenGL 4.5, deferred PBR rendering and an ECS core. I ported ' +
-  'it to Nintendo Switch, where I have only tested it on an emulator, and a PlayStation 4 ' +
-  'port is under way: the ECS and simple-geometry rendering work, on a devkit. Before that ' +
-  'I spent two and a half years as a fullstack developer on ERP software.';
+  'Gameplay and AI programmer. I built the enemy AI for Beerserker: The Stolen Brew (Early ' +
+  'Access on Steam, team of about 20): all four archetypes, in StateTree with C++ and ' +
+  'Blueprints. I built XEMA, my own C++ and OpenGL engine, with an ECS and ' +
+  'deferred PBR rendering. I work with Unreal and Unity, and before games I spent two and a ' +
+  'half years as a fullstack developer on ERP software.';
 
 export const experience: Entry[] = [
   {
@@ -70,17 +72,20 @@ export const experience: Entry[] = [
     org: 'Beerserker: The Stolen Brew',
     orgLink: 'https://store.steampowered.com/app/4522440/',
     orgNote:
-      'Final-year project at ESAT. Developed by Grumpy Games and ESAT, published on Steam by ' +
-      'ESAT (Early Access, free)',
+      'ESAT final-year project, team of about 20 · developed by Grumpy Games and ESAT, ' +
+      'published on Steam by ESAT (Early Access, free)',
     date: 'Sept 2025 — Jul 2026',
-    body:
-      'About 20 people across programming, art, design, music and production. I implemented ' +
-      'the four enemy archetypes in StateTree, in C++ and Blueprints, with custom tasks and ' +
-      'conditions, and used EQS to query the environment. I also built a templated object ' +
-      'pool as a plugin (enemies, projectiles, decals and particles), so it is modular and ' +
-      'can be taken to other projects, and the enemy spawners, ' +
-      'and took part in designing the architecture of a custom GAS-based action system. I was ' +
-      'responsible for configuring and uploading the Steam builds.',
+    points: [
+      'Implemented the four enemy archetypes (melee, ranged, explosive and a tank mini-boss) ' +
+        'with StateTree in C++ and Blueprints, with custom tasks and conditions.',
+      'Built a templated object pool as a plugin, reusable in other projects, for the many ' +
+        'enemies, particles, decals and projectiles.',
+      'Used EQS to pick where the ranged enemy retreats to, based on distance to the player ' +
+        'and line of sight. The tank favours its less-used melee attacks, so it ' +
+        'doesn’t keep repeating the same one.',
+      'Built the enemy spawners, set up and uploaded the Steam builds, and took part in ' +
+        'designing the architecture of a custom GAS-based action system.',
+    ],
   },
   {
     role: 'Gameplay Programmer',
@@ -88,23 +93,22 @@ export const experience: Entry[] = [
     orgLink: 'https://store.steampowered.com/app/3776540/Roadtrip_El_Motor_de_la_Locura/',
     orgNote: 'Oniric Tales',
     date: 'Dec 2024 — Jun 2025',
-    body:
-      'Design, architecture and development of core gameplay systems. Built a scalable ' +
-      'component-based dialogue system, an AI perception system integrated into behaviour ' +
-      'trees, and a radio communication system; contributed to the Behavior Graph, general ' +
-      'gameplay mechanics, profiling and bug fixing.',
+    points: [
+      'Designed and built core gameplay systems: a component-based dialogue system, an AI ' +
+        'perception system integrated with the behaviour trees, and a radio communication system.',
+      'Also worked on the Behavior Graph, general gameplay mechanics, profiling and bug fixing.',
+    ],
   },
   {
     role: 'Fullstack Developer',
     org: 'AHORA',
     date: 'Sept 2020 — Mar 2023',
-    body:
-      'Frontend of an enterprise management system with Vue.js, TypeScript, SCSS, HTML, ' +
-      'Bootstrap, Flexbox and DevExtreme. Developed products and management systems with ' +
-      'FlexyGo, an in-house low-code framework, and built components and extensions for it. ' +
-      'Backend in VB and C# on MSSQL; frontend with TypeScript, HTML, CSS and WebComponents. ' +
-      'Handled and resolved client incidents, with frequent travel to the client’s site. ' +
-      'Worked with Agile methodologies (Scrum).',
+    points: [
+      'Enterprise management system: frontend with Vue.js, TypeScript and DevExtreme; ' +
+        'backend in VB and C# on MSSQL.',
+      'Built products, components and extensions with FlexyGo, an in-house low-code framework.',
+      'Handled client incidents, often on site. Worked in Scrum.',
+    ],
   },
 ];
 
@@ -114,35 +118,27 @@ export const education: Entry[] = [
     org: 'ESAT — Escuela Superior de Arte y Tecnología',
     orgNote: 'Valencia',
     date: '2023 — 2026',
-    body:
-      'Specialisation in video game programming, especially in C++. Over three years I have ' +
-      'built a graphics engine from scratch, which taught me how graphics engines work under ' +
-      'the hood, both in software architecture and in the graphics pipeline, and published a ' +
-      'game on Steam with Unreal Engine 5. I have also worked on procedural generation, ' +
-      'implementing WFC (in my own engine); a templated FSM from scratch; Markov chains (to ' +
-      'choose which attack the Beerserker tank uses, with weights that adjust dynamically); ' +
-      'A* pathfinding; cellular automata and L-systems. During the three years we also learned ' +
-      'to program in assembly and to read the assembly our C++ compiles to, in order to ' +
-      'identify bottlenecks and performance problems, especially in inner loops, and fix them ' +
-      'with optimisation techniques. This last year I have specialised as an AI programmer, ' +
-      'building the four enemy archetypes with StateTree in UE 5.6.',
+    points: [
+      'Video game programming, specialising in C++: my own graphics engine from scratch, ' +
+        'procedural generation (Wave Function Collapse, cellular automata, L-systems), a ' +
+        'templated FSM, A* pathfinding, and assembly to find and fix bottlenecks in inner loops.',
+    ],
   },
   {
     role: 'DAM — Multiplatform Application Development',
     org: 'IES El Grao',
     orgNote: 'Valencia',
     date: '2018 — 2020',
-    body:
-      'Java programming with Eclipse and NetBeans for desktop, and Android Studio for mobile. ' +
-      'Relational databases, HTML and CSS. Fundamentals of OOP and version control.',
+    points: [
+      'Java for desktop and Android, relational databases, HTML and CSS, OOP fundamentals and ' +
+        'version control.',
+    ],
   },
   {
-    role: 'Scrum Master & Product Owner',
+    role: 'Certified Scrum Master & Product Owner',
     org: 'Scrum.org / International Agile Institutes',
     date: 'Professional credentials',
-    body:
-      'Certified in both roles: bridging design requirements and system architecture, ' +
-      'optimising production pipelines and managing technical debt across team iterations.',
+    points: [],
   },
 ];
 
@@ -153,23 +149,21 @@ export const cvProjects: Project[] = [
     name: 'XEMA — custom 3D engine',
     meta: 'C++ · OpenGL 4.5 · Nintendo Switch (emulator)',
     link: 'https://andueza013.github.io/PortfolioGameDev/graphic-engine',
-    body:
-      'A graphics engine I built entirely myself in C++ and OpenGL. It has an ECS ' +
-      'architecture, deferred PBR rendering with shadow mapping and instanced rendering, a JobSystem ' +
-      'for tasks such as asynchronous mesh loading, Lua scripting and PhysX for physics. I use ' +
-      'GLFW for the window and input, and ImGui for visual markers of entities, components ' +
-      'and performance. It runs on PC and I have ported it to Nintendo Switch, where I have ' +
-      'only tested it on an emulator. The PS4 port is in progress: so far the ECS and ' +
-      'rendering of simple geometry work, on a devkit. Mesh loading, textures, instancing, ' +
-      'lights, shadows and PBR are still missing.',
+    points: [
+      'ECS, deferred PBR, shadow mapping, instancing, a JobSystem for async mesh loading, ' +
+        'Lua scripting and PhysX.',
+      'Ported to Nintendo Switch, tested only on an emulator. PS4 port in progress on a ' +
+        'devkit: the ECS and simple-geometry rendering work; mesh loading, textures, ' +
+        'instancing, lights, shadows and PBR are still missing.',
+    ],
   },
   {
     name: 'Abandoned Hospital',
     meta: 'Unreal Engine 5 · C++ · AI Perception, EQS',
-    body:
-      'Class exercise to work with AI Perception and EQS in Unreal Engine, built with a ' +
-      'behaviour tree, for enemy and NPC behaviour. Once I had handed it in, I rebuilt it on ' +
-      'my own with free assets and rewrote the AI from scratch with StateTree.',
+    points: [
+      'Class exercise with AI Perception and EQS on a behaviour tree; I later rebuilt it on ' +
+        'my own, with the AI rewritten in StateTree.',
+    ],
   },
 ];
 
@@ -254,8 +248,20 @@ export const skillCategories: SkillCategory[] = [
   },
 ];
 
+// The one-page CV folds the home page's eight categories into five rows.
+const cvSkillGroups: [string, string[]][] = [
+  ['Engines & AI', ['Game engines', 'AI & gameplay']],
+  ['Languages', ['Languages']],
+  ['Graphics & systems', ['Graphics & systems']],
+  ['Tools & platforms', ['Debugging & profiling', 'Tooling', 'Platforms']],
+  ['Outside games', ['Outside games']],
+];
+
 /** Flat "label: a, b, c" rows for the CV's skills block, derived from the categories above. */
-export const skillRows: [string, string][] = skillCategories.map((c) => [
-  c.label,
-  c.skills.map((s) => s.name).join(', '),
+export const skillRows: [string, string][] = cvSkillGroups.map(([label, sources]) => [
+  label,
+  skillCategories
+    .filter((c) => sources.includes(c.label))
+    .flatMap((c) => c.skills.map((s) => s.name))
+    .join(', '),
 ]);

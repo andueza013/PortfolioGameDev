@@ -19,7 +19,7 @@ interface OtherProject {
 const otherProjects: OtherProject[] = [
   {
     title: "Abandoned Hospital",
-    desc: "Class exercise to work with AI Perception and EQS in Unreal Engine, built with a behaviour tree, for enemy and NPC behaviour. Once I had handed it in, I rebuilt it on my own with free assets and rewrote the AI from scratch with StateTree.",
+    desc: "A class exercise on AI Perception and EQS in Unreal Engine, with enemies and NPCs driven by a behaviour tree. After handing it in, I rebuilt it on my own with free assets and rewrote the AI from scratch in StateTree.",
     img: "AH.webp",
     tags: ["Unreal Engine 5", "C++", "AI"],
     badge: "academic",
@@ -33,16 +33,16 @@ const otherProjects: OtherProject[] = [
     badge: "gamejam",
   },
   {
-    title: "Project Memento Vivere",
-    desc: "University project: a 2.5D metroidvania in Unity with jump, attack and dash traversal. The player fights enemies driven by distinct movement patterns and attack routines to reach the end of the level.",
-    img: "mementovivere.png",
-    link: "https://anduezadev.itch.io/project-memento-vivere",
-    tags: ["Unity", "C#", "Metroidvania"],
-    badge: "academic",
+    title: "Krakendoku",
+    desc: "Team project, in development. A roguelike puzzle game: solving procedurally generated sudoku grids earns you coins and items, and mistakes cost you lives. Between puzzles, you spend your coins in a shop. Special encounters change the rules: frozen cells that thaw as correct numbers are placed, or wind that removes numbers you have to place again.",
+    img: "krakendoku.png",
+    link: "https://anduezadev.itch.io/krakendoku",
+    tags: ["Unity", "C#", "Roguelike"],
+    badge: "personal",
   },
   {
     title: "Xperimental Exploration of the Marine Abyss",
-    desc: "Game jam survival game. The player pilots an exploration submarine down to the ruins of a lost civilisation at abyssal depth, recovering as many valuable minerals as possible and surfacing with them before running out of resources.",
+    desc: "A survival game. The player pilots an exploration submarine down to the ruins of a lost civilisation at abyssal depth, recovering as many valuable minerals as possible and surfacing with them before running out of resources.",
     img: "xema1.png",
     link: "https://anduezadev.itch.io/xperimental-exploration-of-the-marine-abyss",
     tags: ["Unity", "C#", "Survival"],
@@ -54,43 +54,17 @@ const otherProjects: OtherProject[] = [
 <Layout title="Fernando Fernández Andueza · Gameplay & AI Programmer">
   <div class="container">
     <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+    <!-- Name, role and ways in only: the projects come straight after, and the
+         pitch, photo and availability live in "About me" below the experience. -->
     <header class="hero">
-      <div class="hero-container">
-        <div class="hero-content">
-          <p class="hero-eyebrow">// gameplay &middot; ai &middot; c++</p>
-          <h1 class="hero-name">Fernando Fernández Andueza</h1>
-          <p class="hero-role">Gameplay &amp; AI Programmer</p>
-          <p class="hero-availability">
-            Valencia, Spain &nbsp;·&nbsp; open to relocation within Spain and to remote work
-          </p>
-          <p class="hero-pitch">
-            I'm a Game Programmer with a passion for Game AI, procedural generation and
-            gameplay systems and mechanics. I built the enemy AI for <strong>Beerserker: The Stolen Brew</strong>,
-            a final-year project by a team of
-            about 20 that is on Steam in Early Access, and I built <strong>XEMA</strong>, a
-            custom C++ and OpenGL engine that taught me how engines work under the hood.
-          </p>
-          <p class="hero-pitch">
-            I work with Unreal and Unity. Before games I spent two and a half years as a
-            fullstack developer on ERP software.
-          </p>
+      <p class="hero-eyebrow">// gameplay &middot; ai &middot; c++</p>
+      <h1 class="hero-name">Fernando Fernández Andueza</h1>
+      <p class="hero-role">Gameplay &amp; AI Programmer</p>
 
-          <div class="hero-ctas">
-            <a href="#projects" class="btn-hero-primary">View projects</a>
-            <a href={`${import.meta.env.BASE_URL}/cv`} class="btn-hero-ghost">View CV</a>
-            <a href={`mailto:${profile.email}`} class="btn-hero-ghost">{profile.email}</a>
-          </div>
-        </div>
-
-        <div class="hero-avatar-wrapper">
-          <img
-            src={`${import.meta.env.BASE_URL}/profile.jpeg`}
-            alt="Portrait of Fernando Fernández Andueza"
-            class="hero-avatar"
-            width="800"
-            height="800"
-          />
-        </div>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-hero-primary">View projects</a>
+        <a href={`${import.meta.env.BASE_URL}/cv`} class="btn-hero-ghost">View CV</a>
+        <a href={`mailto:${profile.email}`} class="btn-hero-ghost">{profile.email}</a>
       </div>
     </header>
 
@@ -123,32 +97,23 @@ const otherProjects: OtherProject[] = [
           </div>
 
           <p>
-            A fast-paced arcade action game with a comical twist. It is our final-year
-            project at ESAT, made by about 20 people across programming, art, design,
-            music and production, and it came out on Steam in Early Access in July 2026.
-          </p>
-          <p>
-            I worked mainly on the AI. I implemented the four enemy archetypes you meet
-            in the game (melee, ranged, explosive and a tank mini-boss), using <strong>StateTree</strong> in C++ and Blueprints. I also implemented a
-            templated object pool as a plugin, so it is modular and can be taken to other
-            projects, and the enemy spawners. Finally, I was in
-            charge of managing the Steam builds.
-          </p>
-          <p>
-            I have used StateTree with custom tasks and conditions, EQS to query the
-            environment, actor components, plugins, Animation Montages, Animation
-            Notifies, Two Bone IK and GameInstance Subsystems.
+            A fast-paced arcade action game with a comical twist: our final-year project
+            at ESAT, made by a team of about 20 and in Early Access on Steam since July 2026.
+            I worked mainly on the AI: the four enemy archetypes (melee, ranged, explosive
+            and a tank mini-boss) in <strong>StateTree</strong> with C++ and Blueprints,
+            plus a templated object pool as a plugin and the enemy spawners.
           </p>
 
           <div class="card-links">
-            <a href={`${import.meta.env.BASE_URL}/beerserker`} class="btn-secondary"
+            <!-- The breakdown is the primary action: it shows my work, Steam shows the game -->
+            <a href={`${import.meta.env.BASE_URL}/beerserker`} class="btn-primary"
               >AI breakdown →</a
             >
             <a
               href="https://store.steampowered.com/app/4522440/"
               target="_blank"
               rel="noopener"
-              class="btn-primary"
+              class="btn-secondary"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -177,27 +142,23 @@ const otherProjects: OtherProject[] = [
             >
           </div>
 
-          <h3>XEMA — Custom 3D Engine</h3>
+          <h3>XEMA — custom 3D engine</h3>
           <p class="card-subtitle">
-            Built entirely by me &nbsp;·&nbsp; PC and Nintendo Switch
+            PC and Nintendo Switch
           </p>
 
           <img
-            src={`${import.meta.env.BASE_URL}/project-images/engine1.jpg`}
-            alt="Scene rendered by the XEMA engine"
+            src={`${import.meta.env.BASE_URL}/project-images/xema/pbr-still-life.jpg`}
+            alt="A marble bust, a brass vase and a katana rendered by the XEMA engine with PBR and shadows"
             class="thumbnail card-media"
             loading="lazy"
           />
 
           <p>
-            XEMA is a graphics engine I built entirely myself with OpenGL and C++,
-            for both PC and Nintendo Switch (on Switch I have only tested it on an
-            emulator). It has an ECS architecture, deferred PBR rendering with
-            shadow mapping and instanced rendering, and a JobSystem to speed up work
-            such as asynchronous mesh loading. It also has Lua scripting and PhysX
-            integration for physics, with GLFW for input and window management, and
-            ImGui for visual markers of entities, components and performance. I am
-            currently working on a PS4 port using its own graphics API.
+            XEMA is a graphics engine I built entirely myself in C++ and OpenGL: an ECS
+            architecture, deferred PBR rendering with shadow mapping and instancing, a
+            JobSystem, Lua scripting and PhysX. It runs on PC and I have ported it to
+            Nintendo Switch (tested only on an emulator); a PS4 port is in progress.
           </p>
 
           <div class="card-links">
@@ -232,10 +193,10 @@ const otherProjects: OtherProject[] = [
           </div>
 
           <p>
-            Design, architecture and development of core gameplay systems. Built a
-            scalable component-based dialogue system, an AI perception system integrated
-            into behaviour trees, and a radio communication system; contributed to the
-            Behavior Graph, general gameplay mechanics, profiling and bug fixing.
+            I designed and built core gameplay systems: a component-based dialogue system,
+            an AI perception system integrated with the behaviour trees, and a radio
+            communication system. I also worked on the Behavior Graph, general gameplay
+            mechanics, profiling and bug fixing.
           </p>
 
           <div class="card-links">
@@ -294,6 +255,39 @@ const otherProjects: OtherProject[] = [
       </p>
     </section>
 
+    <!-- ── ABOUT ─────────────────────────────────────────────────────────── -->
+    <section id="about" class="about" aria-labelledby="about-head">
+      <h2 class="sec-head" id="about-head">About me</h2>
+
+      <div class="hero-container">
+        <div class="hero-content">
+          <p class="hero-pitch">
+            I'm a game programmer focused on game AI, gameplay systems and procedural
+            generation. I built the enemy AI for <strong>Beerserker: The Stolen Brew</strong>,
+            now in Early Access on Steam, and I built <strong>XEMA</strong>, a custom C++ and
+            OpenGL engine that taught me how engines work under the hood.
+          </p>
+          <p class="hero-pitch">
+            I work with Unreal and Unity. Before games I spent two and a half years as a
+            fullstack developer on ERP software.
+          </p>
+          <p class="hero-availability">
+            Valencia, Spain &nbsp;·&nbsp; open to relocation within Spain and to remote work
+          </p>
+        </div>
+
+        <div class="hero-avatar-wrapper">
+          <img
+            src={`${import.meta.env.BASE_URL}/profile.jpeg`}
+            alt="Portrait of Fernando Fernández Andueza"
+            class="hero-avatar"
+            width="800"
+            height="800"
+          />
+        </div>
+      </div>
+    </section>
+
     <!-- ── SKILLS ────────────────────────────────────────────────────────── -->
     <section id="skills" aria-labelledby="skills-head">
       <h2 class="sec-head" id="skills-head">Technical skills</h2>
@@ -321,11 +315,10 @@ const otherProjects: OtherProject[] = [
 
       <div class="contact-panel">
         <div class="contact-pitch">
-          <h3>Open to gameplay &amp; AI programmer roles</h3>
           <p>
             I'm looking for a gameplay or AI programming position in Unreal Engine or
-            Unity. If you have an opening — or just want the technical detail behind
-            any of the projects above — write to me and I'll get back to you.
+            Unity. If you have an opening, or want more detail on any of these projects,
+            email me.
           </p>
           <ul class="contact-facts">
             {

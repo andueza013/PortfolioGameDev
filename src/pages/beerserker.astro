@@ -20,7 +20,7 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout
   title="Beerserker Enemy AI · Technical Breakdown — Fernando Fernández Andueza"
-  description="How I built the enemy AI of Beerserker: The Stolen Brew in Unreal Engine 5 with StateTree: four archetypes, from a melee enemy to a tank mini-boss with four attacks."
+  description="How I built the enemy AI for Beerserker: The Stolen Brew with StateTree in Unreal Engine 5, from the melee enemy to the tank mini-boss."
 >
   <div class="container page-container">
 
@@ -40,7 +40,7 @@ import Layout from '../layouts/Layout.astro';
 
           <h1>Beerserker</h1>
           <p class="ed-lede">
-           Beerserker is a modern fast-paced arcade game and comical twist. Blinded by the legendary dwarven ale's taste, Ragna aims to retrieve this masterpiece from the grasp of the gods. Will you be able to make your way through a crowded dwarven brewery? Or end up crushed by their ranks?
+           Beerserker is a modern, fast-paced arcade game with a comical twist. Blinded by the taste of the legendary dwarven ale, Ragna sets out to take it back from the gods. Can you fight your way through a crowded dwarven brewery, or will you be crushed by their ranks?
           </p>
 
           <div class="card-meta" style="margin-top: 1.5rem;">
@@ -57,19 +57,23 @@ import Layout from '../layouts/Layout.astro';
 
       <span class="ed-label">The production</span>
       <p class="ed-prose">
-        Beerserker: The Stolen Brew is my final-year project at <strong>ESAT</strong>, with
-        about 20 people across programming, art, design, music and production. It came out on
-        Steam in Early Access on <strong>7 July 2026</strong> and is free.
+        Beerserker: The Stolen Brew is my final-year project at ESAT, with about 20 people
+        across programming, art, design, music and production. It came out on Steam in Early
+        Access on 7 July 2026 and is free.
       </p>
 
-      <span class="ed-label">My ownership</span>
+      <span class="ed-label">What I did</span>
       <p class="ed-prose">
         I worked mostly on the AI. I implemented the four enemy archetypes with <strong>StateTree</strong>,
         in C++ and Blueprints, with custom tasks and conditions, and
         used <strong>EQS</strong> to query the environment. I also built a templated object pool
         as a plugin (for enemies, projectiles, decals and particles) and the enemy spawners, and
-        I was in charge of configuring and uploading the builds to Steam. The team worked
-        collaboratively in Perforce.
+        I was in charge of configuring and uploading the builds to Steam. We used Perforce for
+        version control.
+      </p>
+      <p class="ed-prose">
+        Other Unreal tools I used: actor components, plugins, Animation Montages, Animation
+        Notifies, Two Bone IK and GameInstance Subsystems.
       </p>
 
       <figure class="tech-figure">
@@ -153,17 +157,18 @@ import Layout from '../layouts/Layout.astro';
             >
               <source src={`${import.meta.env.BASE_URL}/project-images/beerserker/videos/Bomb.mp4`} type="video/mp4" />
             </video>
-            <figcaption>The blink telegraph accelerating toward detonation.</figcaption>
+            <figcaption>The blinking speeds up as it gets closer to exploding.</figcaption>
           </figure>
         </div>
         <div class="ed-body">
           <h3>Explosive</h3>
           <div class="ed-rule ed-rule--amber"></div>
           <p>
-            A red blink speeds up as its detonation timer runs down, so the player can read how
-            much time is left at a glance. It detonates on a timer if it never reaches the
-            player, after a short commit animation if it does, or on the spot if it is killed
-            first — the intended counter is killing it at range before either happens.
+            It blinks red, faster and faster as its timer runs down, so the player can tell at a
+            glance how much time is left. If it never reaches the player, it explodes when the
+            timer runs out; if it does, it explodes after a short wind-up animation; and if it is
+            killed, it explodes straight away. The way to deal with it is to kill it from a
+            distance before it gets close.
           </p>
         </div>
       </div>
@@ -177,24 +182,23 @@ import Layout from '../layouts/Layout.astro';
               loop
               muted
               playsinline
-              aria-label="Tank mini-boss cycling between its four attack patterns"
+              aria-label="Tank mini-boss switching between its four attacks"
             >
               <source src={`${import.meta.env.BASE_URL}/project-images/beerserker/videos/Tank.mp4`} type="video/mp4" />
             </video>
-            <figcaption>Choosing between four attack patterns.</figcaption>
+            <figcaption>Switching between its four attacks.</figcaption>
           </figure>
         </div>
         <div class="ed-body">
           <h3>Tank mini-boss</h3>
           <div class="ed-rule ed-rule--green"></div>
           <p>
-            <strong>Four attacks:</strong> a ranged honey throw, a ranged dwarf throw, a melee
-            sweep that leaves a honey hazard on the ground, and a melee area attack. The two
-            ranged attacks are each chosen independently by their own cooldown and range check;
-            the two melee attacks share a cooldown and are chosen by weight, so the fight
-            doesn't fall into repeating the same attack. Throwing the dwarf is its own short
-            sequence — call it over, wait for it to arrive, confirm it's still alive, grab it,
-            throw it — falling back to a different attack if the dwarf isn't available.
+            It has four attacks. At range, it throws honey or throws a dwarf; up close, it does
+            a sweep that leaves honey on the ground, or an area attack. Each ranged attack has
+            its own cooldown and range check. The two melee attacks share a cooldown and are
+            picked by weight (see below). To throw a dwarf, it
+            calls one over, waits for it to arrive, checks it's still alive, grabs it and throws
+            it. If there's no dwarf to throw, it uses a different attack.
           </p>
         </div>
       </div>
@@ -205,9 +209,9 @@ import Layout from '../layouts/Layout.astro';
       <h2 class="ed-kicker">Why StateTree, not Behavior Tree</h2>
 
       <p class="ed-lede ed-lede-drop">
-        We chose <strong>StateTree</strong> because Epic is adopting it as a standard, and
-        because we were forcing Behavior Trees to behave like state machines. For that, we
-        used a state machine directly: a StateTree.
+        We chose <strong>StateTree</strong> because Epic is adopting it as the standard, and
+        because we were forcing Behavior Trees to work like state machines, when StateTree
+        already is one.
       </p>
 
       <figure class="tech-figure">
@@ -230,13 +234,12 @@ import Layout from '../layouts/Layout.astro';
         <div class="ed-item">
           <span class="ed-item-index">01</span>
           <div class="ed-item-body">
-            <h3>Many enemies on screen all the time</h3>
+            <h3>Many enemies on screen at once</h3>
             <p>
-              I programmed a generic object pool as a plugin, so it is modular and can be taken
-              to other projects, because of the nature of the game: many enemies on screen all
-              the time, plus particles, decals and projectiles. When an enemy goes back to the
-              pool, its StateTree stops on the next frame, and when it is reused it starts again
-              from the beginning.
+              The game keeps many enemies on screen at all times, plus particles, decals and
+              projectiles, so I wrote a generic object pool, as a plugin that can be reused in
+              other projects. When an enemy returns to the pool, its StateTree stops on
+              the next frame, and when it is reused it starts again from the beginning.
             </p>
           </div>
         </div>
@@ -246,8 +249,8 @@ import Layout from '../layouts/Layout.astro';
           <div class="ed-item-body">
             <h3>Where the ranged enemy retreats to</h3>
             <p>
-              The enemy retreats to a safe place, chosen with an <strong>EQS</strong> query by
-              its distance to the player and its line of sight to them.
+              The enemy retreats to a safe spot, picked with an <strong>EQS</strong> query based
+              on distance to the player and line of sight.
             </p>
           </div>
         </div>
@@ -295,11 +298,11 @@ import Layout from '../layouts/Layout.astro';
           <div class="ed-item-body">
             <h3>Exposed attributes and varied melee attacks</h3>
             <p>
-              The enemies' attributes are exposed in the editor so they can be modified: attack
-              range, cooldowns, detection radius or honey distances. Each attack's cooldown is set
-              by GameplayTag and checked by a custom StateTree condition. In the melee enemies,
+              The enemies' attributes are exposed in the editor for tuning: attack range,
+              cooldowns, detection radius and honey distances. Each attack's cooldown is set by
+              GameplayTag and checked by a custom StateTree condition. In the melee enemies,
               attacks are a list of animations: adding a new one is enough for the enemy to use
-              it, so the game doesn't feel so repetitive.
+              it, so combat feels less repetitive.
             </p>
           </div>
         </div>

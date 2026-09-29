@@ -31,5 +31,5 @@ const { entry, compact = false } = Astro.props;
     </div>
     <span class="resume-badge-date">{entry.date}</span>
   </div>
-  {!compact && <p class="resume-body">{entry.body}</p>}
+  {!compact && <p class="resume-body">{entry.points.join(' ')}</p>}
 </div>

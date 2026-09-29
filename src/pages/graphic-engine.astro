@@ -3,6 +3,9 @@
 // Technical breakdown of the XEMA custom C++ engine.
 // Every claim here comes from the author's own description of the engine —
 // don't add technical detail that he hasn't stated.
+//
+// ORDER: visuals first (PBR render, RenderDoc frame, WFC video), then the
+// architecture and platform notes, so the page doesn't open on a stats panel.
 
 import Layout from '../layouts/Layout.astro';
 ---
@@ -17,93 +20,41 @@ import Layout from '../layouts/Layout.astro';
     <div class="page-header">
       <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
 
-      <div class="card-meta">
+      <p class="ed-kicker" style="margin-top: 1.5rem;">Custom 3D engine · Technical breakdown</p>
+      <h1>XEMA</h1>
+      <p class="ed-lede">
+        XEMA is a graphics engine I built entirely myself in C++ and OpenGL, for PC and
+        Nintendo Switch. I am currently
+        working on a PS4 port using the console's own graphics API.
+      </p>
+
+      <div class="card-meta" style="margin-top: 1.5rem;">
         <span class="badge badge-personal"><span class="badge-dot"></span>University project</span>
         <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL &nbsp;·&nbsp; PC &nbsp;·&nbsp; Nintendo Switch (emulator)</span>
       </div>
 
-      <h1>XEMA — Custom 3D Engine</h1>
-      <p class="page-intro">
-        XEMA is a graphics engine I built entirely myself in C++ and OpenGL, for PC and
-        Nintendo Switch. On Switch I have only tested it on an emulator. I am currently
-        working on a PS4 port using its own graphics API.
-      </p>
-    </div>
-
-    <!-- ── CORE SYSTEMS ──────────────────────────────────────────────────── -->
-    <div class="tech-section">
-      <h2>Core systems</h2>
-      <div class="tech-grid">
-
-        <div class="tech-card">
-          <h3>Architecture</h3>
-          <ul>
-            <li>ECS (Entity Component System) architecture.</li>
-            <li>
-              JobSystem to speed up work such as asynchronous mesh loading.
-            </li>
-          </ul>
-        </div>
-
-        <div class="tech-card">
-          <h3>Libraries and tools</h3>
-          <ul>
-            <li>GLFW for input and window management.</li>
-            <li>
-              ImGui for visual markers of entities, components and performance.
-            </li>
-            <li>PhysX integration for physics.</li>
-            <li>Lua scripting.</li>
-          </ul>
-          <figure class="tech-figure tech-figure--inset">
-            <img
-              src={`${import.meta.env.BASE_URL}/project-images/xema/imgui-stats.png`}
-              alt="ImGui stats panel showing FPS, frame time and the time spent in each engine section"
-              width="290"
-              height="281"
-              loading="lazy"
-            />
-            <figcaption>ImGui performance panel: frame time and time per engine section.</figcaption>
-          </figure>
-        </div>
-
-        <div class="tech-card">
-          <h3>Procedural generation</h3>
-          <ul>
-            <li>Wave Function Collapse, implemented in the engine.</li>
-          </ul>
-        </div>
-
-      </div>
-
-      <figure class="tech-figure">
-        <div class="video-wrapper">
-          <iframe
-            src="https://www.youtube.com/embed/grZnYOMaqTQ?si=gf-zIuqm6VRQ5O4K"
-            title="XEMA — Wave Function Collapse"
-            allow="encrypted-media; picture-in-picture"
-            loading="lazy"
-            allowfullscreen></iframe>
-        </div>
-        <figcaption>Wave Function Collapse running in XEMA.</figcaption>
+      <figure class="tech-figure tech-figure--hero">
+        <img
+          src={`${import.meta.env.BASE_URL}/project-images/xema/pbr-still-life.jpg`}
+          alt="A marble bust, a brass vase and a katana on a dark floor, lit from the side and casting shadows"
+          width="1500"
+          height="860"
+        />
+        <figcaption>
+          Poly Haven models (marble bust, brass vase, katana) rendered with XEMA's deferred PBR
+          pipeline and shadow mapping.
+        </figcaption>
       </figure>
     </div>
 
-    <!-- ── GRAPHICS ──────────────────────────────────────────────────────── -->
+    <!-- ── RENDERING ─────────────────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2>Graphics</h2>
-      <div class="tech-grid">
+      <h2 class="ed-kicker">Rendering</h2>
 
-        <div class="tech-card">
-          <h3>Rendering</h3>
-          <ul>
-            <li>Deferred rendering with PBR.</li>
-            <li>Shadow mapping.</li>
-            <li>Instanced rendering.</li>
-          </ul>
-        </div>
-
-      </div>
+      <p class="ed-prose">
+        Rendering is deferred, with PBR, shadow mapping and instanced rendering. This is one
+        frame captured in RenderDoc.
+      </p>
 
       <figure class="tech-figure">
         <img
@@ -134,9 +85,8 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
         <figcaption>
-          One XEMA frame captured in RenderDoc. The geometry pass writes albedo, normals and
-          position to three render targets, and the lighting pass reads them together with the
-          shadow map to draw the final image.
+          The geometry pass writes albedo, normals and position to three render targets, and
+          the lighting pass reads them together with the shadow map to draw the final image.
         </figcaption>
       </figure>
 
@@ -155,31 +105,91 @@ import Layout from '../layouts/Layout.astro';
       </figure>
     </div>
 
+    <!-- ── PROCEDURAL GENERATION ─────────────────────────────────────────── -->
+    <div class="tech-section">
+      <h2 class="ed-kicker">Procedural generation</h2>
+
+      <p class="ed-prose">
+        I implemented Wave Function Collapse in the engine. The landscape in the frame above
+        comes from it.
+      </p>
+
+      <figure class="tech-figure">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/grZnYOMaqTQ?si=gf-zIuqm6VRQ5O4K"
+            title="XEMA — Wave Function Collapse"
+            allow="encrypted-media; picture-in-picture"
+            loading="lazy"
+            allowfullscreen></iframe>
+        </div>
+        <figcaption>
+          Wave Function Collapse demo generating nine different grids (four main ones and five
+          transition grids) across multiple threads.
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- ── ARCHITECTURE ──────────────────────────────────────────────────── -->
+    <div class="tech-section">
+      <h2 class="ed-kicker">Architecture</h2>
+
+      <div class="ed-row">
+        <div class="ed-body">
+          <p>
+            XEMA is built on an ECS architecture, with a JobSystem for work such as asynchronous
+            mesh loading. It has Lua scripting and uses PhysX for physics. GLFW handles the
+            window and input, and ImGui draws the debug panels for entities, components and
+            performance.
+          </p>
+        </div>
+        <div class="ed-media ed-media--natural">
+          <figure class="tech-figure">
+            <img
+              src={`${import.meta.env.BASE_URL}/project-images/xema/imgui-stats.png`}
+              alt="ImGui stats panel showing FPS, frame time and the time spent in each engine section"
+              width="290"
+              height="281"
+              loading="lazy"
+            />
+            <figcaption>ImGui performance panel: frame time and time per engine section.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+
     <!-- ── PLATFORMS ─────────────────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2>Platforms</h2>
-      <div class="tech-grid">
+      <h2 class="ed-kicker">Platforms</h2>
 
-        <div class="tech-card">
-          <h3>Nintendo Switch — tested on emulator</h3>
-          <ul>
-            <li>Ported through <strong>libnx</strong> and <strong>EGL</strong>.</li>
-            <li>I have only tested it on an emulator, not on a console.</li>
-          </ul>
+      <p class="ed-prose">
+        The platform code is chosen at compile time: each platform builds only its own source
+        files, because a backend never runs on any platform but its own. I first designed it
+        with interfaces, but dropped them because they weren't needed and every call had to go
+        through a vtable for nothing.
+      </p>
+
+      <div class="ed-list" style="margin-top: 2rem;">
+        <div class="ed-item">
+          <span class="ed-item-index">01</span>
+          <div class="ed-item-body">
+            <h3>Nintendo Switch: tested on an emulator</h3>
+            <p>
+              I ported it through <strong>libnx</strong> and <strong>EGL</strong>.
+            </p>
+          </div>
         </div>
 
-        <div class="tech-card">
-          <h3>PlayStation 4 — in progress</h3>
-          <ul>
-            <li>
-              Running on a devkit: the ECS and rendering of simple geometry.
-            </li>
-            <li>
-              Still missing: mesh loading, textures, instancing, lights, shadows and PBR.
-            </li>
-          </ul>
+        <div class="ed-item">
+          <span class="ed-item-index">02</span>
+          <div class="ed-item-body">
+            <h3>PlayStation 4: in progress</h3>
+            <p>
+              Running on a devkit: the ECS and rendering of simple geometry. Still missing:
+              mesh loading, textures, instancing, lights, shadows and PBR.
+            </p>
+          </div>
         </div>
-
       </div>
     </div>
 

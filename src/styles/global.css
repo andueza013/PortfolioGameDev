@@ -244,7 +244,7 @@ section+section {
 
 /* ── Hero ──────────────────────────────────────────────────────────────── */
 .hero {
-  padding: 6rem 0 4rem;
+  padding: 6rem 0 1.5rem;
 }
 
 .hero-eyebrow {
@@ -744,6 +744,9 @@ section+section {
 /* Cards in a row keep their own height, so a short card isn't padded out */
 .tech-grid { align-items: start; }
 .tech-figure--natural { max-width: 623px; }
+
+/* Lead image under a page header: full container width */
+.tech-figure--hero { max-width: none; margin-top: 2.25rem; }
 .tech-figure--inset img,
 .tech-figure--natural img { border-radius: 4px; }
 
@@ -968,6 +971,15 @@ section+section {
   object-fit: cover;
 }
 
+/* Screenshots with small text (the ImGui panel): real size, never cropped */
+.ed-media--natural { flex-basis: 290px; }
+
+.ed-media--natural img {
+  aspect-ratio: auto;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
 .ed-body {
   flex: 1;
   min-width: 0;
@@ -988,6 +1000,7 @@ section+section {
   font-size: 15px;
   line-height: 1.8;
   color: var(--text-2);
+  max-width: 640px;
 }
 
 .ed-body p strong {
@@ -1192,7 +1205,7 @@ section+section {
   }
 
   .hero {
-    padding: 4rem 0 3rem;
+    padding: 4rem 0 1rem;
   }
 
   section {
@@ -1397,6 +1410,15 @@ section+section {
 
 .hero-content {
   flex: 2;
+}
+
+/* In "About me" the text starts at the top, so the photo does too */
+.about .hero-avatar {
+  margin-top: 0;
+}
+
+.about .hero-availability {
+  margin-bottom: 0;
 }
 
 .hero-content .hero-eyebrow {
