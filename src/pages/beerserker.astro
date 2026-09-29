@@ -4,7 +4,7 @@
 //
 // SCOPE NOTE: Beerserker is a commercial project, so no source from the studio
 // repository is reproduced here. Everything below describes architecture and
-// decisions, illustrated with diagrams and editor captures.
+// decisions, illustrated with gameplay clips and an editor capture.
 //
 // MEDIA: archetype clips are muted, looping <video> (public/project-images/
 // beerserker/videos/*.mp4) rather than <img>/GIF — Astro's image optimisation
@@ -12,14 +12,14 @@
 // the size. The StateTree graph stays a static <img> (PNG).
 //
 // LAYOUT: editorial long-form — running prose, alternating image/text rows and
-// pull-quotes instead of the tech-grid/tech-card pattern used on graphic-engine.astro.
+// pull-quotes instead of a grid of tech cards. graphic-engine.astro uses the same layout.
 // See src/styles/global.css, "Editorial detail page (beerserker)".
 
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-  title="Beerserker Enemy AI · Technical Breakdown — Fernando Fernández Andueza"
+  title="Beerserker Enemy AI · Technical breakdown — Fernando Fernández Andueza"
   description="How I built the enemy AI for Beerserker: The Stolen Brew with StateTree in Unreal Engine 5, from the melee enemy to the tank mini-boss."
 >
   <div class="container page-container">
@@ -66,9 +66,8 @@ import Layout from '../layouts/Layout.astro';
       <p class="ed-prose">
         I worked mostly on the AI. I implemented the four enemy archetypes with <strong>StateTree</strong>,
         in C++ and Blueprints, with custom tasks and conditions, and
-        used <strong>EQS</strong> to query the environment. I also built a templated object pool
-        as a plugin (for enemies, projectiles, decals and particles) and the enemy spawners, and
-        I was in charge of configuring and uploading the builds to Steam. We used Perforce for
+        used <strong>EQS</strong> to query the environment. I also built an object pool
+        as a plugin and the enemy spawners, and I was in charge of configuring and uploading the builds to Steam. We used Perforce for
         version control.
       </p>
       <p class="ed-prose">
@@ -106,7 +105,6 @@ import Layout from '../layouts/Layout.astro';
             >
               <source src={`${import.meta.env.BASE_URL}/project-images/beerserker/videos/Melee.mp4`} type="video/mp4" />
             </video>
-            <figcaption>Moving towards the player and hitting them.</figcaption>
           </figure>
         </div>
         <div class="ed-body">
@@ -127,19 +125,18 @@ import Layout from '../layouts/Layout.astro';
               loop
               muted
               playsinline
-              aria-label="Ranged enemy retreating to a distant place and shooting at the player"
+              aria-label="Ranged enemy retreating to a safe spot and shooting at the player"
             >
               <source src={`${import.meta.env.BASE_URL}/project-images/beerserker/videos/Ranged.mp4`} type="video/mp4" />
             </video>
-            <figcaption>Retreating to a distant place and shooting.</figcaption>
           </figure>
         </div>
         <div class="ed-body">
           <h3>Ranged</h3>
           <div class="ed-rule ed-rule--purple"></div>
           <p>
-            It gets in range and shoots. When the player is too close, it looks for a distant
-            place to retreat to and shoot from.
+            It gets in range and shoots. When the player is too close, it looks for a safe
+            spot to retreat to and shoot from.
           </p>
         </div>
       </div>
@@ -157,7 +154,6 @@ import Layout from '../layouts/Layout.astro';
             >
               <source src={`${import.meta.env.BASE_URL}/project-images/beerserker/videos/Bomb.mp4`} type="video/mp4" />
             </video>
-            <figcaption>The blinking speeds up as it gets closer to exploding.</figcaption>
           </figure>
         </div>
         <div class="ed-body">
@@ -186,7 +182,6 @@ import Layout from '../layouts/Layout.astro';
             >
               <source src={`${import.meta.env.BASE_URL}/project-images/beerserker/videos/Tank.mp4`} type="video/mp4" />
             </video>
-            <figcaption>Switching between its four attacks.</figcaption>
           </figure>
         </div>
         <div class="ed-body">
@@ -194,8 +189,8 @@ import Layout from '../layouts/Layout.astro';
           <div class="ed-rule ed-rule--green"></div>
           <p>
             It has four attacks. At range, it throws honey or throws a dwarf; up close, it does
-            a sweep that leaves honey on the ground, or an area attack. Each ranged attack has
-            its own cooldown and range check. The two melee attacks share a cooldown and are
+            a sweep that leaves honey on the ground, or an area attack. Each ranged attack has its own cooldown, and it only throws
+            honey when the player is within a set distance range. The two melee attacks share a cooldown and are
             picked by weight (see below). To throw a dwarf, it
             calls one over, waits for it to arrive, checks it's still alive, grabs it and throws
             it. If there's no dwarf to throw, it uses a different attack.
@@ -208,7 +203,7 @@ import Layout from '../layouts/Layout.astro';
     <div class="tech-section">
       <h2 class="ed-kicker">Why StateTree, not Behavior Tree</h2>
 
-      <p class="ed-lede ed-lede-drop">
+      <p class="ed-lede">
         We chose <strong>StateTree</strong> because Epic is adopting it as the standard, and
         because we were forcing Behavior Trees to work like state machines, when StateTree
         already is one.
@@ -217,12 +212,10 @@ import Layout from '../layouts/Layout.astro';
       <figure class="tech-figure">
         <img
           src={`${import.meta.env.BASE_URL}/project-images/beerserker/statetree-graph.png`}
-          alt="Annotated StateTree graph for one of the enemy archetypes"
+          alt="StateTree graph of the tank mini-boss"
           loading="lazy"
         />
-        <figcaption>
-          One of the archetypes' StateTree graphs, annotated.
-        </figcaption>
+        <figcaption>The tank's StateTree graph.</figcaption>
       </figure>
     </div>
 
@@ -234,10 +227,10 @@ import Layout from '../layouts/Layout.astro';
         <div class="ed-item">
           <span class="ed-item-index">01</span>
           <div class="ed-item-body">
-            <h3>Many enemies on screen at once</h3>
+            <h3>Why an object pool</h3>
             <p>
               The game keeps many enemies on screen at all times, plus particles, decals and
-              projectiles, so I wrote a generic object pool, as a plugin that can be reused in
+              projectiles, so I wrote an object pool, as a plugin that can be reused in
               other projects. When an enemy returns to the pool, its StateTree stops on
               the next frame, and when it is reused it starts again from the beginning.
             </p>
@@ -287,7 +280,7 @@ import Layout from '../layouts/Layout.astro';
             <p>
               When the player hits an enemy with an attack that stuns, the enemy receives
               the <code>StateTree.Stun</code> event, which takes it into the stun state. When the
-              animation ends, an anim notify sends <code>StateTree.StunFinish</code> to leave it.
+              animation ends, an Animation Notify sends <code>StateTree.StunFinish</code> to leave it.
               The tank can't be stunned.
             </p>
           </div>
@@ -328,6 +321,12 @@ import Layout from '../layouts/Layout.astro';
         </a>
       </div>
     </div>
+
+    <!-- ── PAGE NAV ─────────────────────────────────────────────────────── -->
+    <nav class="page-nav" aria-label="More pages">
+      <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
+      <a href={`${import.meta.env.BASE_URL}/graphic-engine`} class="back-link">XEMA technical breakdown →</a>
+    </nav>
 
   </div><!-- /.container -->
 

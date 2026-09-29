@@ -11,7 +11,7 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-  title="XEMA Engine · Technical Breakdown — Fernando Fernández Andueza"
+  title="XEMA Engine · Technical breakdown — Fernando Fernández Andueza"
   description="XEMA — a C++ and OpenGL engine with ECS, deferred PBR rendering, Lua scripting and PhysX, for PC and Nintendo Switch (tested on an emulator)."
 >
   <div class="container page-container">
@@ -20,17 +20,17 @@ import Layout from '../layouts/Layout.astro';
     <div class="page-header">
       <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
 
-      <p class="ed-kicker" style="margin-top: 1.5rem;">Custom 3D engine · Technical breakdown</p>
+      <p class="ed-kicker" style="margin-top: 1.5rem;">Custom C++ engine · Technical breakdown</p>
       <h1>XEMA</h1>
       <p class="ed-lede">
-        XEMA is a graphics engine I built entirely myself in C++ and OpenGL, for PC and
-        Nintendo Switch. I am currently
-        working on a PS4 port using the console's own graphics API.
+        XEMA is an engine I built entirely myself in C++ and OpenGL, for PC and
+        Nintendo Switch (tested only on an emulator). I'm currently working on a PS4 port using
+        the console's own graphics API.
       </p>
 
       <div class="card-meta" style="margin-top: 1.5rem;">
         <span class="badge badge-personal"><span class="badge-dot"></span>University project</span>
-        <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL &nbsp;·&nbsp; PC &nbsp;·&nbsp; Nintendo Switch (emulator)</span>
+        <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL</span>
       </div>
 
       <figure class="tech-figure tech-figure--hero">
@@ -52,7 +52,7 @@ import Layout from '../layouts/Layout.astro';
       <h2 class="ed-kicker">Rendering</h2>
 
       <p class="ed-prose">
-        Rendering is deferred, with PBR, shadow mapping and instanced rendering. This is one
+        The renderer is deferred, with PBR, shadow mapping and instancing. This is one
         frame captured in RenderDoc.
       </p>
 
@@ -65,23 +65,17 @@ import Layout from '../layouts/Layout.astro';
           loading="lazy"
         />
         <div class="gbuffer-grid">
-          <div class="gbuffer-stack">
-            <div class="gbuffer-item">
-              <img src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-albedo.png`} alt="Albedo render target" width="365" height="115" loading="lazy" />
-              <span class="gbuffer-label">Albedo</span>
-            </div>
-            <div class="gbuffer-item">
-              <img src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-normal.png`} alt="Normals render target" width="664" height="210" loading="lazy" />
-              <span class="gbuffer-label">Normals</span>
-            </div>
-            <div class="gbuffer-item">
-              <img src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-position.png`} alt="Position render target" width="563" height="177" loading="lazy" />
-              <span class="gbuffer-label">Position</span>
-            </div>
+          <div class="gbuffer-item">
+            <img src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-albedo.png`} alt="Albedo render target" width="365" height="115" loading="lazy" />
+            <span class="gbuffer-label">Albedo</span>
           </div>
-          <div class="gbuffer-item gbuffer-item--square">
-            <img src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-shadow.png`} alt="Shadow map seen from the light" width="490" height="488" loading="lazy" />
-            <span class="gbuffer-label">Shadow map</span>
+          <div class="gbuffer-item">
+            <img src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-normal.png`} alt="Normals render target" width="664" height="210" loading="lazy" />
+            <span class="gbuffer-label">Normals</span>
+          </div>
+          <div class="gbuffer-item">
+            <img src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-position.png`} alt="Position render target" width="563" height="177" loading="lazy" />
+            <span class="gbuffer-label">Position</span>
           </div>
         </div>
         <figcaption>
@@ -163,8 +157,8 @@ import Layout from '../layouts/Layout.astro';
       <h2 class="ed-kicker">Platforms</h2>
 
       <p class="ed-prose">
-        The platform code is chosen at compile time: each platform builds only its own source
-        files, because a backend never runs on any platform but its own. I first designed it
+        The platform code is chosen at compile time: each build compiles only its own platform's
+        source files, since a build only ever runs on one platform. I first designed it
         with interfaces, but dropped them because they weren't needed and every call had to go
         through a vtable for nothing.
       </p>
@@ -192,6 +186,11 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
     </div>
+
+    <!-- ── PAGE NAV ─────────────────────────────────────────────────────── -->
+    <nav class="page-nav" aria-label="More pages">
+      <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
+    </nav>
 
   </div><!-- /.container -->
 

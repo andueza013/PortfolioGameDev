@@ -151,20 +151,8 @@ section+section {
   padding: .875rem 2rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 1rem;
-}
-
-.nav-logo {
-  font-family: var(--mono);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  white-space: nowrap;
-}
-
-.nav-logo .slash {
-  color: var(--accent);
 }
 
 .nav-links {
@@ -247,14 +235,6 @@ section+section {
   padding: 6rem 0 1.5rem;
 }
 
-.hero-eyebrow {
-  font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--accent);
-  letter-spacing: .06em;
-  margin-bottom: 1.375rem;
-}
-
 .hero-name {
   font-size: clamp(2.25rem, 5vw, 3.5rem);
   font-weight: 300;
@@ -268,17 +248,6 @@ section+section {
   font-size: clamp(1.1rem, 2.5vw, 1.375rem);
   color: var(--text-2);
   margin-bottom: .5rem;
-}
-
-/* Location, mobility and work status: the first thing a recruiter checks, and
-   it used to be reachable only from the contact panel at the foot of the page. */
-.hero-availability {
-  font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--text-3);
-  letter-spacing: .01em;
-  line-height: 1.6;
-  margin-bottom: 1.75rem;
 }
 
 .hero-pitch {
@@ -708,6 +677,19 @@ section+section {
   color: var(--accent);
 }
 
+/* Links at the foot of a detail page, so the reader doesn't have to scroll back up */
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-top: 1px solid var(--border-muted);
+  padding-top: 2rem;
+  margin-top: 2.5rem;
+}
+
+.page-nav .back-link { margin-bottom: 0; }
+
 .tech-section {
   border-top: 1px solid var(--border-muted);
   padding-top: 2.5rem;
@@ -739,7 +721,6 @@ section+section {
 
 /* width/height attributes are only there to reserve space; let the width drive */
 .tech-figure img { height: auto; }
-.tech-figure .gbuffer-item--square img { height: 100%; }
 
 /* Cards in a row keep their own height, so a short card isn't padded out */
 .tech-grid { align-items: start; }
@@ -750,26 +731,15 @@ section+section {
 .tech-figure--inset img,
 .tech-figure--natural img { border-radius: 4px; }
 
-/* RenderDoc G-buffer: three wide targets stacked, shadow map beside them */
+/* RenderDoc G-buffer: the three render targets side by side */
 .gbuffer-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: .75rem;
   margin-top: .75rem;
 }
 
-.gbuffer-stack {
-  display: flex;
-  flex-direction: column;
-  gap: .75rem;
-}
-
 .gbuffer-item { position: relative; }
-
-.gbuffer-item--square img {
-  height: 100%;
-  object-fit: cover;
-}
 
 .gbuffer-label {
   position: absolute;
@@ -890,16 +860,6 @@ section+section {
   font-weight: 500;
 }
 
-/* Drop cap on the opening paragraph of a prose section */
-.ed-lede-drop::first-letter {
-  font-size: 3.1em;
-  font-weight: 300;
-  float: left;
-  line-height: .82;
-  padding: 4px 10px 0 0;
-  color: var(--accent);
-}
-
 .ed-prose {
   font-size: 15px;
   line-height: 1.8;
@@ -980,8 +940,10 @@ section+section {
   border-radius: 4px;
 }
 
+/* Capped at the paragraph width, so in a reversed row the media sits next to the
+   text instead of being pushed to the far edge */
 .ed-body {
-  flex: 1;
+  flex: 0 1 640px;
   min-width: 0;
   order: 2;
 }
@@ -1096,7 +1058,6 @@ section+section {
   }
 
   .ed-lede { font-size: 1.0625rem; }
-  .ed-lede-drop::first-letter { font-size: 2.6em; }
   .ed-quote p { font-size: 1.15rem; }
 
   .ed-row {
@@ -1113,8 +1074,10 @@ section+section {
     order: initial;
   }
 
-  .ed-num { font-size: 2.5rem; width: auto; }
-  .ed-media { flex-basis: auto; width: 100%; }
+  /* Stacked, the number would sit alone on a line above the media */
+  .ed-num { display: none; }
+  .ed-media,
+  .ed-body { flex-basis: auto; width: 100%; }
 }
 
 /* ── Footer ────────────────────────────────────────────────────────────── */
@@ -1256,7 +1219,8 @@ section+section {
   font-size: 1.35rem;
   font-weight: 500;
   color: var(--text);
-  margin-bottom: 2.5rem;
+  /* The column's own gap already spaces the title from the first entry */
+  margin-bottom: 0;
   letter-spacing: -.01em;
 }
 
@@ -1364,12 +1328,9 @@ section+section {
 }
 
 
+/* Three cards never fit two columns evenly, so below three columns they stack */
 @media (max-width: 1200px) {
-  .featured-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 900px) {
-  .featured-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .featured-grid { grid-template-columns: 1fr; gap: 1.25rem; max-width: 760px; }
 }
 
 /* Fuerza a los enlaces de la tarjeta a anclarse siempre al fondo */
@@ -1377,7 +1338,7 @@ section+section {
   margin-top: auto;
 }
 
-/* Keeps the thumbnail from stretching inside the two-column featured grid */
+/* Crops the thumbnail to the same 16:9 box as the trailers in the other featured cards */
 .card-featured .thumbnail {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -1417,13 +1378,10 @@ section+section {
   margin-top: 0;
 }
 
-.about .hero-availability {
+.about .hero-pitch:last-of-type {
   margin-bottom: 0;
 }
 
-.hero-content .hero-eyebrow {
-  margin-top: 0;
-}
 
 /* Below 768px the photo stacks on top and the text is centred */
 @media (max-width: 768px) {
@@ -1439,9 +1397,6 @@ section+section {
     margin-right: auto;
   }
 
-  .hero-ctas {
-    justify-content: center;
-  }
 }
 /* ── Contact ───────────────────────────────────────────────────────────── */
 .contact-panel {

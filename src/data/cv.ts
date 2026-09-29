@@ -44,7 +44,7 @@ export interface SkillCategory {
 
 export const profile = {
   name: 'Fernando Fernández Andueza',
-  role: 'Gameplay & AI Programmer',
+  role: 'Gameplay and AI Programmer',
   email: 'anduezadev@gmail.com',
   portfolio: 'https://andueza013.github.io/PortfolioGameDev',
   linkedin: 'https://linkedin.com/in/fernando-fernandez-andueza',
@@ -60,25 +60,24 @@ export const profile = {
 
 /** The "Profile" block of the CV. The Switch and PS4 detail lives under XEMA. */
 export const summary =
-  'Gameplay and AI programmer. I built the enemy AI for Beerserker: The Stolen Brew (Early ' +
-  'Access on Steam, team of about 20): all four archetypes, in StateTree with C++ and ' +
-  'Blueprints. I built XEMA, my own C++ and OpenGL engine, with an ECS and ' +
-  'deferred PBR rendering. I work with Unreal and Unity, and before games I spent two and a ' +
-  'half years as a fullstack developer on ERP software.';
+  'I built all four enemy archetypes for Beerserker: The ' +
+  'Stolen Brew in StateTree, with C++ and Blueprints. I built XEMA, my own C++ and OpenGL ' +
+  'engine, with an ECS and deferred PBR rendering. I work with Unreal and Unity, and before ' +
+  'games I spent two and a half years as a fullstack developer on ERP software.';
 
 export const experience: Entry[] = [
   {
-    role: 'Gameplay & AI Programmer',
+    role: 'Gameplay and AI Programmer',
     org: 'Beerserker: The Stolen Brew',
     orgLink: 'https://store.steampowered.com/app/4522440/',
     orgNote:
       'ESAT final-year project, team of about 20 · developed by Grumpy Games and ESAT, ' +
       'published on Steam by ESAT (Early Access, free)',
-    date: 'Sept 2025 — Jul 2026',
+    date: 'Sep 2025 — Jul 2026',
     points: [
       'Implemented the four enemy archetypes (melee, ranged, explosive and a tank mini-boss) ' +
         'with StateTree in C++ and Blueprints, with custom tasks and conditions.',
-      'Built a templated object pool as a plugin, reusable in other projects, for the many ' +
+      'Built an object pool as a plugin, reusable in other projects, for the many ' +
         'enemies, particles, decals and projectiles.',
       'Used EQS to pick where the ranged enemy retreats to, based on distance to the player ' +
         'and line of sight. The tank favours its less-used melee attacks, so it ' +
@@ -91,7 +90,7 @@ export const experience: Entry[] = [
     role: 'Gameplay Programmer',
     org: 'Roadtrip: The Engine of Madness',
     orgLink: 'https://store.steampowered.com/app/3776540/Roadtrip_El_Motor_de_la_Locura/',
-    orgNote: 'Oniric Tales',
+    orgNote: 'Oniric Tales · Unity',
     date: 'Dec 2024 — Jun 2025',
     points: [
       'Designed and built core gameplay systems: a component-based dialogue system, an AI ' +
@@ -102,10 +101,10 @@ export const experience: Entry[] = [
   {
     role: 'Fullstack Developer',
     org: 'AHORA',
-    date: 'Sept 2020 — Mar 2023',
+    date: 'Sep 2020 — Mar 2023',
     points: [
       'Enterprise management system: frontend with Vue.js, TypeScript and DevExtreme; ' +
-        'backend in VB and C# on MSSQL.',
+        'backend in VB and C# on SQL Server.',
       'Built products, components and extensions with FlexyGo, an in-house low-code framework.',
       'Handled client incidents, often on site. Worked in Scrum.',
     ],
@@ -119,7 +118,7 @@ export const education: Entry[] = [
     orgNote: 'Valencia',
     date: '2023 — 2026',
     points: [
-      'Video game programming, specialising in C++: my own graphics engine from scratch, ' +
+      'Specialising in C++: my own engine from scratch, ' +
         'procedural generation (Wave Function Collapse, cellular automata, L-systems), a ' +
         'templated FSM, A* pathfinding, and assembly to find and fix bottlenecks in inner loops.',
     ],
@@ -146,8 +145,8 @@ export const education: Entry[] = [
 // worst place to say the same thing twice.
 export const cvProjects: Project[] = [
   {
-    name: 'XEMA — custom 3D engine',
-    meta: 'C++ · OpenGL 4.5 · Nintendo Switch (emulator)',
+    name: 'XEMA — custom C++ engine',
+    meta: 'C++ · OpenGL 4.5',
     link: 'https://andueza013.github.io/PortfolioGameDev/graphic-engine',
     points: [
       'ECS, deferred PBR, shadow mapping, instancing, a JobSystem for async mesh loading, ' +
@@ -159,7 +158,7 @@ export const cvProjects: Project[] = [
   },
   {
     name: 'Abandoned Hospital',
-    meta: 'Unreal Engine 5 · C++ · AI Perception, EQS',
+    meta: 'Unreal Engine 5 · C++',
     points: [
       'Class exercise with AI Perception and EQS on a behaviour tree; I later rebuilt it on ' +
         'my own, with the AI rewritten in StateTree.',
@@ -173,7 +172,7 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: 'Unreal Engine 5 (C++ & Blueprints)', hi: true },
       { name: 'Unity (C#)', hi: true },
-      { name: 'XEMA — custom C++ engine', hi: true },
+
     ],
   },
   {
@@ -193,6 +192,7 @@ export const skillCategories: SkillCategory[] = [
       { name: 'C++', hi: true },
       { name: 'C#', hi: true },
       { name: 'C' },
+      { name: 'ARM64 assembly' },
       { name: 'Lua' },
     ],
   },
@@ -203,36 +203,25 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Deferred shading / PBR', hi: true },
       { name: 'Vertex & fragment shaders' },
       { name: 'ECS architecture' },
-      { name: 'ImGui' },
-      { name: 'GLFW' },
       { name: 'Multithreading & job systems' },
-      { name: 'Memory management & pointers' },
-      { name: 'PhysX 5' },
+      { name: 'Memory management & pointers' }
+
     ],
   },
   {
     label: 'Debugging & profiling',
     skills: [
-      { name: 'Unreal Insights', hi: true },
       { name: 'Visual Studio debugger', hi: true },
+      { name: 'Unreal Insights', hi: true },
       { name: 'RenderDoc', hi: true },
     ],
   },
   {
-    label: 'Platforms',
-    skills: [
-      { name: 'PC (Windows)' },
-      { name: 'Nintendo Switch (emulator)' },
-      { name: 'PlayStation 4 (partial, devkit)' },
-    ],
-  },
-  {
-    label: 'Tooling',
+    label: 'Version control',
     skills: [
       { name: 'Git' },
       { name: 'Perforce' },
-      { name: 'Plastic SCM' },
-      { name: 'Premake5' },
+      { name: 'Plastic SCM' }
     ],
   },
   {
@@ -243,17 +232,17 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Vue.js' },
       { name: 'SQL Server' },
       { name: 'Java' },
-      { name: 'VB .NET' },
+      { name: 'VB.NET' },
     ],
   },
 ];
 
-// The one-page CV folds the home page's eight categories into five rows.
+// The one-page CV folds the home page's seven categories into five rows.
 const cvSkillGroups: [string, string[]][] = [
   ['Engines & AI', ['Game engines', 'AI & gameplay']],
   ['Languages', ['Languages']],
   ['Graphics & systems', ['Graphics & systems']],
-  ['Tools & platforms', ['Debugging & profiling', 'Tooling', 'Platforms']],
+  ['Tools', ['Debugging & profiling', 'Version control']],
   ['Outside games', ['Outside games']],
 ];
 

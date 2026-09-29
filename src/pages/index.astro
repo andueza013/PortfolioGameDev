@@ -29,12 +29,12 @@ const otherProjects: OtherProject[] = [
     desc: "Built for Mini Jam 157: Electric. The player is a maintenance robot keeping a failing nuclear plant online: reactor components break down on a timer and power cables across the facility have to be traced and reconnected before the city loses power.",
     img: "pochas.png",
     link: "https://anduezadev.itch.io/p0-ch45",
-    tags: ["Unity", "C#", "Game Jam"],
+    tags: ["Unity", "C#"],
     badge: "gamejam",
   },
   {
     title: "Krakendoku",
-    desc: "Team project, in development. A roguelike puzzle game: solving procedurally generated sudoku grids earns you coins and items, and mistakes cost you lives. Between puzzles, you spend your coins in a shop. Special encounters change the rules: frozen cells that thaw as correct numbers are placed, or wind that removes numbers you have to place again.",
+    desc: "A roguelike puzzle game: solving procedurally generated sudoku grids earns you coins and items, and mistakes cost you lives. Between puzzles, you spend your coins in a shop. Special encounters change the rules: frozen cells that thaw as correct numbers are placed, or wind that removes numbers you have to place again.",
     img: "krakendoku.png",
     link: "https://anduezadev.itch.io/krakendoku",
     tags: ["Unity", "C#", "Roguelike"],
@@ -51,15 +51,14 @@ const otherProjects: OtherProject[] = [
 ];
 ---
 
-<Layout title="Fernando Fernández Andueza · Gameplay & AI Programmer">
+<Layout title="Fernando Fernández Andueza · Gameplay and AI Programmer">
   <div class="container">
     <!-- ── HERO ──────────────────────────────────────────────────────────── -->
     <!-- Name, role and ways in only: the projects come straight after, and the
-         pitch, photo and availability live in "About me" below the experience. -->
+         pitch and photo live in "About me" below the experience. -->
     <header class="hero">
-      <p class="hero-eyebrow">// gameplay &middot; ai &middot; c++</p>
       <h1 class="hero-name">Fernando Fernández Andueza</h1>
-      <p class="hero-role">Gameplay &amp; AI Programmer</p>
+      <p class="hero-role">Gameplay and AI Programmer</p>
 
       <div class="hero-ctas">
         <a href="#projects" class="btn-hero-primary">View projects</a>
@@ -84,7 +83,7 @@ const otherProjects: OtherProject[] = [
 
           <h3>Beerserker: The Stolen Brew</h3>
           <p class="card-subtitle">
-            ESAT × Grumpy Games &nbsp;·&nbsp; Gameplay &amp; AI Programmer
+            ESAT × Grumpy Games &nbsp;·&nbsp; Gameplay and AI Programmer
           </p>
 
           <div class="video-wrapper card-media">
@@ -97,11 +96,10 @@ const otherProjects: OtherProject[] = [
           </div>
 
           <p>
-            A fast-paced arcade action game with a comical twist: our final-year project
-            at ESAT, made by a team of about 20 and in Early Access on Steam since July 2026.
+            A fast-paced arcade action game with a comical twist: our final-year project at ESAT, made by a team of about 20.
             I worked mainly on the AI: the four enemy archetypes (melee, ranged, explosive
             and a tank mini-boss) in <strong>StateTree</strong> with C++ and Blueprints,
-            plus a templated object pool as a plugin and the enemy spawners.
+            plus an object pool as a plugin and the enemy spawners.
           </p>
 
           <div class="card-links">
@@ -138,13 +136,13 @@ const otherProjects: OtherProject[] = [
               <span class="badge-dot"></span>University project
             </span>
             <span class="card-engine"
-              >C++ &nbsp;·&nbsp; OpenGL &nbsp;·&nbsp; Nintendo Switch (emulator)</span
+              >C++ &nbsp;·&nbsp; OpenGL</span
             >
           </div>
 
-          <h3>XEMA — custom 3D engine</h3>
+          <h3>XEMA — custom C++ engine</h3>
           <p class="card-subtitle">
-            PC and Nintendo Switch
+            PC &nbsp;·&nbsp; Nintendo Switch (emulator only) &nbsp;·&nbsp; PS4 port in progress
           </p>
 
           <img
@@ -155,10 +153,9 @@ const otherProjects: OtherProject[] = [
           />
 
           <p>
-            XEMA is a graphics engine I built entirely myself in C++ and OpenGL: an ECS
+            XEMA is an engine I built entirely myself in C++ and OpenGL: an ECS
             architecture, deferred PBR rendering with shadow mapping and instancing, a
-            JobSystem, Lua scripting and PhysX. It runs on PC and I have ported it to
-            Nintendo Switch (tested only on an emulator); a PS4 port is in progress.
+            JobSystem, Lua scripting and PhysX.
           </p>
 
           <div class="card-links">
@@ -179,8 +176,7 @@ const otherProjects: OtherProject[] = [
 
           <h3>Roadtrip: The Engine of Madness</h3>
           <p class="card-subtitle">
-            Horror driving game &nbsp;·&nbsp; Oniric Tales &nbsp;·&nbsp;
-            Gameplay Programmer, Dec 2024 — Jun 2025
+            Oniric Tales &nbsp;·&nbsp; Gameplay Programmer
           </p>
 
           <div class="video-wrapper card-media">
@@ -236,7 +232,7 @@ const otherProjects: OtherProject[] = [
 
     <!-- ── RESUME / BACKGROUND ───────────────────────────────────────────── -->
     <section id="resume" aria-labelledby="resume-head">
-      <h2 class="sec-head" id="resume-head">Experience &amp; academic path</h2>
+      <h2 class="sec-head" id="resume-head">Experience &amp; education</h2>
 
       <div class="resume-layout">
         <div class="resume-column">
@@ -245,7 +241,7 @@ const otherProjects: OtherProject[] = [
         </div>
 
         <div class="resume-column">
-          <h3 class="resume-section-title">Academic path</h3>
+          <h3 class="resume-section-title">Education &amp; certifications</h3>
           {education.map((entry) => <ResumeEntry entry={entry} compact />)}
         </div>
       </div>
@@ -263,16 +259,13 @@ const otherProjects: OtherProject[] = [
         <div class="hero-content">
           <p class="hero-pitch">
             I'm a game programmer focused on game AI, gameplay systems and procedural
-            generation. I built the enemy AI for <strong>Beerserker: The Stolen Brew</strong>,
-            now in Early Access on Steam, and I built <strong>XEMA</strong>, a custom C++ and
-            OpenGL engine that taught me how engines work under the hood.
+            generation. I built the enemy AI for <strong>Beerserker: The Stolen Brew</strong>, and I
+            built <strong>XEMA</strong>, my own C++ and OpenGL engine, which taught me how
+            engines work under the hood.
           </p>
           <p class="hero-pitch">
             I work with Unreal and Unity. Before games I spent two and a half years as a
             fullstack developer on ERP software.
-          </p>
-          <p class="hero-availability">
-            Valencia, Spain &nbsp;·&nbsp; open to relocation within Spain and to remote work
           </p>
         </div>
 

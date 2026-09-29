@@ -1,8 +1,9 @@
 ---
 // src/components/ResumeEntry.astro
-// One block of the home page's Experience / Academic path timeline.
+// One block of the home page's Experience / Education timeline.
 // The data comes from src/data/cv.ts, so the CV page shows the same entries.
-// `compact` drops the body: the home page shows role, org and dates only and
+// `compact` drops the note and the body: the home page shows role, org and dates
+// only (the featured cards above already say the rest) and
 // links to /cv for the detail.
 
 import type { Entry } from '../data/cv';
@@ -26,7 +27,7 @@ const { entry, compact = false } = Astro.props;
         ) : (
           entry.org
         )}
-        {entry.orgNote && <span class="resume-company-note"> · {entry.orgNote}</span>}
+        {!compact && entry.orgNote && <span class="resume-company-note"> · {entry.orgNote}</span>}
       </p>
     </div>
     <span class="resume-badge-date">{entry.date}</span>

@@ -1,6 +1,6 @@
 # Portfolio — Fernando Fernández Andueza
 
-Personal portfolio of a Gameplay & AI Programmer (Unreal Engine 5 / C++, Unity / C#,
+Personal portfolio of a Gameplay and AI Programmer (Unreal Engine 5 / C++, Unity / C#,
 and XEMA — a custom C++ engine, ported to Nintendo Switch and tested on emulator).
 
 Built with [Astro](https://astro.build) as a fully static site and deployed to GitHub Pages
@@ -58,7 +58,7 @@ chrome --headless --disable-gpu --no-pdf-header-footer \
 ```
 
 Any Chromium binary works. The `@media print` rules in `src/pages/cv.astro` do the rest —
-A4, hidden chrome, and URLs spelled out after each link.
+A4 on a single page, hidden chrome, and the contact URLs spelled out in the header.
 
 ## Commands
 
