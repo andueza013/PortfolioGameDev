@@ -61,7 +61,7 @@ export const profile = {
 /** The "Profile" block of the CV. The Switch and PS4 detail lives under XEMA. */
 export const summary =
   'I built all four enemy archetypes for Beerserker: The ' +
-  'Stolen Brew in StateTree, with C++ and Blueprints. I built XEMA, my own C++ and OpenGL ' +
+  'Stolen Brew in StateTree, with C++ and Blueprints, and wrote XEMA, my own C++ and OpenGL ' +
   'engine, with an ECS and deferred PBR rendering. I work with Unreal and Unity, and before ' +
   'games I spent two and a half years as a fullstack developer on ERP software.';
 
@@ -71,9 +71,9 @@ export const experience: Entry[] = [
     org: 'Beerserker: The Stolen Brew',
     orgLink: 'https://store.steampowered.com/app/4522440/',
     orgNote:
-      'ESAT final-year project, team of about 20 · developed by Grumpy Games and ESAT, ' +
-      'published on Steam by ESAT (Early Access, free)',
-    date: 'Sep 2025 — Jul 2026',
+      'ESAT final-year project, team of about 20. Developed by Grumpy Games and ESAT, ' +
+      'published on Steam by ESAT (Early Access, free).',
+    date: 'Sep 2025 – Jul 2026',
     points: [
       'Implemented the four enemy archetypes (melee, ranged, explosive and a tank mini-boss) ' +
         'with StateTree in C++ and Blueprints, with custom tasks and conditions.',
@@ -90,8 +90,8 @@ export const experience: Entry[] = [
     role: 'Gameplay Programmer',
     org: 'Roadtrip: The Engine of Madness',
     orgLink: 'https://store.steampowered.com/app/3776540/Roadtrip_El_Motor_de_la_Locura/',
-    orgNote: 'Oniric Tales · Unity',
-    date: 'Dec 2024 — Jun 2025',
+    orgNote: 'Oniric Tales, Unity',
+    date: 'Dec 2024 – Jun 2025',
     points: [
       'Designed and built core gameplay systems: a component-based dialogue system, an AI ' +
         'perception system integrated with the behaviour trees, and a radio communication system.',
@@ -101,7 +101,7 @@ export const experience: Entry[] = [
   {
     role: 'Fullstack Developer',
     org: 'AHORA',
-    date: 'Sep 2020 — Mar 2023',
+    date: 'Sep 2020 – Mar 2023',
     points: [
       'Enterprise management system: frontend with Vue.js, TypeScript and DevExtreme; ' +
         'backend in VB and C# on SQL Server.',
@@ -114,9 +114,9 @@ export const experience: Entry[] = [
 export const education: Entry[] = [
   {
     role: 'HND in Video Game Programming',
-    org: 'ESAT — Escuela Superior de Arte y Tecnología',
+    org: 'ESAT (Escuela Superior de Arte y Tecnología)',
     orgNote: 'Valencia',
-    date: '2023 — 2026',
+    date: '2023–2026',
     points: [
       'Specialising in C++: my own engine from scratch, ' +
         'procedural generation (Wave Function Collapse, cellular automata, L-systems), a ' +
@@ -124,10 +124,10 @@ export const education: Entry[] = [
     ],
   },
   {
-    role: 'DAM — Multiplatform Application Development',
+    role: 'DAM (Multiplatform Application Development)',
     org: 'IES El Grao',
     orgNote: 'Valencia',
-    date: '2018 — 2020',
+    date: '2018–2020',
     points: [
       'Java for desktop and Android, relational databases, HTML and CSS, OOP fundamentals and ' +
         'version control.',
@@ -145,8 +145,8 @@ export const education: Entry[] = [
 // worst place to say the same thing twice.
 export const cvProjects: Project[] = [
   {
-    name: 'XEMA — custom C++ engine',
-    meta: 'C++ · OpenGL 4.5',
+    name: 'XEMA (custom C++ engine)',
+    meta: 'C++, OpenGL 4.5',
     link: 'https://andueza013.github.io/PortfolioGameDev/graphic-engine',
     points: [
       'ECS, deferred PBR, shadow mapping, instancing, a JobSystem for async mesh loading, ' +
@@ -158,7 +158,7 @@ export const cvProjects: Project[] = [
   },
   {
     name: 'Abandoned Hospital',
-    meta: 'Unreal Engine 5 · C++',
+    meta: 'Unreal Engine 5, C++',
     points: [
       'Class exercise with AI Perception and EQS on a behaviour tree; I later rebuilt it on ' +
         'my own, with the AI rewritten in StateTree.',

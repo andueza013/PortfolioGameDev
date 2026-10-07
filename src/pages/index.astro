@@ -10,220 +10,187 @@ interface OtherProject {
   img?: string;
   video?: string;
   link?: string;
-  tags: string[];
-  badge: "shipped" | "gamejam" | "personal" | "academic";
+  tech: string[];
+  kind: "shipped" | "gamejam" | "personal" | "academic";
 }
 
 // Everything that isn't a featured project: coursework, jams and prototypes.
-// The badge tells them apart, so they share one grid.
+// `kind` tells them apart, so they share one grid.
 const otherProjects: OtherProject[] = [
   {
     title: "Abandoned Hospital",
     desc: "A class exercise on AI Perception and EQS in Unreal Engine, with enemies and NPCs driven by a behaviour tree. After handing it in, I rebuilt it on my own with free assets and rewrote the AI from scratch in StateTree.",
     img: "AH.webp",
-    tags: ["Unreal Engine 5", "C++", "AI"],
-    badge: "academic",
+    tech: ["Unreal Engine 5", "C++"],
+    kind: "academic",
   },
   {
     title: "P0-CH45",
     desc: "Built for Mini Jam 157: Electric. The player is a maintenance robot keeping a failing nuclear plant online: reactor components break down on a timer and power cables across the facility have to be traced and reconnected before the city loses power.",
     img: "pochas.png",
     link: "https://anduezadev.itch.io/p0-ch45",
-    tags: ["Unity", "C#"],
-    badge: "gamejam",
+    tech: ["Unity", "C#"],
+    kind: "gamejam",
   },
   {
     title: "Krakendoku",
     desc: "A roguelike puzzle game: solving procedurally generated sudoku grids earns you coins and items, and mistakes cost you lives. Between puzzles, you spend your coins in a shop. Special encounters change the rules: frozen cells that thaw as correct numbers are placed, or wind that removes numbers you have to place again.",
     img: "krakendoku.png",
     link: "https://anduezadev.itch.io/krakendoku",
-    tags: ["Unity", "C#", "Roguelike"],
-    badge: "personal",
+    tech: ["Unity", "C#"],
+    kind: "personal",
   },
   {
     title: "Xperimental Exploration of the Marine Abyss",
     desc: "A survival game. The player pilots an exploration submarine down to the ruins of a lost civilisation at abyssal depth, recovering as many valuable minerals as possible and surfacing with them before running out of resources.",
     img: "xema1.png",
     link: "https://anduezadev.itch.io/xperimental-exploration-of-the-marine-abyss",
-    tags: ["Unity", "C#", "Survival"],
-    badge: "gamejam",
+    tech: ["Unity", "C#"],
+    kind: "gamejam",
   },
 ];
 ---
 
-<Layout title="Fernando Fernández Andueza · Gameplay and AI Programmer">
+<Layout title="Fernando Fernández Andueza | Gameplay and AI Programmer">
   <div class="container">
     <!-- ── HERO ──────────────────────────────────────────────────────────── -->
-    <!-- Name, role and ways in only: the projects come straight after, and the
-         pitch and photo live in "About me" below the experience. -->
-    <header class="hero">
-      <h1 class="hero-name">Fernando Fernández Andueza</h1>
-      <p class="hero-role">Gameplay and AI Programmer</p>
+    <!-- Name and role on the left, how to reach me on the right. The pitch and
+         photo live in "About me" below the experience. -->
+    <header class="home-hero">
+      <div>
+        <h1>Fernando Fernández Andueza</h1>
+        <p class="home-role">Gameplay and AI Programmer</p>
+      </div>
 
-      <div class="hero-ctas">
-        <a href="#projects" class="btn-hero-primary">View projects</a>
-        <a href={`${import.meta.env.BASE_URL}/cv`} class="btn-hero-ghost">View CV</a>
-        <a href={`mailto:${profile.email}`} class="btn-hero-ghost">{profile.email}</a>
+      <div class="home-hero-contact">
+        <a href={`mailto:${profile.email}`} class="link">{profile.email}</a>
+        <div class="inline-links">
+          <a href={`${import.meta.env.BASE_URL}/cv`} class="link">CV</a>
+          <a href={profile.linkedin} target="_blank" rel="noopener" class="link">LinkedIn</a>
+          <a href={profile.itch} target="_blank" rel="noopener" class="link">itch.io</a>
+        </div>
       </div>
     </header>
 
     <!-- ── FEATURED PROJECTS ─────────────────────────────────────────────── -->
     <section id="projects" aria-labelledby="projects-head">
-      <h2 class="sec-head" id="projects-head">Featured projects</h2>
+      <h2 class="sec-title" id="projects-head">Featured projects</h2>
 
-      <div class="featured-grid">
-        <!-- Beerserker: The Stolen Brew -->
-        <article class="card-featured">
-          <div class="card-meta">
-            <span class="badge badge-shipped">
-              <span class="badge-dot"></span>Early Access on Steam
-            </span>
-            <span class="card-engine">Unreal Engine 5 &nbsp;·&nbsp; C++</span>
-          </div>
-
-          <h3>Beerserker: The Stolen Brew</h3>
-          <p class="card-subtitle">
-            ESAT × Grumpy Games &nbsp;·&nbsp; Gameplay and AI Programmer
-          </p>
-
-          <div class="video-wrapper card-media">
+      <!-- Beerserker: The Stolen Brew -->
+      <article class="feat">
+        <div class="feat-media">
+          <div class="video-wrapper">
             <iframe
               src="https://www.youtube.com/embed/2bR2OxafTjQ?si=HfbHE73XUxKJRXTU"
-              title="Beerserker: The Stolen Brew — Trailer"
+              title="Beerserker: The Stolen Brew trailer"
               allow="encrypted-media; picture-in-picture"
               loading="lazy"
               allowfullscreen></iframe>
           </div>
+        </div>
 
+        <div>
+          <h3>Beerserker: The Stolen Brew</h3>
+          <p class="home-meta">
+            ESAT final-year project (Grumpy Games), Gameplay and AI Programmer<br />
+            Unreal Engine 5, C++. Early Access on Steam
+          </p>
           <p>
-            A fast-paced arcade action game with a comical twist: our final-year project at ESAT, made by a team of about 20.
+            A fast-paced arcade action game with a comical twist, made by a team of about 20.
             I worked mainly on the AI: the four enemy archetypes (melee, ranged, explosive
-            and a tank mini-boss) in <strong>StateTree</strong> with C++ and Blueprints,
+            and a tank mini-boss) in StateTree with C++ and Blueprints,
             plus an object pool as a plugin and the enemy spawners.
           </p>
-
-          <div class="card-links">
+          <div class="feat-links">
             <!-- The breakdown is the primary action: it shows my work, Steam shows the game -->
-            <a href={`${import.meta.env.BASE_URL}/beerserker`} class="btn-primary"
-              >AI breakdown →</a
-            >
+            <a href={`${import.meta.env.BASE_URL}/beerserker`} class="link">Technical breakdown</a>
             <a
               href="https://store.steampowered.com/app/4522440/"
               target="_blank"
               rel="noopener"
-              class="btn-secondary"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                width="16"
-                height="16"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  d="M12.695 0C8.772 0 5.314 2.578 4.05 6.148l6.624 2.777c.666-.57 1.55-.923 2.526-.923 2.137 0 3.872 1.735 3.872 3.872 0 .976-.353 1.86-.923 2.527l2.777 6.624C21.422 18.686 24 15.228 24 11.305 24 5.06 18.94 0 12.695 0zM5.997 15.17c-.426.668-.667 1.458-.667 2.304 0 2.395 1.942 4.336 4.337 4.336.846 0 1.636-.24 2.304-.666l-5.974-5.974z"
-                ></path>
-              </svg>
-              Play on Steam
-            </a>
-          </div>
-        </article>
-
-        <!-- XEMA Engine -->
-        <article class="card-featured">
-          <div class="card-meta">
-            <span class="badge badge-personal">
-              <span class="badge-dot"></span>University project
-            </span>
-            <span class="card-engine"
-              >C++ &nbsp;·&nbsp; OpenGL</span
+              class="link">Play on Steam</a
             >
           </div>
+        </div>
+      </article>
 
-          <h3>XEMA — custom C++ engine</h3>
-          <p class="card-subtitle">
-            PC &nbsp;·&nbsp; Nintendo Switch (emulator only) &nbsp;·&nbsp; PS4 port in progress
-          </p>
-
+      <!-- XEMA Engine -->
+      <article class="feat">
+        <div class="feat-media">
           <img
             src={`${import.meta.env.BASE_URL}/project-images/xema/pbr-still-life.jpg`}
             alt="A marble bust, a brass vase and a katana rendered by the XEMA engine with PBR and shadows"
-            class="thumbnail card-media"
             loading="lazy"
           />
+        </div>
 
+        <div>
+          <h3>XEMA (custom C++ graphics engine)</h3>
+          <p class="home-meta">
+            C++, OpenGL<br />
+            PC, Nintendo Switch (emulator only), PS4 port in progress
+          </p>
           <p>
             XEMA is an engine I built entirely myself in C++ and OpenGL: an ECS
             architecture, deferred PBR rendering with shadow mapping and instancing, a
             JobSystem, Lua scripting and PhysX.
           </p>
-
-          <div class="card-links">
-            <a href={`${import.meta.env.BASE_URL}/graphic-engine`} class="btn-secondary"
-              >Technical breakdown →</a
-            >
+          <div class="feat-links">
+            <a href={`${import.meta.env.BASE_URL}/graphic-engine`} class="link">Technical breakdown</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <!-- Roadtrip: The Engine of Madness -->
-        <article class="card-featured">
-          <div class="card-meta">
-            <span class="badge badge-development">
-              <span class="badge-dot"></span>In development · Steam page live
-            </span>
-            <span class="card-engine">Unity &nbsp;·&nbsp; C#</span>
-          </div>
-
-          <h3>Roadtrip: The Engine of Madness</h3>
-          <p class="card-subtitle">
-            Oniric Tales &nbsp;·&nbsp; Gameplay Programmer
-          </p>
-
-          <div class="video-wrapper card-media">
+      <!-- Roadtrip: The Engine of Madness -->
+      <article class="feat">
+        <div class="feat-media">
+          <div class="video-wrapper">
             <iframe
               src="https://www.youtube.com/embed/e15C8ltjDOQ?si=vq4NW1F98MPu64Yu"
-              title="Roadtrip: The Engine of Madness — Trailer"
+              title="Roadtrip: The Engine of Madness trailer"
               allow="encrypted-media; picture-in-picture"
               loading="lazy"
               allowfullscreen></iframe>
           </div>
+        </div>
 
+        <div>
+          <h3>Roadtrip: The Engine of Madness</h3>
+          <p class="home-meta">
+            Oniric Tales, Gameplay Programmer<br />
+            Unity, C#. In development, Steam page live
+          </p>
           <p>
             I designed and built core gameplay systems: a component-based dialogue system,
             an AI perception system integrated with the behaviour trees, and a radio
             communication system. I also worked on the Behavior Graph, general gameplay
             mechanics, profiling and bug fixing.
           </p>
-
-          <div class="card-links">
+          <div class="feat-links">
             <a
               href="https://store.steampowered.com/app/3776540/Roadtrip_El_Motor_de_la_Locura/"
               target="_blank"
               rel="noopener"
-              class="btn-secondary"
+              class="link">View on Steam</a
             >
-              View on Steam ↗
-            </a>
           </div>
-        </article>
-      </div>
+        </div>
+      </article>
     </section>
 
     <!-- ── OTHER PROJECTS ────────────────────────────────────────────────── -->
     <section id="other-projects" aria-labelledby="other-projects-head">
-      <h2 class="sec-head" id="other-projects-head">Other projects</h2>
-      <div class="grid">
+      <h2 class="sec-title" id="other-projects-head">Other projects</h2>
+      <div class="proj-grid">
         {
           otherProjects.map((game) => (
             <ProjectCard
               title={game.title}
               description={game.desc}
-              tags={game.tags}
+              tech={game.tech}
               link={game.link}
-              linkLabel="Play on itch.io"
               img={game.img}
-              video={game.video}
-              badge={game.badge}
+              kind={game.kind}
             />
           ))
         }
@@ -232,71 +199,61 @@ const otherProjects: OtherProject[] = [
 
     <!-- ── RESUME / BACKGROUND ───────────────────────────────────────────── -->
     <section id="resume" aria-labelledby="resume-head">
-      <h2 class="sec-head" id="resume-head">Experience &amp; education</h2>
+      <h2 class="sec-title" id="resume-head">Experience &amp; education</h2>
 
-      <div class="resume-layout">
-        <div class="resume-column">
-          <h3 class="resume-section-title">Experience</h3>
-          {experience.map((entry) => <ResumeEntry entry={entry} compact />)}
-        </div>
+      <div class="resume-group">
+        <h3>Experience</h3>
+        {experience.map((entry) => <ResumeEntry entry={entry} />)}
+      </div>
 
-        <div class="resume-column">
-          <h3 class="resume-section-title">Education &amp; certifications</h3>
-          {education.map((entry) => <ResumeEntry entry={entry} compact />)}
-        </div>
+      <div class="resume-group">
+        <h3>Education &amp; certifications</h3>
+        {education.map((entry) => <ResumeEntry entry={entry} />)}
       </div>
 
       <p class="resume-more">
-        <a href={`${import.meta.env.BASE_URL}/cv`} class="btn-secondary">Full details in the CV →</a>
+        <a href={`${import.meta.env.BASE_URL}/cv`} class="link">Full details in the CV</a>
       </p>
     </section>
 
     <!-- ── ABOUT ─────────────────────────────────────────────────────────── -->
-    <section id="about" class="about" aria-labelledby="about-head">
-      <h2 class="sec-head" id="about-head">About me</h2>
+    <section id="about" aria-labelledby="about-head">
+      <h2 class="sec-title" id="about-head">About me</h2>
 
-      <div class="hero-container">
-        <div class="hero-content">
-          <p class="hero-pitch">
+      <div class="about-body">
+        <div>
+          <p>
             I'm a game programmer focused on game AI, gameplay systems and procedural
-            generation. I built the enemy AI for <strong>Beerserker: The Stolen Brew</strong>, and I
-            built <strong>XEMA</strong>, my own C++ and OpenGL engine, which taught me how
-            engines work under the hood.
+            generation. I developed the enemy AI for <strong>Beerserker: The Stolen Brew</strong> and
+            wrote <strong>XEMA</strong>, my own C++ and OpenGL engine, which taught me how
+            engines are put together.
           </p>
-          <p class="hero-pitch">
+          <p>
             I work with Unreal and Unity. Before games I spent two and a half years as a
             fullstack developer on ERP software.
           </p>
         </div>
 
-        <div class="hero-avatar-wrapper">
-          <img
-            src={`${import.meta.env.BASE_URL}/profile.jpeg`}
-            alt="Portrait of Fernando Fernández Andueza"
-            class="hero-avatar"
-            width="800"
-            height="800"
-          />
-        </div>
+        <img
+          src={`${import.meta.env.BASE_URL}/profile.jpeg`}
+          alt="Portrait of Fernando Fernández Andueza"
+          class="about-photo"
+          width="800"
+          height="800"
+        />
       </div>
     </section>
 
     <!-- ── SKILLS ────────────────────────────────────────────────────────── -->
     <section id="skills" aria-labelledby="skills-head">
-      <h2 class="sec-head" id="skills-head">Technical skills</h2>
-      <div class="skills-grid">
+      <h2 class="sec-title" id="skills-head">Technical skills</h2>
+      <div class="skills-cols">
         {
           skillCategories.map((category) => (
-            <div>
-              <p class="skill-group-label">{category.label}</p>
-              <div class="skill-list">
-                {category.skills.map((skill) => (
-                  <span class:list={["skill-item", { hi: skill.hi }]}>
-                    {skill.name}
-                  </span>
-                ))}
-              </div>
-            </div>
+            <p>
+              <b>{category.label}</b>
+              {category.skills.map((skill) => skill.name).join(', ')}
+            </p>
           ))
         }
       </div>
@@ -304,36 +261,29 @@ const otherProjects: OtherProject[] = [
 
     <!-- ── CONTACT ───────────────────────────────────────────────────────── -->
     <section id="contact" aria-labelledby="contact-head">
-      <h2 class="sec-head" id="contact-head">Get in touch</h2>
+      <h2 class="sec-title" id="contact-head">Contact</h2>
 
-      <div class="contact-panel">
-        <div class="contact-pitch">
+      <div class="contact-end">
+        <div>
           <p>
             I'm looking for a gameplay or AI programming position in Unreal Engine or
             Unity. If you have an opening, or want more detail on any of these projects,
             email me.
           </p>
-          <ul class="contact-facts">
-            {
-              profile.facts.map(([label, value]) => (
-                <li><span>{label}</span> {value}</li>
-              ))
-            }
-          </ul>
+          <a href={`mailto:${profile.email}`} class="link contact-mail">{profile.email}</a>
         </div>
 
-        <div class="contact-actions">
-          <a href={`mailto:${profile.email}`} class="btn-hero-primary">{profile.email}</a>
-          <a href={`${import.meta.env.BASE_URL}/cv`} class="btn-hero-ghost">View CV</a>
-          <a
-            href={`${import.meta.env.BASE_URL}/cv-fernando-fernandez-andueza.pdf`}
-            class="btn-hero-ghost"
-            download
-          >
-            CV (PDF) ↓
-          </a>
-          <a href={profile.linkedin} target="_blank" rel="noopener" class="btn-hero-ghost">LinkedIn ↗</a>
-          <a href={profile.itch} target="_blank" rel="noopener" class="btn-hero-ghost">itch.io ↗</a>
+        <div>
+          <ul class="contact-facts">
+            {profile.facts.map(([, value]) => <li>{value}</li>)}
+          </ul>
+          <div class="inline-links">
+            <a
+              href={`${import.meta.env.BASE_URL}/cv-fernando-fernandez-andueza.pdf`}
+              class="link"
+              download>CV (PDF)</a
+            >
+          </div>
         </div>
       </div>
     </section>

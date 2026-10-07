@@ -27,12 +27,12 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
 ---
 
 <Layout
-  title={`CV — ${profile.name}`}
-  description={`Curriculum vitae of ${profile.name} — Gameplay and AI Programmer (Unreal Engine 5, Unity, custom C++ engine).`}
+  title={`CV | ${profile.name}`}
+  description={`Curriculum vitae of ${profile.name}, Gameplay and AI Programmer (Unreal Engine 5, Unity, custom C++ engine).`}
 >
   <div class="container cv-container">
     <div class="cv-toolbar">
-      <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
+      <a href={import.meta.env.BASE_URL} class="back-link">Back to portfolio</a>
       <div class="cv-toolbar-actions">
         {/* A real file, because application forms and ATS ask you to upload one
             rather than to print a page. Regenerate it when this CV changes —
@@ -44,7 +44,6 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
         >
           Download PDF
         </a>
-        <button type="button" id="print-cv" class="btn-hero-ghost">Save as PDF</button>
       </div>
     </div>
 
@@ -52,17 +51,17 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
       <header class="cv-head">
         <h1>{profile.name}</h1>
         <p class="cv-role">{profile.role}</p>
-        {/* Separators sit inside {' '} so Astro can't swallow the spaces around the
-            inline links. The portfolio URL leads: on paper it is the way in. */}
-        <p class="cv-contact">
-          <a href={profile.portfolio}>{printUrl(profile.portfolio)}</a>{' · '}
-          <a href={`mailto:${profile.email}`}>{profile.email}</a>{' · '}
-          <a href={profile.linkedin}>{printUrl(profile.linkedin)}</a>{' · '}
+        {/* The links are spaced by the flex gap, not by separator characters.
+            The portfolio URL leads: on paper it is the way in. */}
+        <p class="cv-contact cv-contact-links">
+          <a href={profile.portfolio}>{printUrl(profile.portfolio)}</a>
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          <a href={profile.linkedin}>{printUrl(profile.linkedin)}</a>
           <a href={profile.itch}>{printUrl(profile.itch)}</a>
         </p>
         <p class="cv-contact">
-          {profile.location} &middot; EU citizen &middot; open to relocation within Spain and to
-          remote work &middot; Spanish (native)
+          {profile.location}. EU citizen, open to relocation within Spain and to remote
+          work. Spanish (native).
         </p>
       </header>
 
@@ -89,11 +88,10 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
           <div class="cv-entry">
             <div class="cv-entry-head">
               <h3>
-                {e.role}{' '}
+                {e.role},{' '}
                 <span class="cv-org">
-                  &middot;{' '}
                   {e.orgLink ? <a href={e.orgLink}>{e.org}</a> : e.org}
-                  {e.orgNote && e.orgNote.length <= 30 && <span class="cv-org-note"> &middot; {e.orgNote}</span>}
+                  {e.orgNote && e.orgNote.length <= 30 && <span class="cv-org-note"> ({e.orgNote})</span>}
                 </span>
               </h3>
               <span class="cv-date">{e.date}</span>
@@ -111,7 +109,7 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
           <div class="cv-entry">
             <div class="cv-entry-head">
               <h3>{pr.link ? <a href={pr.link}>{pr.name}</a> : pr.name}</h3>
-              <span class="cv-date">{pr.meta}</span>
+              <span class="cv-date cv-meta">{pr.meta}</span>
             </div>
             <ul class="cv-points">{pr.points.map((pt) => <li>{pt}</li>)}</ul>
           </div>
@@ -124,10 +122,10 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
           <div class="cv-entry">
             <div class="cv-entry-head">
               <h3>
-                {e.role}{' '}
+                {e.role},{' '}
                 <span class="cv-org">
-                  &middot; {e.org}
-                  {e.orgNote && <span class="cv-org-note"> &middot; {e.orgNote}</span>}
+                  {e.org}
+                  {e.orgNote && <span class="cv-org-note">, {e.orgNote}</span>}
                 </span>
               </h3>
               <span class="cv-date">{e.date}</span>
@@ -141,10 +139,6 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
     </article>
   </div>
 </Layout>
-
-<script>
-  document.getElementById('print-cv')?.addEventListener('click', () => window.print());
-</script>
 
 <style>
   .cv-container {
@@ -170,13 +164,6 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
     flex-wrap: wrap;
   }
 
-  .cv-sheet {
-    background: var(--surface);
-    border: 1px solid var(--border-muted);
-    border-radius: 12px;
-    padding: 2.5rem;
-  }
-
   .cv-head {
     border-bottom: 1px solid var(--border);
     padding-bottom: 1.25rem;
@@ -185,15 +172,14 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
 
   .cv-head h1 {
     font-size: 1.9rem;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: -.02em;
     line-height: 1.2;
   }
 
   .cv-role {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--accent);
+    font-size: 15px;
+    color: var(--text-3);
     margin: .25rem 0 .75rem;
   }
 
@@ -201,6 +187,12 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
     font-size: 12.5px;
     color: var(--text-2);
     line-height: 1.7;
+  }
+
+  .cv-contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1.25em;
   }
 
   .cv-contact a {
@@ -214,11 +206,9 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
   .cv-block:last-child { margin-bottom: 0; }
 
   .cv-block h2 {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--text-3);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
     margin-bottom: .875rem;
   }
 
@@ -254,11 +244,14 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
   .cv-org-note { color: var(--text-3); }
 
   .cv-date {
-    font-family: var(--mono);
-    font-size: 11px;
+    font-size: 12.5px;
+    font-variant-numeric: tabular-nums;
     color: var(--text-3);
     white-space: nowrap;
   }
+
+  /* Tech list, not a date: tabular figures spread out "4.5" and the commas */
+  .cv-meta { font-variant-numeric: normal; }
 
   .cv-entry p,
   .cv-points li {
@@ -295,13 +288,13 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
 
   .cv-updated {
     margin-top: 2rem;
-    font-family: var(--mono);
-    font-size: 10.5px;
+    font-size: 12px;
     color: var(--text-3);
   }
 
   @media (max-width: 640px) {
-    .cv-sheet { padding: 1.5rem; }
+    /* Short titles kept the date beside them and long ones wrapped it: always below on phones */
+    .cv-entry-head { flex-direction: column; gap: .1rem; }
     .cv-skills { grid-template-columns: 1fr; gap: .1rem 0; }
     .cv-skills dd { margin-bottom: .5rem; }
   }
@@ -318,6 +311,9 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
     .skip-link { display: none !important; }
 
     html, body { background: #fff !important; color: #000 !important; }
+    /* The system face is more compact than the web font: with it, the CV fits
+       on one A4 page */
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif !important; }
     .container, .cv-container { max-width: none !important; padding: 0 !important; }
 
     .cv-sheet {
@@ -393,6 +389,8 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
     .cv-skills dd { font-size: 9pt !important; }
     .cv-entry p.cv-note { font-size: 8.5pt !important; }
     .cv-entry h3 { font-size: 10pt !important; }
+    .cv-block h2 { font-size: 9pt !important; }
+    .cv-date { font-size: 8.5pt !important; }
     .cv-points { padding-left: .9rem !important; }
     .cv-updated { display: none !important; }  }
 </style>

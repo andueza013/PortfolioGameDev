@@ -1,87 +1,47 @@
 ---
 // src/components/ProjectCard.astro
-// Generic project card for the jams / prototypes grid.
+// One entry of the home page's "Other projects" grid: image, title, one grey
+// line (kind of project, then tech) and the description. No card box, no pills.
 // Props:
-//   title       — project name
-//   description — 2-3 sentence technical summary
-//   tags        — string[], rendered as mono pills
-//   link        — optional external URL (itch.io, GitHub, etc.)
-//   linkLabel   — button text (default: "View project")
+//   title       — project name; links to `link` when there is one
+//   description — short summary
+//   tech        — string[], joined into the grey line
+//   link        — optional external URL (itch.io, etc.)
 //   img         — optional thumbnail filename (looks in /public/project-images/)
-//   video       — optional embed URL (YouTube/Drive), takes priority over img
-//   badge       — optional status string: "shipped" | "gamejam" | "personal" | "academic"
+//   kind        — optional: "shipped" | "gamejam" | "personal" | "academic"
 
 interface Props {
   title:       string;
   description: string;
-  tags:        string[];
+  tech:        string[];
   link?:       string;
-  linkLabel?:  string;
   img?:        string;
-  video?:      string;
-  badge?:      'shipped' | 'gamejam' | 'personal' | 'academic';
+  kind?:       'shipped' | 'gamejam' | 'personal' | 'academic';
 }
 
-const {
-  title,
-  description,
-  tags,
-  link,
-  linkLabel = 'View project',
-  img,
-  video,
-  badge,
-} = Astro.props;
+const { title, description, tech, link, img, kind } = Astro.props;
 
-const badgeLabels: Record<string, string> = {
+const kindLabels: Record<string, string> = {
   shipped:  'Steam',
-  gamejam:  'Game Jam',
+  gamejam:  'Game jam',
   personal: 'Personal',
   academic: 'Academic',
 };
+
+const meta = [kind && kindLabels[kind], tech.join(', ')].filter(Boolean).join('. ');
 ---
 
-<article class="card">
-  {video ? (
-    <div class="video-wrapper card-media">
-      <iframe
-        src={video}
-        title={title}
-        allow="encrypted-media; picture-in-picture"
-        allowfullscreen
-        loading="lazy"
-      ></iframe>
-    </div>
-  ) : img && (
+<article class="proj">
+  {img && (
     <img
       src={`${import.meta.env.BASE_URL}/project-images/${img}`}
       alt={title}
-      class="thumbnail"
       loading="lazy"
     />
   )}
-
-  <div class="card-head">
-    <h3>{title}</h3>
-    {badge && (
-      <span class={`badge badge-${badge}`}>
-        <span class="badge-dot"></span>
-        {badgeLabels[badge]}
-      </span>
-    )}
-  </div>
-
+  <h3>
+    {link ? <a href={link} target="_blank" rel="noopener" class="link">{title}</a> : title}
+  </h3>
+  <p class="home-meta">{meta}</p>
   <p>{description}</p>
-
-  <div class="tag-container">
-    {tags.map(tag => <span class="tag">{tag}</span>)}
-  </div>
-
-  {link && (
-    <div class="card-links">
-      <a href={link} target="_blank" rel="noopener" class="btn-secondary">
-        {linkLabel} ↗
-      </a>
-    </div>
-  )}
 </article>

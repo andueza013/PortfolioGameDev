@@ -11,16 +11,15 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-  title="XEMA Engine · Technical breakdown — Fernando Fernández Andueza"
-  description="XEMA — a C++ and OpenGL engine with ECS, deferred PBR rendering, Lua scripting and PhysX, for PC and Nintendo Switch (tested on an emulator)."
+  title="XEMA engine | Fernando Fernández Andueza"
+  description="XEMA, a C++ and OpenGL engine with ECS, deferred PBR rendering, Lua scripting and PhysX, for PC and Nintendo Switch (tested on an emulator)."
 >
   <div class="container page-container">
 
     <!-- ── PAGE HEADER ──────────────────────────────────────────────────── -->
     <div class="page-header">
-      <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
+      <a href={import.meta.env.BASE_URL} class="back-link">Back to portfolio</a>
 
-      <p class="ed-kicker" style="margin-top: 1.5rem;">Custom C++ engine · Technical breakdown</p>
       <h1>XEMA</h1>
       <p class="ed-lede">
         XEMA is an engine I built entirely myself in C++ and OpenGL, for PC and
@@ -28,10 +27,7 @@ import Layout from '../layouts/Layout.astro';
         the console's own graphics API.
       </p>
 
-      <div class="card-meta" style="margin-top: 1.5rem;">
-        <span class="badge badge-personal"><span class="badge-dot"></span>University project</span>
-        <span class="card-engine">C++ &nbsp;·&nbsp; OpenGL</span>
-      </div>
+      <p class="home-meta page-meta">University project. C++, OpenGL</p>
 
       <figure class="tech-figure tech-figure--hero">
         <img
@@ -49,7 +45,7 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- ── RENDERING ─────────────────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2 class="ed-kicker">Rendering</h2>
+      <h2 class="sec-title">Rendering</h2>
 
       <p class="ed-prose">
         The renderer is deferred, with PBR, shadow mapping and instancing. This is one
@@ -101,7 +97,7 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- ── PROCEDURAL GENERATION ─────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2 class="ed-kicker">Procedural generation</h2>
+      <h2 class="sec-title">Procedural generation</h2>
 
       <p class="ed-prose">
         I implemented Wave Function Collapse in the engine. The landscape in the frame above
@@ -112,7 +108,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="video-wrapper">
           <iframe
             src="https://www.youtube.com/embed/grZnYOMaqTQ?si=gf-zIuqm6VRQ5O4K"
-            title="XEMA — Wave Function Collapse"
+            title="XEMA Wave Function Collapse demo"
             allow="encrypted-media; picture-in-picture"
             loading="lazy"
             allowfullscreen></iframe>
@@ -126,7 +122,7 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- ── ARCHITECTURE ──────────────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2 class="ed-kicker">Architecture</h2>
+      <h2 class="sec-title">Architecture</h2>
 
       <div class="ed-row">
         <div class="ed-body">
@@ -154,7 +150,7 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- ── PLATFORMS ─────────────────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2 class="ed-kicker">Platforms</h2>
+      <h2 class="sec-title">Platforms</h2>
 
       <p class="ed-prose">
         The platform code is chosen at compile time: each build compiles only its own platform's
@@ -165,7 +161,6 @@ import Layout from '../layouts/Layout.astro';
 
       <div class="ed-list" style="margin-top: 2rem;">
         <div class="ed-item">
-          <span class="ed-item-index">01</span>
           <div class="ed-item-body">
             <h3>Nintendo Switch: tested on an emulator</h3>
             <p>
@@ -175,7 +170,6 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <div class="ed-item">
-          <span class="ed-item-index">02</span>
           <div class="ed-item-body">
             <h3>PlayStation 4: in progress</h3>
             <p>
@@ -189,7 +183,7 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- ── PAGE NAV ─────────────────────────────────────────────────────── -->
     <nav class="page-nav" aria-label="More pages">
-      <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
+      <a href={import.meta.env.BASE_URL} class="back-link">Back to portfolio</a>
     </nav>
 
   </div><!-- /.container -->

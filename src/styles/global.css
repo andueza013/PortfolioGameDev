@@ -4,48 +4,37 @@
    Base:    reset, body, links
    Layout:  container, sections
    Nav:     sticky header
-   Hero:    landing section
-   Sec:     section headings
-   Card:    project cards (featured + grid)
-   Tags:    tech pill tags
-   Btns:    link buttons inside cards
-   Skills:  skills section
-   Detail:  graphic-engine detail page
+   Btns:    buttons, video embed
+   Detail:  beerserker / graphic-engine pages
    Footer:  site footer
    Responsive
+   Home:    home page sections
    ───────────────────────────────────────────────────────────────────────── */
 
 /* ── Tokens ────────────────────────────────────────────────────────────── */
 :root {
-  --bg: #0f172a;
-  --surface: #1e293b;
-  --surface-2: #243044;
-  --border: #334155;
-  --border-muted: #1e293b;
+  /* Warm near-black neutrals and one amber accent. The accent is for links and
+     the single main action in a block, nothing else. */
+  --bg: #131416;
+  --surface: #1b1c1f;
+  --surface-2: #222326;
+  --border: #2e2f33;
+  --border-muted: #242528;
 
-  --text: #f8fafc;
-  --text-2: #94a3b8;
-  --text-3: #8b9bb4;
+  --text: #eceae6;
+  --text-2: #b8b5af;
+  --text-3: #9c9a95;
 
-  --accent: #3b82f6;
-  /* Darker accent for solid fills that carry white text: #3b82f6 gives only
-     3.68:1 against #fff, below the 4.5:1 WCAG AA needs. This one gives 5.17:1. */
-  --accent-strong: #2563eb;
-  --accent-bg: rgba(59, 130, 246, .08);
-  --accent-bdr: rgba(59, 130, 246, .28);
+  --accent: #e2b25a;
+  /* Solid accent fills carry dark text: --on-accent on --accent is about 10:1 */
+  --accent-strong: #e2b25a;
+  --on-accent: #1a1508;
+  --accent-bg: rgba(226, 178, 90, .08);
+  --accent-bdr: rgba(226, 178, 90, .3);
 
-  --green: #34d399;
-  --green-bg: rgba(52, 211, 153, .08);
-  --green-bdr: rgba(52, 211, 153, .25);
-  --purple: #a78bfa;
-  --purple-bg: rgba(167, 139, 250, .08);
-  --purple-bdr: rgba(167, 139, 250, .25);
-  --amber: #f59e0b;
-  --amber-bg: rgba(245, 158, 11, .08);
-  --amber-bdr: rgba(245, 158, 11, .25);
 
-  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --sans: 'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --mono: 'Consolas', ui-monospace, monospace;
 }
 
 /* ── Reset ─────────────────────────────────────────────────────────────── */
@@ -139,7 +128,7 @@ section+section {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(15, 23, 42, .88);
+  background: rgba(19, 20, 22, .9);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border-muted);
@@ -174,15 +163,7 @@ section+section {
 }
 
 .nav-links .nav-cta {
-  color: var(--accent);
-  border: 1px solid var(--accent-bdr);
-  padding: .3rem .9rem;
-  border-radius: 6px;
-  transition: background .15s;
-}
-
-.nav-links .nav-cta:hover {
-  background: var(--accent-bg);
+  color: var(--text);
 }
 
 /* Menu toggle — hidden until the links collapse at 640px */
@@ -230,55 +211,6 @@ section+section {
 .nav-toggle-bars::before { top: -5px; }
 .nav-toggle-bars::after  { top: 5px; }
 
-/* ── Hero ──────────────────────────────────────────────────────────────── */
-.hero {
-  padding: 6rem 0 1.5rem;
-}
-
-.hero-name {
-  font-size: clamp(2.25rem, 5vw, 3.5rem);
-  font-weight: 300;
-  color: var(--text);
-  letter-spacing: -.025em;
-  line-height: 1.1;
-  margin-bottom: .5rem;
-}
-
-.hero-role {
-  font-size: clamp(1.1rem, 2.5vw, 1.375rem);
-  color: var(--text-2);
-  margin-bottom: .5rem;
-}
-
-.hero-pitch {
-  max-width: 100%;
-  font-size: 20px;
-  color: var(--text-2);
-  line-height: 1.75;
-  margin-bottom: 1.1rem;
-}
-
-/* The pitch is two paragraphs: the hook, then the detail. The second one steps
-   down in size so the first still carries the page. */
-.hero-pitch+.hero-pitch {
-  font-size: 17px;
-}
-
-.hero-pitch:last-of-type {
-  margin-bottom: 2rem;
-}
-
-.hero-pitch strong {
-  color: var(--text);
-  font-weight: 500;
-}
-
-.hero-ctas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .625rem;
-}
-
 .btn-hero-primary {
   display: inline-flex;
   align-items: center;
@@ -288,7 +220,7 @@ section+section {
   padding: .6rem 1.25rem;
   border-radius: 8px;
   background: var(--accent-strong);
-  color: #fff;
+  color: var(--on-accent);
   border: 1px solid var(--accent-strong);
   transition: opacity .15s;
 }
@@ -316,204 +248,12 @@ section+section {
   color: var(--text);
 }
 
-/* ── Section heading ───────────────────────────────────────────────────── */
-/* Section heading. It is an <h2> for document structure, but keeps the small
-   mono label look — hence the explicit size and weight. */
-.sec-head {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  font-weight: 500;
-  color: var(--text-3);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: .75rem;
-  margin-bottom: 2rem;
-}
-
-.sec-head::after {
-  content: '';
-  flex: 1;
-  max-width: 80px;
-  height: 1px;
-  background: var(--border-muted);
-}
-
-/* ── Project grid ──────────────────────────────────────────────────────── */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.25rem;
-}
-
-/* ── Cards ─────────────────────────────────────────────────────────────── */
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: .875rem;
-  background: var(--surface);
-  padding: 1.5rem;
-  border-radius: 10px;
-  border: 1px solid var(--border-muted);
-  transition: border-color .2s, background .2s;
-}
-
-.card:hover {
-  border-color: var(--border);
-  background: var(--surface-2);
-}
-
-.card h3 {
-  font-size: 1.0625rem;
-  font-weight: 500;
-  color: var(--text);
-  letter-spacing: -.01em;
-}
-
-.card p {
-  font-size: 13.5px;
-  color: var(--text-2);
-  line-height: 1.65;
-  flex: 1;
-}
-
-/* Featured card — accent top border, stretches to fill its grid cell */
-.card-featured {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  position: relative;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem;
-  overflow: hidden;
-}
-
-.card-featured::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 2px;
-  background: var(--green);
-  opacity: .75;
-}
-
-.card-featured h3 {
-  font-size: 1.375rem;
-  font-weight: 500;
-  color: var(--text);
-  letter-spacing: -.02em;
-  margin-bottom: .25rem;
-}
-
-.card-featured p {
-  font-size: 14.5px;
-  color: var(--text-2);
-  line-height: 1.75;
-  max-width: 800px;
-}
-
-.card-meta {
-  display: flex;
-  align-items: center;
-  gap: .75rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
-}
-
-.card-engine {
-  font-family: var(--mono);
-  font-size: 11.5px;
-  color: var(--text-3);
-}
-
-/* Genre · studio · role line, under a featured card's title */
-.card-featured .card-subtitle {
-  font-size: 13px;
-  color: var(--text-3);
-  margin-bottom: 1rem;
-}
-
-/* Trailer or screenshot sitting between the title and the description */
-.card-media {
-  margin-bottom: 1.25rem;
-}
-
-/* Title with a status badge pushed to the right */
-.card-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: .625rem;
-}
-
-/* Status badge */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: .35rem;
-  font-size: 11px;
-  font-weight: 500;
-  padding: .225rem .65rem;
-  border-radius: 20px;
-  border: 1px solid;
-  white-space: nowrap;
-}
-
-.badge-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: currentColor;
-  flex-shrink: 0;
-}
-
-.badge-shipped {
-  color: var(--green);
-  background: var(--green-bg);
-  border-color: var(--green-bdr);
-}
-
-.badge-personal {
-  color: var(--accent);
-  background: var(--accent-bg);
-  border-color: var(--accent-bdr);
-}
-
-.badge-gamejam {
-  color: var(--amber);
-  background: var(--amber-bg);
-  border-color: var(--amber-bdr);
-}
-
-.badge-academic {
-  color: var(--text-2);
-  background: rgba(100, 116, 139, .08);
-  border-color: rgba(100, 116, 139, .2);
-}
-
-.badge-development {
-  color: var(--purple);
-  background: var(--purple-bg);
-  border-color: var(--purple-bdr);
-}
-
-/* Thumbnail image inside card */
-.thumbnail {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
 /* YouTube embed */
 .video-wrapper {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   background: #000;
 }
@@ -525,23 +265,6 @@ section+section {
   width: 100%;
   height: 100%;
   border: 0;
-}
-
-/* ── Tags ──────────────────────────────────────────────────────────────── */
-.tag-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .375rem;
-}
-
-.tag {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  color: var(--text-2);
-  background: rgba(255, 255, 255, .04);
-  border: 1px solid var(--border-muted);
-  padding: .2rem .55rem;
-  border-radius: 4px;
 }
 
 /* ── Card link buttons ─────────────────────────────────────────────────── */
@@ -567,11 +290,11 @@ section+section {
   white-space: nowrap;
 }
 
-/* Primary: filled — for Steam (most important CTA) */
+/* Primary: filled — the one main action in a block */
 .btn-primary {
-  background: var(--green);
-  border-color: var(--green);
-  color: #0f172a;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
 }
 
 .btn-primary:hover {
@@ -596,53 +319,6 @@ section+section {
   fill: currentColor;
 }
 
-/* ── Skills ────────────────────────────────────────────────────────────── */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 2rem 2.5rem;
-}
-
-.skill-group-label {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  color: var(--accent);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  margin-bottom: .75rem;
-}
-
-.skill-list {
-  display: flex;
-  flex-direction: column;
-  gap: .3rem;
-}
-
-.skill-item {
-  font-size: 13.5px;
-  color: var(--text-2);
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-}
-
-.skill-item::before {
-  content: '';
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--border);
-  flex-shrink: 0;
-}
-
-.skill-item.hi {
-  color: var(--text);
-}
-
-.skill-item.hi::before {
-  background: var(--accent);
-}
-
 /* ── Detail page (graphic-engine) ─────────────────────────────────────── */
 .page-header {
   padding: 3.5rem 0 2.5rem;
@@ -650,7 +326,7 @@ section+section {
 
 .page-header h1 {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 300;
+  font-weight: 700;
   letter-spacing: -.02em;
   margin-bottom: .625rem;
 }
@@ -668,7 +344,11 @@ section+section {
   align-items: center;
   gap: .375rem;
   font-size: 13.5px;
-  color: var(--text-3);
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
   margin-bottom: 2rem;
   transition: color .15s;
 }
@@ -713,7 +393,7 @@ section+section {
 .tech-figure video {
   display: block;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 /* Screenshots with small text: never upscale them past their real size */
@@ -722,8 +402,6 @@ section+section {
 /* width/height attributes are only there to reserve space; let the width drive */
 .tech-figure img { height: auto; }
 
-/* Cards in a row keep their own height, so a short card isn't padded out */
-.tech-grid { align-items: start; }
 .tech-figure--natural { max-width: 623px; }
 
 /* Lead image under a page header: full container width */
@@ -749,102 +427,27 @@ section+section {
   border-radius: 4px;
   background: rgba(0, 0, 0, .65);
   color: #fff;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .04em;
+  font-size: 12px;
 }
 
 @media (max-width: 640px) {
   .gbuffer-grid { grid-template-columns: 1fr; }
 }
 
-.tech-section h2 {
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 1.25rem;
+/* ── Detail pages (beerserker, graphic-engine) ─────────────────────────────
+   Running prose and image/text rows. Section titles use .sec-title, like the
+   home page; no mono labels, numbering or coloured rules. */
+.page-meta {
+  margin-top: 1.25rem;
 }
 
-.tech-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));
-  gap: 1.25rem;
-}
-
-.tech-card {
-  background: var(--surface);
-  border: 1px solid var(--border-muted);
-  border-radius: 10px;
-  padding: 1.5rem;
-}
-
-.tech-card h3 {
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: .875rem;
-}
-
-.tech-card ul {
-  display: flex;
-  flex-direction: column;
-  gap: .625rem;
-  padding-left: 0;
-  list-style: none;
-}
-
-/* The bullet is positioned, not a flex item. `display: flex` here turned every
-   inline child into a flex item, so a mid-sentence <strong> was pulled out of
-   the text flow and pushed apart by the gap. */
-.tech-card li {
-  position: relative;
-  padding-left: .875rem;
-  font-size: 13.5px;
-  color: var(--text-2);
-  line-height: 1.6;
-  list-style: none;
-}
-
-.tech-card li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: .55em;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
-.tech-card li strong {
-  color: var(--text);
-  font-weight: 500;
-}
-
-/* ── Editorial detail page (beerserker) ───────────────────────────────────
-   Long-form alternative to the tech-grid/tech-card pattern above: running
-   prose, numbered rows and pull-quotes instead of a repeated card grid. */
-.ed-kicker {
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
-}
-
-/* Sub-topic label inside a prose section, e.g. "Perception" before its
-   paragraph when a section covers more than one topic */
+/* Sub-topic label inside a prose section, e.g. "What I did" before its paragraph */
 .ed-label {
   display: block;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-bottom: .5rem;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: .35rem;
 }
 
 .ed-lede {
@@ -877,24 +480,7 @@ section+section {
   font-weight: 500;
 }
 
-.ed-quote {
-  margin: 2rem 0;
-  padding-left: 1.5rem;
-  border-left: 2px solid var(--accent);
-}
-
-.ed-quote p {
-  font-size: 1.4rem;
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.5;
-  color: var(--text);
-  margin: 0;
-}
-
-.ed-quote--amber { border-color: var(--amber); }
-
-/* Alternating image/text row — the four archetypes */
+/* Image/text row: the four archetypes, the ImGui panel */
 .ed-row {
   display: flex;
   align-items: center;
@@ -903,16 +489,6 @@ section+section {
 
 .ed-row + .ed-row {
   margin-top: 3.5rem;
-}
-
-.ed-num {
-  flex: 0 0 auto;
-  width: 4.5rem;
-  font-size: 4.25rem;
-  font-weight: 200;
-  line-height: 1;
-  color: var(--border-muted);
-  order: 0;
 }
 
 .ed-media {
@@ -940,20 +516,17 @@ section+section {
   border-radius: 4px;
 }
 
-/* Capped at the paragraph width, so in a reversed row the media sits next to the
-   text instead of being pushed to the far edge */
+/* Capped at the paragraph width, so the media sits next to the text instead
+   of being pushed apart from it */
 .ed-body {
   flex: 0 1 640px;
   min-width: 0;
   order: 2;
 }
 
-.ed-row--rev .ed-media { order: 2; }
-.ed-row--rev .ed-body { order: 1; }
-
 .ed-body h3 {
   font-size: 1.375rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text);
   margin-bottom: .625rem;
 }
@@ -970,18 +543,7 @@ section+section {
   font-weight: 500;
 }
 
-.ed-rule {
-  width: 2.25rem;
-  height: 2px;
-  margin-bottom: 1rem;
-  background: var(--accent);
-}
-
-.ed-rule--purple { background: var(--purple); }
-.ed-rule--amber { background: var(--amber); }
-.ed-rule--green { background: var(--green); }
-
-/* Numbered entries without a card box — challenges & solutions, retrospective */
+/* Entries without a card box: design decisions, platforms */
 .ed-list {
   max-width: 760px;
 }
@@ -998,24 +560,16 @@ section+section {
   border-top: none;
 }
 
-.ed-item-index {
-  flex: 0 0 2rem;
-  padding-top: .15rem;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text-3);
-}
-
 .ed-item-body h3 {
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 600;
   color: var(--text);
   margin-bottom: .5rem;
 }
 
 .ed-item-body p {
-  font-size: 13.5px;
-  line-height: 1.7;
+  font-size: 15px;
+  line-height: 1.8;
   color: var(--text-2);
 }
 
@@ -1036,9 +590,7 @@ section+section {
   width: 200px;
   aspect-ratio: 2 / 3;
   object-fit: cover;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, .2);
+  border-radius: 4px;
 }
 
 .ed-header-text {
@@ -1058,7 +610,6 @@ section+section {
   }
 
   .ed-lede { font-size: 1.0625rem; }
-  .ed-quote p { font-size: 1.15rem; }
 
   .ed-row {
     flex-direction: column;
@@ -1066,16 +617,11 @@ section+section {
     gap: 1rem;
   }
 
-  .ed-num,
   .ed-media,
-  .ed-body,
-  .ed-row--rev .ed-media,
-  .ed-row--rev .ed-body {
+  .ed-body {
     order: initial;
   }
 
-  /* Stacked, the number would sit alone on a line above the media */
-  .ed-num { display: none; }
   .ed-media,
   .ed-body { flex-basis: auto; width: 100%; }
 }
@@ -1161,16 +707,6 @@ section+section {
     font-size: 15px;
   }
 
-  .nav-links .nav-cta {
-    display: inline-block;
-    margin-top: .35rem;
-    padding: .5rem 1rem;
-  }
-
-  .hero {
-    padding: 4rem 0 1rem;
-  }
-
   section {
     padding: 3rem 0;
   }
@@ -1179,22 +715,6 @@ section+section {
     padding-top: 0;
   }
 
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .tech-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .skills-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .card-featured {
-    padding: 1.375rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1207,270 +727,322 @@ section+section {
   }
 }
 
-/* ── Resume Timeline Section ───────────────────────────────────────────── */
-.resume-layout {
+/* ── Home ──────────────────────────────────────────────────────────────────
+   No cards, badges or pills: status, studio and tech go in one plain grey
+   line, sections are split by type size and thin rules only. */
+
+/* Inline text link: accent underline, text keeps its own colour */
+.link {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: color .15s;
+}
+
+.link:hover {
+  color: var(--accent);
+}
+
+.home-hero {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3.5rem;
-  margin-top: 2.5rem;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 2rem;
+  padding: 5rem 0 3rem;
+  border-bottom: 1px solid var(--border);
 }
 
-.resume-section-title {
-  font-size: 1.35rem;
-  font-weight: 500;
-  color: var(--text);
-  /* The column's own gap already spaces the title from the first entry */
-  margin-bottom: 0;
-  letter-spacing: -.01em;
+.home-hero h1 {
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -.025em;
+  text-wrap: balance;
 }
 
-.resume-column {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-
-.resume-block {
-  position: relative;
-  padding-left: 1.75rem;
-  border-left: 1px solid var(--border);
-}
-
-.resume-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 0.875rem;
-}
-
-/* El punto del timeline alineado */
-.resume-timeline-dot {
-  position: absolute;
-  left: -4.5px;
-  top: 6px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 10px var(--accent);
-}
-
-.resume-title-group h4 {
-  font-size: 1.125rem;
-  font-weight: 500;
-  color: var(--text);
-  line-height: 1.2;
-}
-
-.resume-company {
-  font-size: 13.5px;
-  color: var(--text-2);
-  margin-top: 0.25rem;
-}
-
-/* Studio, publisher or campus — secondary to the org itself */
-.resume-company-note {
+.home-role {
+  margin-top: .6rem;
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
   color: var(--text-3);
 }
 
-.resume-badge-date {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 1px solid var(--accent-bdr);
-  padding: 0.25rem 0.65rem;
-  border-radius: 20px;
-  white-space: nowrap;
+.home-hero-contact {
+  text-align: right;
+  font-size: 15px;
+  line-height: 1.9;
 }
 
-.resume-body {
-  font-size: 14.5px;
-  color: var(--text-2);
-  line-height: 1.75;
+.inline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1.25rem;
 }
 
-/* Home page: role, org and dates only — the detail lives on /cv */
-.resume-block--compact .resume-header {
-  margin-bottom: 0;
+.home-hero-contact .inline-links {
+  justify-content: flex-end;
 }
 
-.resume-more {
-  margin-top: 2.5rem;
-  text-align: center;
+.sec-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  margin-bottom: 2rem;
 }
 
-/* Responsive para dispositivos móviles */
-@media (max-width: 900px) {
-  .resume-layout {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
-  .resume-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .resume-badge-date {
-    align-self: flex-start;
-  }
+.home-meta {
+  font-size: 15px;
+  color: var(--text-3);
+  line-height: 1.6;
 }
 
-/* ── Featured Grid Layout ──────────────────────────────────────────────── */
-/* Three columns: three featured projects, one per column. */
-.featured-grid {
+/* Featured project: media on the left, text on the right, full width */
+.feat {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: 3fr 5fr;
+  gap: 2.5rem;
+  align-items: start;
 }
 
-
-/* Three cards never fit two columns evenly, so below three columns they stack */
-@media (max-width: 1200px) {
-  .featured-grid { grid-template-columns: 1fr; gap: 1.25rem; max-width: 760px; }
+.feat + .feat {
+  margin-top: 4rem;
 }
 
-/* Fuerza a los enlaces de la tarjeta a anclarse siempre al fondo */
-.card-featured .card-links {
-  margin-top: auto;
+.feat-media img,
+.feat-media .video-wrapper {
+  border-radius: 4px;
 }
 
-/* Crops the thumbnail to the same 16:9 box as the trailers in the other featured cards */
-.card-featured .thumbnail {
+.feat-media img {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
 
-.hero-container {
-  display: flex;
-  align-items: flex-start;
-  gap: 3rem;
+.feat h3 {
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.01em;
 }
 
-.hero-avatar-wrapper {
-  flex: 1;
-  display: flex;
-  justify-content: center;
+.feat .home-meta {
+  margin: .5rem 0 1rem;
 }
 
-/* Square source, so aspect-ratio keeps it a circle at any width */
-.hero-avatar {
-  margin-top: 15%;
-  width: min(320px, 100%);
-  aspect-ratio: 1;
-  height: auto;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+.feat p:not(.home-meta) {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-2);
 }
 
-.hero-content {
-  flex: 2;
-}
-
-/* In "About me" the text starts at the top, so the photo does too */
-.about .hero-avatar {
-  margin-top: 0;
-}
-
-.about .hero-pitch:last-of-type {
-  margin-bottom: 0;
-}
-
-
-/* Below 768px the photo stacks on top and the text is centred */
-@media (max-width: 768px) {
-  .hero-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 2rem;
-  }
-
-  .hero-pitch {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-}
-/* ── Contact ───────────────────────────────────────────────────────────── */
-.contact-panel {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 2.5rem;
-  align-items: start;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem;
-}
-
-.contact-pitch h3 {
-  font-size: 1.375rem;
-  font-weight: 500;
+.feat strong {
   color: var(--text);
-  letter-spacing: -.02em;
-  margin-bottom: .625rem;
+  font-weight: 600;
 }
 
-.contact-pitch p {
-  font-size: 14.5px;
-  color: var(--text-2);
-  line-height: 1.75;
-  max-width: 60ch;
-}
-
-.contact-facts {
+.feat-links {
   display: flex;
-  flex-direction: column;
-  gap: .45rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
   margin-top: 1.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--border-muted);
+  font-weight: 500;
 }
 
-.contact-facts li {
-  font-size: 13.5px;
+/* Other projects: four across, image, title, one grey line, description */
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem 1.75rem;
+}
+
+.proj img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: .875rem;
+}
+
+.proj h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.proj .home-meta {
+  font-size: 14px;
+  margin: .25rem 0 .5rem;
+}
+
+.proj p:not(.home-meta) {
+  font-size: 14.5px;
+  line-height: 1.65;
   color: var(--text-2);
-  line-height: 1.5;
 }
 
-.contact-facts span {
-  display: inline-block;
-  min-width: 8.5rem;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+/* Experience and education: date | role | organisation */
+.resume-group {
+  max-width: 1080px;
+}
+
+.resume-group + .resume-group {
+  margin-top: 2.5rem;
+}
+
+.resume-group h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-3);
+  margin-bottom: .5rem;
+}
+
+.resume-row {
+  display: grid;
+  grid-template-columns: 12rem 1fr 1fr;
+  gap: 1.5rem;
+  padding: .9rem 0;
+  border-top: 1px solid var(--border);
+  font-size: 15.5px;
+}
+
+.resume-row-date {
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.resume-row-role {
+  font-weight: 600;
+}
+
+.resume-row-org {
   color: var(--text-3);
 }
 
-.contact-actions {
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
+.resume-row-org a {
+  color: var(--text-3);
 }
 
-.contact-actions a {
-  justify-content: center;
-  text-align: center;
+.resume-row-org a:hover {
+  color: var(--accent);
+}
+
+.resume-more {
+  margin-top: 1.5rem;
+}
+
+/* About: text, then a square photo */
+.about-body {
+  display: grid;
+  grid-template-columns: minmax(0, 680px) 220px;
+  gap: 3rem;
+  align-items: start;
+}
+
+.about-body p {
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--text-2);
+}
+
+.about-body p + p {
+  margin-top: 1rem;
+}
+
+.about-body strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.about-photo {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* Skills: category name, then the list as plain text */
+.skills-cols {
+  columns: 2;
+  column-gap: 3rem;
+  max-width: 1080px;
+}
+
+.skills-cols p {
+  break-inside: avoid;
+  margin-bottom: 1.1rem;
+  font-size: 15.5px;
+  color: var(--text-2);
+}
+
+.skills-cols b {
+  display: block;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Contact: the pitch and the address on the left, the facts and links on the right */
+.contact-end {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.contact-end p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-2);
+  max-width: 60ch;
+}
+
+.contact-mail {
+  display: inline-block;
+  margin-top: 1.25rem;
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.contact-facts {
+  color: var(--text-3);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.contact-end .inline-links {
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+@media (max-width: 1100px) {
+  .proj-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 900px) {
-  .contact-panel {
+  .home-hero,
+  .feat,
+  .about-body,
+  .contact-end {
     grid-template-columns: 1fr;
-    gap: 1.75rem;
-    padding: 1.5rem;
   }
 
-  .contact-facts span {
-    display: block;
-    min-width: 0;
-    margin-bottom: .1rem;
+  .home-hero { padding-top: 3.5rem; }
+  .home-hero-contact { text-align: left; }
+  .home-hero-contact .inline-links { justify-content: flex-start; }
+  .about-photo { max-width: 200px; }
+
+  .resume-row {
+    grid-template-columns: 1fr;
+    gap: .1rem;
   }
+
+  .skills-cols { columns: 1; }
 }
+
+@media (max-width: 560px) {
+  .proj-grid { grid-template-columns: 1fr; }
+}
+

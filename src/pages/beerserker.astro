@@ -11,51 +11,45 @@
 // doesn't process animated GIFs, and a properly encoded MP4 is a fraction of
 // the size. The StateTree graph stays a static <img> (PNG).
 //
-// LAYOUT: editorial long-form — running prose, alternating image/text rows and
-// pull-quotes instead of a grid of tech cards. graphic-engine.astro uses the same layout.
+// LAYOUT: editorial long-form — running prose, image/text rows (all the same way round) and
+// plain headings instead of a grid of tech cards. graphic-engine.astro uses the same layout.
 // See src/styles/global.css, "Editorial detail page (beerserker)".
 
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-  title="Beerserker Enemy AI · Technical breakdown — Fernando Fernández Andueza"
+  title="Beerserker enemy AI | Fernando Fernández Andueza"
   description="How I built the enemy AI for Beerserker: The Stolen Brew with StateTree in Unreal Engine 5, from the melee enemy to the tank mini-boss."
 >
   <div class="container page-container">
 
     <!-- ── PAGE HEADER ──────────────────────────────────────────────────── -->
     <div class="page-header">
-      <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
+      <a href={import.meta.env.BASE_URL} class="back-link">Back to portfolio</a>
 
       <div class="ed-header-panel">
         <img
           class="ed-header-capsule"
           src={`${import.meta.env.BASE_URL}/project-images/beerserker/Capsule.png`}
-          alt="Beerserker: The Stolen Brew — Steam capsule artwork"
+          alt="Beerserker: The Stolen Brew Steam capsule artwork"
         />
 
         <div class="ed-header-text">
-          <p class="ed-kicker">Enemy AI · Technical breakdown</p>
-
           <h1>Beerserker</h1>
           <p class="ed-lede">
            Beerserker is a modern, fast-paced arcade game with a comical twist. Blinded by the taste of the legendary dwarven ale, Ragna sets out to take it back from the gods. Can you fight your way through a crowded dwarven brewery, or will you be crushed by their ranks?
           </p>
 
-          <div class="card-meta" style="margin-top: 1.5rem;">
-            <span class="badge badge-shipped"><span class="badge-dot"></span>Early Access on Steam</span>
-            <span class="card-engine">Unreal Engine 5 &nbsp;·&nbsp; C++ &nbsp;·&nbsp; StateTree</span>
-          </div>
+          <p class="home-meta page-meta">Early Access on Steam. Unreal Engine 5, C++, StateTree</p>
         </div>
       </div>
     </div>
 
-    <!-- ── THE BRIEF ─────────────────────────────────────────────────────── -->
+    <!-- ── THE PROJECT ─────────────────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2 class="ed-kicker">The brief</h2>
+      <h2 class="sec-title">The project</h2>
 
-      <span class="ed-label">The production</span>
       <p class="ed-prose">
         Beerserker: The Stolen Brew is my final-year project at ESAT, with about 20 people
         across programming, art, design, music and production. It came out on Steam in Early
@@ -79,21 +73,19 @@ import Layout from '../layouts/Layout.astro';
         <div class="video-wrapper">
           <iframe
             src="https://www.youtube.com/embed/2bR2OxafTjQ?si=HfbHE73XUxKJRXTU"
-            title="Beerserker: The Stolen Brew — Trailer"
+            title="Beerserker: The Stolen Brew trailer"
             allow="encrypted-media; picture-in-picture"
             loading="lazy"
             allowfullscreen></iframe>
         </div>
-        <figcaption>Beerserker: The Stolen Brew — trailer.</figcaption>
       </figure>
     </div>
 
     <!-- ── THE FOUR ARCHETYPES ───────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2 class="ed-kicker">The four archetypes</h2>
+      <h2 class="sec-title">The four archetypes</h2>
 
       <div class="ed-row">
-        <div class="ed-num">01</div>
         <div class="ed-media">
           <figure class="tech-figure">
             <video
@@ -109,15 +101,13 @@ import Layout from '../layouts/Layout.astro';
         </div>
         <div class="ed-body">
           <h3>Melee</h3>
-          <div class="ed-rule"></div>
           <p>
             It moves towards the player until the player is in range, then hits them.
           </p>
         </div>
       </div>
 
-      <div class="ed-row ed-row--rev">
-        <div class="ed-num">02</div>
+      <div class="ed-row">
         <div class="ed-media">
           <figure class="tech-figure">
             <video
@@ -133,7 +123,6 @@ import Layout from '../layouts/Layout.astro';
         </div>
         <div class="ed-body">
           <h3>Ranged</h3>
-          <div class="ed-rule ed-rule--purple"></div>
           <p>
             It gets in range and shoots. When the player is too close, it looks for a safe
             spot to retreat to and shoot from.
@@ -142,7 +131,6 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <div class="ed-row">
-        <div class="ed-num">03</div>
         <div class="ed-media">
           <figure class="tech-figure">
             <video
@@ -158,7 +146,6 @@ import Layout from '../layouts/Layout.astro';
         </div>
         <div class="ed-body">
           <h3>Explosive</h3>
-          <div class="ed-rule ed-rule--amber"></div>
           <p>
             It blinks red, faster and faster as its timer runs down, so the player can tell at a
             glance how much time is left. If it never reaches the player, it explodes when the
@@ -169,8 +156,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
 
-      <div class="ed-row ed-row--rev">
-        <div class="ed-num">04</div>
+      <div class="ed-row">
         <div class="ed-media">
           <figure class="tech-figure">
             <video
@@ -186,7 +172,6 @@ import Layout from '../layouts/Layout.astro';
         </div>
         <div class="ed-body">
           <h3>Tank mini-boss</h3>
-          <div class="ed-rule ed-rule--green"></div>
           <p>
             It has four attacks. At range, it throws honey or throws a dwarf; up close, it does
             a sweep that leaves honey on the ground, or an area attack. Each ranged attack has its own cooldown, and it only throws
@@ -201,7 +186,7 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- ── WHY STATETREE, NOT BEHAVIOR TREE ───────────────────────────────── -->
     <div class="tech-section">
-      <h2 class="ed-kicker">Why StateTree, not Behavior Tree</h2>
+      <h2 class="sec-title">Why StateTree</h2>
 
       <p class="ed-lede">
         We chose <strong>StateTree</strong> because Epic is adopting it as the standard, and
@@ -221,11 +206,10 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- ── DESIGN DECISIONS ───────────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2 class="ed-kicker">Design decisions</h2>
+      <h2 class="sec-title">Design decisions</h2>
 
       <div class="ed-list">
         <div class="ed-item">
-          <span class="ed-item-index">01</span>
           <div class="ed-item-body">
             <h3>Why an object pool</h3>
             <p>
@@ -238,7 +222,6 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <div class="ed-item">
-          <span class="ed-item-index">02</span>
           <div class="ed-item-body">
             <h3>Where the ranged enemy retreats to</h3>
             <p>
@@ -249,7 +232,6 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <div class="ed-item">
-          <span class="ed-item-index">03</span>
           <div class="ed-item-body">
             <h3>Which attack the tank picks</h3>
             <p>
@@ -261,7 +243,6 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <div class="ed-item">
-          <span class="ed-item-index">04</span>
           <div class="ed-item-body">
             <h3>Which dwarf the tank throws</h3>
             <p>
@@ -274,7 +255,6 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <div class="ed-item">
-          <span class="ed-item-index">05</span>
           <div class="ed-item-body">
             <h3>Stun through StateTree events</h3>
             <p>
@@ -287,7 +267,6 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <div class="ed-item">
-          <span class="ed-item-index">06</span>
           <div class="ed-item-body">
             <h3>Exposed attributes and varied melee attacks</h3>
             <p>
@@ -304,7 +283,6 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- ── LINKS ─────────────────────────────────────────────────────────── -->
     <div class="tech-section">
-      <h2 class="ed-kicker">The game</h2>
       <div class="card-links">
         <a
           href="https://store.steampowered.com/app/4522440/"
@@ -324,8 +302,8 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- ── PAGE NAV ─────────────────────────────────────────────────────── -->
     <nav class="page-nav" aria-label="More pages">
-      <a href={import.meta.env.BASE_URL} class="back-link">← Back to portfolio</a>
-      <a href={`${import.meta.env.BASE_URL}/graphic-engine`} class="back-link">XEMA technical breakdown →</a>
+      <a href={import.meta.env.BASE_URL} class="back-link">Back to portfolio</a>
+      <a href={`${import.meta.env.BASE_URL}/graphic-engine`} class="back-link">XEMA technical breakdown</a>
     </nav>
 
   </div><!-- /.container -->

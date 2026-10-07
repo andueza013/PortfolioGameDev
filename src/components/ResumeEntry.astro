@@ -1,36 +1,26 @@
 ---
 // src/components/ResumeEntry.astro
-// One block of the home page's Experience / Education timeline.
-// The data comes from src/data/cv.ts, so the CV page shows the same entries.
-// `compact` drops the note and the body: the home page shows role, org and dates
-// only (the featured cards above already say the rest) and
-// links to /cv for the detail.
+// One row of the home page's Experience / Education list: date, role, org.
+// The data comes from src/data/cv.ts, so the CV page shows the same entries;
+// the detail (notes and bullet points) lives only on /cv.
 
 import type { Entry } from '../data/cv';
 
 interface Props {
   entry: Entry;
-  compact?: boolean;
 }
 
-const { entry, compact = false } = Astro.props;
+const { entry } = Astro.props;
 ---
 
-<div class:list={['resume-block', { 'resume-block--compact': compact }]}>
-  <div class="resume-header">
-    <span class="resume-timeline-dot"></span>
-    <div class="resume-title-group">
-      <h4>{entry.role}</h4>
-      <p class="resume-company">
-        {entry.orgLink ? (
-          <a href={entry.orgLink} target="_blank" rel="noopener">{entry.org} ↗</a>
-        ) : (
-          entry.org
-        )}
-        {!compact && entry.orgNote && <span class="resume-company-note"> · {entry.orgNote}</span>}
-      </p>
-    </div>
-    <span class="resume-badge-date">{entry.date}</span>
-  </div>
-  {!compact && <p class="resume-body">{entry.points.join(' ')}</p>}
+<div class="resume-row">
+  <span class="resume-row-date">{entry.date}</span>
+  <span class="resume-row-role">{entry.role}</span>
+  <span class="resume-row-org">
+    {entry.orgLink ? (
+      <a href={entry.orgLink} target="_blank" rel="noopener">{entry.org}</a>
+    ) : (
+      entry.org
+    )}
+  </span>
 </div>
