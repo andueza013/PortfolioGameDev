@@ -402,6 +402,9 @@ section+section {
 /* width/height attributes are only there to reserve space; let the width drive */
 .tech-figure img { height: auto; }
 
+/* Image that links to its own full-size file */
+.figure-zoom { display: block; cursor: zoom-in; }
+
 .tech-figure--natural { max-width: 623px; }
 
 /* Lead image under a page header: full container width */
@@ -660,11 +663,15 @@ section+section {
 .footer-links a {
   font-size: 13px;
   color: var(--text-3);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
   transition: color .15s;
 }
 
 .footer-links a:hover {
-  color: var(--text-2);
+  color: var(--accent);
 }
 
 /* ── Responsive ────────────────────────────────────────────────────────── */

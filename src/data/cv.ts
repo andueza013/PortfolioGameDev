@@ -15,11 +15,16 @@
 export interface Entry {
   /** Job title, degree or certification. */
   role: string;
-  /** Company, product or institution. */
+  /** Employer or institution. Kept to the company name: ATS parsers read the
+   *  text after the job title as the employer. */
   org: string;
   /** External URL for `org`, when there is one to link to. */
   orgLink?: string;
-  /** Secondary context shown under the heading — studio, campus, publisher. */
+  /** The game worked on, shown on the line under the heading. */
+  product?: string;
+  /** External URL for `product` (its Steam page). */
+  productLink?: string;
+  /** Secondary context — engine, campus, project type, publisher. */
   orgNote?: string;
   /** Free-form date range, rendered verbatim. */
   date: string;
@@ -33,6 +38,8 @@ export interface Project {
   meta: string;
   /** Absolute URL — printed after the name on paper, so it must be resolvable. */
   link?: string;
+  /** Context line under the heading — project type, team, publisher. */
+  note?: string;
   /** One bullet each on the CV. */
   points: string[];
 }
@@ -54,7 +61,7 @@ export const profile = {
     ['Based in', 'Valencia, Spain'],
     ['Work status', 'EU citizen, no visa needed to work in the EU'],
     ['Availability', 'Open to relocation within Spain and to remote work'],
-    ['Languages', 'Spanish (native)'],
+    ['Languages', 'Spanish (native), English (intermediate)'],
   ] as [string, string][],
 };
 
@@ -67,30 +74,11 @@ export const summary =
 
 export const experience: Entry[] = [
   {
-    role: 'Gameplay and AI Programmer',
-    org: 'Beerserker: The Stolen Brew',
-    orgLink: 'https://store.steampowered.com/app/4522440/',
-    orgNote:
-      'ESAT final-year project, team of about 20. Developed by Grumpy Games and ESAT, ' +
-      'published on Steam by ESAT (Early Access, free).',
-    date: 'Sep 2025 – Jul 2026',
-    points: [
-      'Implemented the four enemy archetypes (melee, ranged, explosive and a tank mini-boss) ' +
-        'with StateTree in C++ and Blueprints, with custom tasks and conditions.',
-      'Built an object pool as a plugin, reusable in other projects, for the many ' +
-        'enemies, particles, decals and projectiles.',
-      'Used EQS to pick where the ranged enemy retreats to, based on distance to the player ' +
-        'and line of sight. The tank favours its less-used melee attacks, so it ' +
-        'doesn’t keep repeating the same one.',
-      'Built the enemy spawners, set up and uploaded the Steam builds, and took part in ' +
-        'designing the architecture of a custom GAS-based action system.',
-    ],
-  },
-  {
     role: 'Gameplay Programmer',
-    org: 'Roadtrip: The Engine of Madness',
-    orgLink: 'https://store.steampowered.com/app/3776540/Roadtrip_El_Motor_de_la_Locura/',
-    orgNote: 'Oniric Tales, Unity',
+    org: 'Oniric Tales',
+    product: 'Roadtrip: The Engine of Madness',
+    productLink: 'https://store.steampowered.com/app/3776540/Roadtrip_El_Motor_de_la_Locura/',
+    orgNote: 'Unity',
     date: 'Dec 2024 – Jun 2025',
     points: [
       'Designed and built core gameplay systems: a component-based dialogue system, an AI ' +
@@ -104,7 +92,7 @@ export const experience: Entry[] = [
     date: 'Sep 2020 – Mar 2023',
     points: [
       'Enterprise management system: frontend with Vue.js, TypeScript and DevExtreme; ' +
-        'backend in VB and C# on SQL Server.',
+        'backend in VB.NET and C# on SQL Server.',
       'Built products, components and extensions with FlexyGo, an in-house low-code framework.',
       'Handled client incidents, often on site. Worked in Scrum.',
     ],
@@ -120,7 +108,7 @@ export const education: Entry[] = [
     points: [
       'Specialising in C++: my own engine from scratch, ' +
         'procedural generation (Wave Function Collapse, cellular automata, L-systems), a ' +
-        'templated FSM, A* pathfinding, and assembly to find and fix bottlenecks in inner loops.',
+        'templated FSM, A* pathfinding and optimization in assembly to find and fix bottlenecks in inner loops.',
     ],
   },
   {
@@ -136,7 +124,7 @@ export const education: Entry[] = [
   {
     role: 'Certified Scrum Master & Product Owner',
     org: 'Scrum.org / International Agile Institutes',
-    date: 'Professional credentials',
+    date: '',
     points: [],
   },
 ];
@@ -144,6 +132,26 @@ export const education: Entry[] = [
 // Only work that does NOT already appear under `experience` — a one-page CV is the
 // worst place to say the same thing twice.
 export const cvProjects: Project[] = [
+  {
+    // A student project, so it lives here rather than under `experience`
+    name: 'Beerserker: The Stolen Brew',
+    meta: 'Unreal Engine 5, C++',
+    link: 'https://store.steampowered.com/app/4522440/',
+    note:
+      'Final-year project at ESAT, team of about 20. Developed by Grumpy Games and ESAT, ' +
+      'published on Steam by ESAT (Early Access, free).',
+    points: [
+      'Implemented the four enemy archetypes (melee, ranged, explosive and a tank mini-boss) ' +
+        'with StateTree in C++ and Blueprints, with custom tasks and conditions.',
+      'Built an object pool as a plugin, reusable in other projects, for the many ' +
+        'enemies, particles, decals and projectiles.',
+      'Used EQS to pick where the ranged enemy retreats to, based on distance to the player ' +
+        'and line of sight. The tank favours the melee attacks it has used least, so it ' +
+        'doesn’t keep repeating the same one.',
+      'Built the enemy spawners, set up and uploaded the Steam builds, and took part in ' +
+        'designing the architecture of a custom action system based on GAS (Gameplay Ability System).',
+    ],
+  },
   {
     name: 'XEMA (custom C++ engine)',
     meta: 'C++, OpenGL 4.5',
@@ -170,7 +178,7 @@ export const skillCategories: SkillCategory[] = [
   {
     label: 'Game engines',
     skills: [
-      { name: 'Unreal Engine 5 (C++ & Blueprints)', hi: true },
+      { name: 'Unreal Engine 5 (UE5) with C++ & Blueprints', hi: true },
       { name: 'Unity (C#)', hi: true },
 
     ],
@@ -179,8 +187,8 @@ export const skillCategories: SkillCategory[] = [
     label: 'AI & gameplay',
     skills: [
       { name: 'StateTree', hi: true },
-      { name: 'Behaviour Trees', hi: true },
-      { name: 'EQS' },
+      { name: 'Behavior Trees', hi: true },
+      { name: 'EQS (Environment Query System)' },
       { name: 'AI Perception' },
       { name: 'Animation systems' },
       { name: 'Object pooling' },
@@ -189,7 +197,7 @@ export const skillCategories: SkillCategory[] = [
   {
     label: 'Languages',
     skills: [
-      { name: 'C++', hi: true },
+      { name: 'C++ (C++17, C++20, C++23, STL)', hi: true },
       { name: 'C#', hi: true },
       { name: 'C' },
       { name: 'ARM64 assembly' },
@@ -202,7 +210,7 @@ export const skillCategories: SkillCategory[] = [
       { name: 'OpenGL 4.5 DSA', hi: true },
       { name: 'Deferred shading / PBR', hi: true },
       { name: 'Vertex & fragment shaders' },
-      { name: 'ECS architecture' },
+      { name: 'Entity Component System (ECS)' },
       { name: 'Multithreading & job systems' },
       { name: 'Memory management & pointers' }
 
@@ -240,7 +248,7 @@ export const skillCategories: SkillCategory[] = [
 // The one-page CV folds the home page's seven categories into five rows.
 const cvSkillGroups: [string, string[]][] = [
   ['Engines & AI', ['Game engines', 'AI & gameplay']],
-  ['Languages', ['Languages']],
+  ['Programming languages', ['Languages']],
   ['Graphics & systems', ['Graphics & systems']],
   ['Tools', ['Debugging & profiling', 'Version control']],
   ['Outside games', ['Outside games']],

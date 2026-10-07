@@ -61,7 +61,7 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
         </p>
         <p class="cv-contact">
           {profile.location}. EU citizen, open to relocation within Spain and to remote
-          work. Spanish (native).
+          work. Spanish (native), English (intermediate).
         </p>
       </header>
 
@@ -72,14 +72,13 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
 
       <section class="cv-block">
         <h2>Technical skills</h2>
-        <dl class="cv-skills">
+        {/* One paragraph per row, label inline: a two-column grid made PDF text
+            extraction (and so ATS parsers) read all the labels, then all the lists */}
+        <div class="cv-skills">
           {skillRows.map(([label, list]) => (
-            <>
-              <dt>{label}</dt>
-              <dd>{list}</dd>
-            </>
+            <p><span class="cv-skill-label">{label}:</span> {list}</p>
           ))}
-        </dl>
+        </div>
       </section>
 
       <section class="cv-block">
@@ -91,13 +90,19 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
                 {e.role},{' '}
                 <span class="cv-org">
                   {e.orgLink ? <a href={e.orgLink}>{e.org}</a> : e.org}
-                  {e.orgNote && e.orgNote.length <= 30 && <span class="cv-org-note"> ({e.orgNote})</span>}
                 </span>
               </h3>
               <span class="cv-date">{e.date}</span>
             </div>
-            {/* A short note (a studio name) fits beside the title; a long one gets its own line */}
-            {e.orgNote && e.orgNote.length > 30 && <p class="cv-note">{e.orgNote}</p>}
+            {/* The game goes on its own line, so the heading reads "role, employer" for ATS
+                parsers. A short note (the engine) goes in brackets, a long one as a sentence. */}
+            {(e.product || e.orgNote) && (
+              <p class="cv-note">
+                {e.product && (e.productLink ? <a href={e.productLink}>{e.product}</a> : e.product)}
+                {e.product && e.orgNote && (e.orgNote.length <= 30 ? ` (${e.orgNote})` : `. ${e.orgNote}`)}
+                {!e.product && e.orgNote}
+              </p>
+            )}
             <ul class="cv-points">{e.points.map((pt) => <li>{pt}</li>)}</ul>
           </div>
         ))}
@@ -111,6 +116,7 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
               <h3>{pr.link ? <a href={pr.link}>{pr.name}</a> : pr.name}</h3>
               <span class="cv-date cv-meta">{pr.meta}</span>
             </div>
+            {pr.note && <p class="cv-note">{pr.note}</p>}
             <ul class="cv-points">{pr.points.map((pt) => <li>{pt}</li>)}</ul>
           </div>
         ))}
@@ -237,8 +243,10 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
     color: var(--text);
   }
 
-  .cv-entry h3 a { border-bottom: 1px solid var(--border); }
-  .cv-entry h3 a:hover { color: var(--accent); }
+  .cv-entry h3 a,
+  .cv-note a { border-bottom: 1px solid var(--border); }
+  .cv-entry h3 a:hover,
+  .cv-note a:hover { color: var(--accent); }
 
   .cv-org { color: var(--text-2); font-weight: 400; }
   .cv-org-note { color: var(--text-3); }
@@ -278,13 +286,24 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
   .cv-points li + li { margin-top: .15rem; }
 
   .cv-skills {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: .4rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
   }
 
-  .cv-skills dt { font-size: 12.5px; font-weight: 500; color: var(--text); }
-  .cv-skills dd { font-size: 12.5px; color: var(--text-2); line-height: 1.55; }
+  /* Label runs straight into its list. Aligning the lists in a column (grid or
+     hanging indent) made PDF text extraction read every label, then every list */
+  .cv-skills p {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--text-2);
+    line-height: 1.55;
+  }
+
+  .cv-skill-label {
+    font-weight: 500;
+    color: var(--text);
+  }
 
   .cv-updated {
     margin-top: 2rem;
@@ -295,8 +314,7 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
   @media (max-width: 640px) {
     /* Short titles kept the date beside them and long ones wrapped it: always below on phones */
     .cv-entry-head { flex-direction: column; gap: .1rem; }
-    .cv-skills { grid-template-columns: 1fr; gap: .1rem 0; }
-    .cv-skills dd { margin-bottom: .5rem; }
+    .cv-skill-label { display: block; }
   }
 </style>
 
@@ -332,13 +350,14 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
     .cv-summary,
     .cv-entry p,
     .cv-points li,
-    .cv-skills dd,
+    .cv-skills p,
     .cv-org { color: #222 !important; }
 
     .cv-entry p.cv-note { color: #444 !important; }
 
     .cv-contact a { border-bottom: 0 !important; }
-    .cv-entry h3 a { border-bottom: 0 !important; }
+    .cv-entry h3 a,
+    .cv-note a { border-bottom: 0 !important; }
     .cv-org-note { color: #444 !important; }
 
     .cv-block h2 {
@@ -350,7 +369,7 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
     }
 
     .cv-entry h3,
-    .cv-skills dt,
+    .cv-skill-label,
     .cv-summary strong { color: #000 !important; }
 
     .cv-date { color: #444 !important; }
@@ -362,7 +381,7 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
     .cv-summary,
     .cv-entry p,
     .cv-points li { orphans: 3; widows: 3; line-height: 1.35 !important; }
-    .cv-skills dd { line-height: 1.4 !important; }
+    .cv-skills p { line-height: 1.4 !important; }
 
     /* Long entries may flow onto the next page — keeping them whole left a
        third of page 1 empty. The heading still never gets stranded. */
@@ -374,19 +393,18 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
     /* Tighter vertical rhythm on paper so the CV fits on one page */
     .cv-head { padding-bottom: .6rem !important; margin-bottom: .8rem !important; }
     .cv-role { margin: .1rem 0 .35rem !important; }
-    .cv-block { margin-bottom: .65rem !important; }
+    .cv-block { margin-bottom: .45rem !important; }
     .cv-block h2 { margin-bottom: .3rem !important; }
-    .cv-entry { margin-bottom: .4rem !important; }
+    .cv-entry { margin-bottom: .3rem !important; }
     .cv-points { margin-top: .15rem !important; }
     .cv-points li + li { margin-top: .05rem !important; }
-    .cv-skills { gap: .15rem 1rem !important; }
+    .cv-skills { gap: .15rem !important; }
 
     .cv-contact { font-size: 8.5pt !important; line-height: 1.5 !important; }
     .cv-summary,
     .cv-entry p,
     .cv-points li,
-    .cv-skills dt,
-    .cv-skills dd { font-size: 9pt !important; }
+    .cv-skills p { font-size: 9pt !important; }
     .cv-entry p.cv-note { font-size: 8.5pt !important; }
     .cv-entry h3 { font-size: 10pt !important; }
     .cv-block h2 { font-size: 9pt !important; }

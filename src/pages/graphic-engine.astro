@@ -81,13 +81,21 @@ import Layout from '../layouts/Layout.astro';
       </figure>
 
       <figure class="tech-figure tech-figure--natural">
-        <img
-          src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-events.png`}
-          alt="RenderDoc event list with several glDrawElementsInstanced calls followed by the depth-only and colour passes"
-          width="623"
-          height="252"
-          loading="lazy"
-        />
+        {/* Unreadable at phone width: tapping opens the full-size file */}
+        <a
+          href={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-events.png`}
+          class="figure-zoom"
+          target="_blank"
+          rel="noopener"
+        >
+          <img
+            src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-events.png`}
+            alt="RenderDoc event list with several glDrawElementsInstanced calls followed by the depth-only and colour passes"
+            width="623"
+            height="252"
+            loading="lazy"
+          />
+        </a>
         <figcaption>
           Draw calls from the same frame: repeated meshes are drawn
           with <code>glDrawElementsInstanced</code>, up to 107 instances in a single call.

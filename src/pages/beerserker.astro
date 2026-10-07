@@ -51,7 +51,7 @@ import Layout from '../layouts/Layout.astro';
       <h2 class="sec-title">The project</h2>
 
       <p class="ed-prose">
-        Beerserker: The Stolen Brew is my final-year project at ESAT, with about 20 people
+        Beerserker: The Stolen Brew is our final-year project at ESAT, made by about 20 people
         across programming, art, design, music and production. It came out on Steam in Early
         Access on 7 July 2026 and is free.
       </p>
@@ -60,12 +60,12 @@ import Layout from '../layouts/Layout.astro';
       <p class="ed-prose">
         I worked mostly on the AI. I implemented the four enemy archetypes with <strong>StateTree</strong>,
         in C++ and Blueprints, with custom tasks and conditions, and
-        used <strong>EQS</strong> to query the environment. I also built an object pool
-        as a plugin and the enemy spawners, and I was in charge of configuring and uploading the builds to Steam. We used Perforce for
+        used <strong>EQS</strong> to query the environment. I also built the enemy spawners and an object pool,
+        as a plugin, and I was in charge of configuring and uploading the builds to Steam. We used Perforce for
         version control.
       </p>
       <p class="ed-prose">
-        Other Unreal tools I used: actor components, plugins, Animation Montages, Animation
+        Other Unreal tools I used: Actor Components, Animation Montages, Animation
         Notifies, Two Bone IK and GameInstance Subsystems.
       </p>
 
@@ -195,11 +195,19 @@ import Layout from '../layouts/Layout.astro';
       </p>
 
       <figure class="tech-figure">
-        <img
-          src={`${import.meta.env.BASE_URL}/project-images/beerserker/statetree-graph.png`}
-          alt="StateTree graph of the tank mini-boss"
-          loading="lazy"
-        />
+        {/* Unreadable at phone width: tapping opens the full-size file */}
+        <a
+          href={`${import.meta.env.BASE_URL}/project-images/beerserker/statetree-graph.png`}
+          class="figure-zoom"
+          target="_blank"
+          rel="noopener"
+        >
+          <img
+            src={`${import.meta.env.BASE_URL}/project-images/beerserker/statetree-graph.png`}
+            alt="StateTree graph of the tank mini-boss"
+            loading="lazy"
+          />
+        </a>
         <figcaption>The tank's StateTree graph.</figcaption>
       </figure>
     </div>
