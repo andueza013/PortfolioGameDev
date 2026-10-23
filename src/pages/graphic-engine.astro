@@ -22,12 +22,12 @@ import Layout from '../layouts/Layout.astro';
 
       <h1>XEMA</h1>
       <p class="ed-lede">
-        XEMA is an engine I built entirely myself in C++ and OpenGL, for PC and
+        XEMA is an engine I built from scratch on my own in C++ and OpenGL, for PC and
         Nintendo Switch (tested only on an emulator). I'm currently working on a PS5 port using
         the console's own graphics API.
       </p>
 
-      <p class="home-meta page-meta">University project. C++, OpenGL</p>
+      <p class="home-meta page-meta">University project. C++, OpenGL 4.5</p>
 
       <figure class="tech-figure tech-figure--hero">
         <img
@@ -55,7 +55,7 @@ import Layout from '../layouts/Layout.astro';
       <figure class="tech-figure">
         <img
           src={`${import.meta.env.BASE_URL}/project-images/xema/renderdoc-final.png`}
-          alt="Final image of a XEMA frame: a procedurally generated landscape with trees and houses"
+          alt="Final image of a XEMA frame: a procedurally generated map with decoration"
           width="590"
           height="186"
           loading="lazy"
@@ -101,6 +101,11 @@ import Layout from '../layouts/Layout.astro';
           with <code>glDrawElementsInstanced</code>, up to 107 instances in a single call.
         </figcaption>
       </figure>
+
+      <p class="ed-prose" style="margin-top: 1.75rem;">
+        Every frame the renderer groups the entities that share a mesh and textures, and draws
+        each group with a single instanced call.
+      </p>
     </div>
 
     <!-- ── PROCEDURAL GENERATION ─────────────────────────────────────────── -->
@@ -108,8 +113,10 @@ import Layout from '../layouts/Layout.astro';
       <h2 class="sec-title">Procedural generation</h2>
 
       <p class="ed-prose">
-        I implemented Wave Function Collapse in the engine. The landscape in the frame above
-        comes from it.
+        I implemented Wave Function Collapse in the engine. Generating the whole map as one
+        grid on the main thread would freeze the game until it finished, so the map in the
+        frame above is split into nine smaller grids, four biomes and five transitions between
+        them, generated in parallel as job system jobs while the game keeps running.
       </p>
 
       <figure class="tech-figure">
@@ -122,8 +129,7 @@ import Layout from '../layouts/Layout.astro';
             allowfullscreen></iframe>
         </div>
         <figcaption>
-          Wave Function Collapse demo generating nine different grids (four main ones and five
-          transition grids) across multiple threads.
+          Wave Function Collapse demo.
         </figcaption>
       </figure>
     </div>
@@ -132,26 +138,38 @@ import Layout from '../layouts/Layout.astro';
     <div class="tech-section">
       <h2 class="sec-title">Architecture</h2>
 
-      <div class="ed-row">
-        <div class="ed-body">
-          <p>
-            XEMA is built on an ECS architecture, with a JobSystem for work such as asynchronous
-            mesh loading. It has Lua scripting and uses PhysX for physics. GLFW handles the
-            window and input, and ImGui draws the debug panels for entities, components and
-            performance.
-          </p>
+      <p class="ed-prose">
+        XEMA is built on an ECS architecture, with a job system that loads meshes
+        asynchronously. It has Lua scripting and uses PhysX for physics. GLFW handles the
+        window and input, and ImGui draws the debug panels for entities, components and
+        performance.
+      </p>
+
+      {/* Both points come from the engine source: ModelManager::LoadModel /
+          CheckPendingModels, and the Buffer, Texture and GeometryBinding wrappers. */}
+      <div class="ed-list" style="margin-top: 2rem;">
+        <div class="ed-item">
+          <div class="ed-item-body">
+            <h3>Loading models without stalling the frame</h3>
+            <p>
+              Reading and parsing a model file would stall the frame, but OpenGL calls have to
+              be made on the thread that owns the context. So the job system's threads read and
+              parse the file, and the main thread uploads it to the GPU. A model is never
+              loaded twice.
+            </p>
+          </div>
         </div>
-        <div class="ed-media ed-media--natural">
-          <figure class="tech-figure">
-            <img
-              src={`${import.meta.env.BASE_URL}/project-images/xema/imgui-stats.png`}
-              alt="ImGui stats panel showing FPS, frame time and the time spent in each engine section"
-              width="290"
-              height="281"
-              loading="lazy"
-            />
-            <figcaption>ImGui performance panel: frame time and time per engine section.</figcaption>
-          </figure>
+
+        <div class="ed-item">
+          <div class="ed-item-body">
+            <h3>Owning OpenGL resources</h3>
+            <p>
+              OpenGL hands out plain integer IDs, so copying an object that holds one would
+              delete it twice, and forgetting to delete it leaks it. Buffers, textures and
+              vertex arrays are wrapped in RAII classes, and shared resources use smart
+              pointers.
+            </p>
+          </div>
         </div>
       </div>
     </div>

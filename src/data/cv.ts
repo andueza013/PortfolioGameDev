@@ -197,7 +197,7 @@ export const skillCategories: SkillCategory[] = [
   {
     label: 'Languages',
     skills: [
-      { name: 'C++ (C++17, C++20, C++23, STL)', hi: true },
+      { name: 'C++ (C++17 to C++23, STL)', hi: true },
       { name: 'C#', hi: true },
       { name: 'C' },
       { name: 'ARM assembly (32- and 64-bit)' },

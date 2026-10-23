@@ -125,15 +125,16 @@ const otherProjects: OtherProject[] = [
         </div>
 
         <div>
-          <h3>XEMA (custom C++ graphics engine)</h3>
+          <h3>XEMA (custom C++ engine)</h3>
           <p class="home-meta">
-            C++, OpenGL<br />
+            C++, OpenGL 4.5<br />
             PC, Nintendo Switch (emulator only), PS5 port in progress
           </p>
           <p>
-            XEMA is an engine I built entirely myself in C++ and OpenGL: an ECS
-            architecture, deferred PBR rendering with shadow mapping and instancing, a
-            JobSystem, Lua scripting and PhysX.
+            XEMA is an engine I built from scratch on my own in C++ and OpenGL: an ECS
+            architecture, deferred PBR rendering with shadow mapping and instancing, a job
+            system that loads meshes asynchronously, Lua scripting and PhysX. Resources are
+            managed with RAII and smart pointers.
           </p>
           <div class="feat-links">
             <a href={`${import.meta.env.BASE_URL}/graphic-engine`} class="link">Technical breakdown</a>

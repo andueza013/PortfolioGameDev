@@ -223,8 +223,7 @@ import Layout from '../layouts/Layout.astro';
             <p>
               The game keeps many enemies on screen at all times, plus particles, decals and
               projectiles, so I wrote an object pool, as a plugin that can be reused in
-              other projects. When an enemy returns to the pool, its StateTree stops on
-              the next frame, and when it is reused it starts again from the beginning.
+              other projects.
             </p>
           </div>
         </div>
@@ -243,9 +242,8 @@ import Layout from '../layouts/Layout.astro';
           <div class="ed-item-body">
             <h3>Which attack the tank picks</h3>
             <p>
-              Each of the tank's melee attacks starts with a weight of 1, and every time it uses
-              one, that attack's weight goes up. The less an attack has been used, the more likely
-              it is to come up, so the tank doesn't keep repeating the same one.
+              The tank's melee attacks are picked by weight: the less an attack has been used,
+              the more likely it is to come up, so the tank doesn't keep repeating the same one.
             </p>
           </div>
         </div>
@@ -266,10 +264,9 @@ import Layout from '../layouts/Layout.astro';
           <div class="ed-item-body">
             <h3>Stun through StateTree events</h3>
             <p>
-              When the player hits an enemy with an attack that stuns, the enemy receives
-              the <code>StateTree.Stun</code> event, which takes it into the stun state. When the
-              animation ends, an Animation Notify sends <code>StateTree.StunFinish</code> to leave it.
-              The tank can't be stunned.
+              When the player hits an enemy with an attack that stuns, a StateTree event takes it
+              into the stun state, and another one at the end of the animation takes it out. The
+              tank can't be stunned.
             </p>
           </div>
         </div>
