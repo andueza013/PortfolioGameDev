@@ -19,7 +19,7 @@ interface OtherProject {
 const otherProjects: OtherProject[] = [
   {
     title: "Abandoned Hospital",
-    desc: "A class exercise on AI Perception and EQS in Unreal Engine, with enemies and NPCs driven by a behaviour tree. After handing it in, I rebuilt it on my own with free assets and rewrote the AI from scratch in StateTree.",
+    desc: "A class exercise on AI Perception and EQS in Unreal Engine, with enemies and NPCs driven by a Behavior Tree. After handing it in, I rebuilt it on my own with free assets and rewrote the AI from scratch in StateTree.",
     img: "AH.webp",
     tech: ["Unreal Engine 5", "C++"],
     kind: "academic",
@@ -161,10 +161,11 @@ const otherProjects: OtherProject[] = [
             Unity, C#. In development, Steam page live
           </p>
           <p>
-            I designed and built core gameplay systems: a component-based dialogue system,
-            an AI perception system integrated with the behaviour trees, and a radio
-            communication system. I also worked on the Behavior Graph, general gameplay
-            mechanics, profiling and bug fixing.
+            I built the core architecture of the game and the AI, using Unity’s Behavior
+            Graph, with a perception system written entirely by me. I also built a
+            component-based dialogue system and the car radio, which plays songs on several
+            stations like a real car radio, and worked on other gameplay mechanics, profiling
+            and bug fixing.
           </p>
           <div class="feat-links">
             <a
@@ -207,7 +208,7 @@ const otherProjects: OtherProject[] = [
       </div>
 
       <div class="resume-group">
-        <h3>Education &amp; certifications</h3>
+        <h3>Education and certifications</h3>
         {education.map((entry) => <ResumeEntry entry={entry} />)}
       </div>
 

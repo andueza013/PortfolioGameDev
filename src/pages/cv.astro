@@ -60,7 +60,7 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
           <a href={profile.itch}>{printUrl(profile.itch)}</a>
         </p>
         <p class="cv-contact">
-          {profile.location}. EU citizen, open to relocation within Spain and to remote
+          {profile.location}. EU citizen, open to relocation and to remote
           work. Spanish (native), English (intermediate).
         </p>
       </header>
@@ -123,7 +123,7 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
       </section>
 
       <section class="cv-block">
-        <h2>Education &amp; certifications</h2>
+        <h2>Education and certifications</h2>
         {education.map((e) => (
           <div class="cv-entry">
             <div class="cv-entry-head">
@@ -398,6 +398,7 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
     .cv-entry { margin-bottom: .3rem !important; }
     .cv-points { margin-top: .15rem !important; }
     .cv-points li + li { margin-top: .05rem !important; }
+    .cv-entry p:not(.cv-note) { margin: .15rem 0 0 !important; }
     .cv-skills { gap: .15rem !important; }
 
     .cv-contact { font-size: 8.5pt !important; line-height: 1.5 !important; }
