@@ -165,8 +165,7 @@ export const cvProjects: Project[] = [
     points: [
       'Includes an ECS, deferred PBR rendering, shadow mapping, instancing, a job system that ' +
         'loads meshes asynchronously, Lua scripting and PhysX.',
-      'Ported to Nintendo Switch (tested only on an emulator). PS4 port in progress: so far ' +
-        'the ECS and basic geometry run on a devkit.',
+      'Ported to Nintendo Switch (tested only on an emulator). PS5 port in progress.'
     ],
   },
 ];
