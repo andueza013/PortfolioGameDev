@@ -164,7 +164,8 @@ export const cvProjects: Project[] = [
     link: 'https://andueza013.github.io/PortfolioGameDev/graphic-engine',
     points: [
       'Built from scratch on my own. Includes an ECS, deferred PBR rendering, shadow mapping, instancing, a job system that ' +
-        'loads meshes asynchronously, Lua scripting and PhysX.',
+        'loads meshes asynchronously, Lua scripting and PhysX. Resources are managed with ' +
+        'RAII and smart pointers.',
       'Ported to Nintendo Switch (tested only on an emulator). PS5 port in progress.'
     ],
   },
@@ -196,7 +197,6 @@ export const skillCategories: SkillCategory[] = [
       { name: 'C#', hi: true },
       { name: 'C' },
       { name: 'ARM assembly (32- and 64-bit)' },
-      { name: 'Lua' },
     ],
   },
   {
