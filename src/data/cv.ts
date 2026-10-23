@@ -188,6 +188,10 @@ export const skillCategories: SkillCategory[] = [
       { name: 'EQS (Environment Query System)' },
       { name: 'AI Perception' },
       { name: 'Animation Montages' },
+      { name: 'Gameplay Ability System (GAS)' },
+      { name: 'Gameplay Tags' },
+      { name: 'Actor Components' },
+      { name: 'Subsystems' },
     ],
   },
   {
