@@ -106,14 +106,14 @@ export const experience: Entry[] = [
 
 export const education: Entry[] = [
   {
-    role: 'HND in Video Game Programming',
+    role: 'HND in Computing: Video Games Programming',
     org: 'ESAT (Escuela Superior de Arte y Tecnología)',
     orgNote: 'Valencia',
     date: '2023–2026',
     points: [
-      'Specialised in C++. Built my own engine and implemented Wave Function Collapse, cellular ' +
-        'automata, L-systems, a templated FSM and A* pathfinding. Learned ARM64 assembly to find ' +
-        'and fix bottlenecks in inner loops.',
+      'C++, algorithms and data structures, ' +
+        'memory management, low-level programming in 32- and 64-bit ARM assembly, graphics ' +
+        'programming, and Unreal Engine and Unity. Final-year project: Beerserker.',
     ],
   },
   {
@@ -163,7 +163,7 @@ export const cvProjects: Project[] = [
     meta: 'C++, OpenGL 4.5',
     link: 'https://andueza013.github.io/PortfolioGameDev/graphic-engine',
     points: [
-      'Includes an ECS, deferred PBR rendering, shadow mapping, instancing, a job system that ' +
+      'Built from scratch on my own. Includes an ECS, deferred PBR rendering, shadow mapping, instancing, a job system that ' +
         'loads meshes asynchronously, Lua scripting and PhysX.',
       'Ported to Nintendo Switch (tested only on an emulator). PS5 port in progress.'
     ],
@@ -195,7 +195,7 @@ export const skillCategories: SkillCategory[] = [
       { name: 'C++ (C++17, C++20, C++23, STL)', hi: true },
       { name: 'C#', hi: true },
       { name: 'C' },
-      { name: 'ARM64 assembly' },
+      { name: 'ARM assembly (32 and 64 bit)' },
       { name: 'Lua' },
     ],
   },
