@@ -82,6 +82,20 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
       </section>
 
       <section class="cv-block">
+        <h2>Selected projects</h2>
+        {cvProjects.map((pr) => (
+          <div class="cv-entry">
+            <div class="cv-entry-head">
+              <h3>{pr.link ? <a href={pr.link}>{pr.name}</a> : pr.name}</h3>
+              <span class="cv-date cv-meta">{pr.meta}</span>
+            </div>
+            {pr.note && <p class="cv-note">{pr.note}</p>}
+            <ul class="cv-points">{pr.points.map((pt) => <li>{pt}</li>)}</ul>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-block">
         <h2>Experience</h2>
         {experience.map((e) => (
           <div class="cv-entry">
@@ -104,20 +118,6 @@ const printUrl = (href: string) => href.replace(/^https?:\/\//, '');
               </p>
             )}
             <ul class="cv-points">{e.points.map((pt) => <li>{pt}</li>)}</ul>
-          </div>
-        ))}
-      </section>
-
-      <section class="cv-block">
-        <h2>Selected projects</h2>
-        {cvProjects.map((pr) => (
-          <div class="cv-entry">
-            <div class="cv-entry-head">
-              <h3>{pr.link ? <a href={pr.link}>{pr.name}</a> : pr.name}</h3>
-              <span class="cv-date cv-meta">{pr.meta}</span>
-            </div>
-            {pr.note && <p class="cv-note">{pr.note}</p>}
-            <ul class="cv-points">{pr.points.map((pt) => <li>{pt}</li>)}</ul>
           </div>
         ))}
       </section>
