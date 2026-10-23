@@ -69,7 +69,7 @@ export const profile = {
 export const summary =
   'Game programmer focused on game AI, gameplay systems and procedural generation, working in ' +
   'C++ with Unreal Engine 5 and in C# with Unity. I have a Higher National Diploma (HND) in ' +
-  'video game programming from ESAT and spent two and a half years as a fullstack developer ' +
+  'Computing: Video Games Programming from ESAT and spent two and a half years as a fullstack developer ' +
   'before moving into games.';
 
 export const experience: Entry[] = [
@@ -143,8 +143,8 @@ export const cvProjects: Project[] = [
     meta: 'Unreal Engine 5, C++',
     link: 'https://store.steampowered.com/app/4522440/',
     note:
-      'Final-year project at ESAT with a team of about 20, co-developed with Grumpy Games. ' +
-      'Free, in Early Access on Steam.',
+      'Final-year project at ESAT, made with Grumpy Games by a team of about 20. ' +
+      'Free and available on Steam.',
     points: [
       'Built the four enemy types (melee, ranged, explosive and a tank mini-boss) in StateTree, ' +
         'with custom tasks and conditions in C++ and Blueprints.',
@@ -195,7 +195,7 @@ export const skillCategories: SkillCategory[] = [
       { name: 'C++ (C++17, C++20, C++23, STL)', hi: true },
       { name: 'C#', hi: true },
       { name: 'C' },
-      { name: 'ARM assembly (32 and 64 bit)' },
+      { name: 'ARM assembly (32- and 64-bit)' },
       { name: 'Lua' },
     ],
   },
